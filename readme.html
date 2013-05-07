@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="ReText 2.1.6">
+  <title>readme</title>
+</head>
+<body>
+<h1>BetBoy</h1>
+<p>Betboy uses artificial neural networks (FANN library) to predict outcomes of football matches. It's written in Python, for graphical interface uses Qt (PySide).</p>
+<p>Features:</p>
+<ul>
+<li>predicting outcomes of football matches</li>
+<li>predictiong odds</li>
+<li>simulations with filters</li>
+<li>automatic bets selector with filters</li>
+<li>complex statistics (standings, form, series, scheudle)</li>
+<li>automatic or manual updates</li>
+<li>preparing data for neural networks</li>
+<li>creating and saving neural networks</li>
+</ul>
+<p>program license: Apache License v2</p>
+<p>e-mail: jacek87markowski@gmail.com</p>
+<p>author: Jacek Markowski</p>
+<h2>Requirements:</h2>
+<ul>
+<li>
+<p>Windows:</p>
+<ul>
+<li>Pyside for Python 2.6 32 bit</li>
+<li>Python 2.6 32 bit</li>
+</ul>
+</li>
+<li>
+<p>Linux:</p>
+<ul>
+<li>Python 2.6 or 2.7</li>
+<li>Pyside</li>
+<li>Pyfann (FANN bindings for Python)</li>
+</ul>
+</li>
+</ul>
+<h2>Installation</h2>
+<p>Download latest BetBoy release:
+<a href="https://sourceforge.net/projects/betboy/files/">BetBoy download page</a></p>
+<p>Before you can run BetBoy you have to install Python,Pyside and Pyfann(only on linux, included in windows version) on your system.</p>
+<h3>Windows</h3>
+<p>Download and install <a href="http://www.python.org/ftp/python/2.6/python-2.6.msi">Python 2.6 32 bit</a></p>
+<p>Download and install <a href="http://releases.qt-project.org/pyside/PySide-1.1.2.win32-py2.6.exe">Pyside for Python 2.6 32 bit</a></p>
+<p>To run BetBoy just double click on bet_boy.py</p>
+<h3>Linux - Ubuntu 12.04</h3>
+<p>Go to Ubuntu software center install :</p>
+<ul>
+<li>pyside-tools</li>
+<li>pyfann</li>
+</ul>
+<p>To run BetBoy open betboy directory in terminal and type 'python bet_boy.py'</p>
+<h2>How to use</h2>
+<p>BetBoy has 8 modules for different tasks:</p>
+<ul>
+<li>Stats central</li>
+<li>Match selector</li>
+<li>Simulator</li>
+<li>Update manager</li>
+<li>Links creator</li>
+<li>Leagues creator</li>
+<li>Export manager</li>
+<li>Learning manager</li>
+</ul>
+<h3><a href="https://www.youtube.com/watch?v=XXzGUsWyFT8">Stats central</a></h3>
+<p>In this module you can check statistics for selected league:</p>
+<ul>
+<li>standings<ul>
+<li>points (overall, home, away)</li>
+<li>under 2.5</li>
+<li>over 2.5</li>
+<li>BTS - both team scored</li>
+<li>MOW - margin of wins<ul>
+<li>formula: goal diffrence in won matches/played matches</li>
+</ul>
+</li>
+<li>MOL - margin of loses<ul>
+<li>formula: goal diffrence in lost matches/played matches</li>
+</ul>
+</li>
+<li>BB rating - BetBoy rating:<ul>
+<li>win: 3 points + (opponent points(scaled to [0,1]) + opponent form(scaled to [0,1]))/2</li>
+<li>draw: 1 point + (opponent points(scaled to [0,1]) + opponent form(scaled to [0,1]))/2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>form</li>
+<li>scheudle</li>
+<li>matches of selected teams</li>
+<li>series of selected teams</li>
+<li>predictions and odds:<ul>
+<li>1 - home team to win</li>
+<li>x - draw</li>
+<li>2 - away team to win</li>
+<li>1x - draw or home team to win</li>
+<li>x2 - draw or away team to win</li>
+</ul>
+</li>
+</ul>
+<p>*(predictions are made only for upcoming match day not whole round, if you take predictions from day after upcoming match day it will be inaccurate and won't be included in simulation for accuracy check)</p>
+<h3><a href="https://www.youtube.com/watch?v=sSwNXzk1V90">Match selector</a>:</h3>
+<p>This module allows to generate list of upcoming matches for selected leagues based on criteria defined in filters (series, odds).</p>
+<h3><a href="https://www.youtube.com/watch?v=9--Cf9QBotU">Simulator</a> - perform simulation to select bets</h3>
+<p>Here you can perform batch simulations for selected leagues,nets and filters. Slecet league filters, net andd click button 'add' to add selected items to list.
+To run simulation click button 'run'. After all simulations
+you will be taken to selected bets tab and checks if any bets matching filters criteria where selected.</p>
+<p>r_min - minimal round to start simulation</p>
+<p>r_max - maximum round where stop simulation</p>
+<ul>
+<li>
+<h5><a href="https://www.youtube.com/watch?v=W8cE2HYc-6Y">Match filters</a></h5>
+<p>Here you can define filters for matches: points diffrences, form diffrences (between home team and away team) and series(wins, loses, draws etc.)
+For example:when you select series wins home =&gt; 1 for home team in simulation will be included only matches where home team has 1 or more home wins streak.
+When you select points &gt; 30 for home team in simulation will be included only matches where home team points are 30% or more (home team points and away team points = 100%)
+<a href="https://www.youtube.com/watch?v=qsLCX8uT6hU">You can also filter matches by odds</a></p>
+</li>
+<li>
+<h5><a href="https://www.youtube.com/watch?v=9--Cf9QBotU">Net ranges</a></h5>
+<p>Here you can define how program will transform ann output(from -1 to 1) for bet (1,1x,x,x2,2)
+For example:
+net ranges are:
+1 min=-1 max=-0,3
+x min=-0,3 max=0,3
+2 min=0,3 max=1
+neural networks gives number -0,79382
+so program gives us bet 1 – home to win, beacuse -0,79382 is in range [-1,-0,3]</p>
+</li>
+<li>
+<h5>Bet filters</h5>
+<p>Here you can define filters for selecting bets.
+In simulation process net accuracy is checked, for example:
+net accuracy for 1 bets is: 50% and bet filter for 1 is 60%, so program will ignore bets (1 - home to win) from this net becausse of low accuracy.
+Net frequency - sometimes when ranges don't give bets from specifin ann output simulation will give none prediction, for example: there were 100 matches in simulation and 50 matches had no prediction- it means that net frequency is 50%, let's say user defined min net frequency at 60% in this case program will ignore bets from this net.</p>
+</li>
+</ul>
+<h3><a href="https://www.youtube.com/watch?v=UahVBOUsOGY">Update manager</a></h3>
+<ul>
+<li>
+<p>Scrape website - 
+This module is for automatic database updates. It uses list of urls to download data from sites.
+Before you can update database, you have to prepare file with urls in <strong>links creator</strong>.
+     Select urls base from saved and click load → urls list is dispalyed → select url to update click button add → click button update.</p>
+<ul>
+<li>errors:
+Sometimes after update some leagues won't work properly. It's caused by to long lines in league file:
+for example:<ul>
+<li>normal line is : 2012.10.10,Real,Arsenal,0,1</li>
+<li>broken line is : 2012.10.10,Real,Arsenal,(postponed for blah balah blah.....) - in this case delete this line from file
+*broken line is : 2012.10.10,Real,Arsenal,(by decision blah blah result; 3:0) - in this case change this line to:
+2012.10.10,Real,Arsenal,3,0</li>
+</ul>
+</li>
+</ul>
+<p>If any errors,there will be created directory data/tmp/leagues (there are stored copies of broken files) and log.txt - shows wchich lines are bad and need manual fixing (for manual fixing i recommend to use notepad++).
+After fixing you can copy files from data/tmp/leagues to data/leagues.</p>
+</li>
+<li>
+<p>football-data.co.uk</p>
+<p>Select list of urls do download and click button 'update'</p>
+</li>
+</ul>
+<h3><a href="https://www.youtube.com/watch?v=Cs3DwGa6ETw">Link creator</a></h3>
+<ul>
+<li>
+<p>Scrape website</p>
+<p>Here you can create file with list of urls used for updates. On the left of displayed website choose football and select league, go to fixtures <strong>select all matches and week by week</strong>. On the left next to address bar there is text line where you can enter your name for this league, after you give name to league click button '+' to add to list. When you complete picking urls you can save entire list to file. This saved file can be opened in update manager.</p>
+</li>
+<li>
+<p>football-data.co.uk</p>
+<p>Select league on the right pane of site: there will be list of files-&gt; move mouse cursor to link to file-&gt; right button of mouse, from list select copy link-&gt; paste link to textbox under browser-&gt; push button '+' to add file to list.</p>
+<p>When collecting actuall season files after selecting leagues, go to section latest matches(list of upcoming matches - this list will be merged to downloaded leagues.), and copy link to upcoming matches-&gt; push button '+' to add to list.<strong>This link to file must be added at last place.</strong></p>
+</li>
+</ul>
+<h3><a href="https://www.youtube.com/watch?v=j_Ag30E6FVY">Leagues creator</a></h3>
+<p>In this module you can manually update leagues or create own leagues.</p>
+<h3><a href="https://www.youtube.com/watch?v=mskxkTn8F5c">Export manager</a></h3>
+<p>Before you can learn artificial neural network(ann) you have to prepare data for learning:</p>
+<ul>
+<li>r_min - minimum round to start export</li>
+<li>r_max - maximum round to stop export</li>
+</ul>
+<p>Select leagues on which ann will be trained, give name fof exported file (above export button) and click export button (wait it takes some time dependly on numbers of selected leagues)
+During this process data is scaled round by round and saved to file.</p>
+<p>There are 145 inputs[in range -1,1] scaled every round for every team and 1 output(-1 - home team won, 0- draw, 1- away team won)</p>
+<p>In inputs included are:</p>
+<ul>
+<li>points (overall,home,away)<ul>
+<li>scaled for max and min value available to get in whole season</li>
+<li>scaled for max and min value actual in table</li>
+</ul>
+</li>
+<li>form (overall,home,away)<ul>
+<li>scaled for max and min value available to get in whole season</li>
+<li>scaled for max and min value actual in table</li>
+</ul>
+</li>
+<li>series (overall,home,away)</li>
+<li>odds</li>
+</ul>
+<h3><a href="https://www.youtube.com/watch?v=mskxkTn8F5c">Learning manager</a></h3>
+<p>Select earlier prepared file from exports, set setting for neural network (training algorithm, activation functions, epochs, reports frequency, hidden layer) and click learn, after succesful learning there will be new file in neaural networks. This created net can be used for predicting of matches(you can check in simulation for which leagues it has the best accuracy)</p>
+</body>
+</html>

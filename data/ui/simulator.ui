@@ -1,0 +1,4524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Simulator</class>
+ <widget class="QWidget" name="Simulator">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>872</width>
+    <height>638</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Simulator</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_11">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::West</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_settings">
+      <attribute name="title">
+       <string>Settings</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTabWidget" name="tabWidget_2">
+         <property name="tabPosition">
+          <enum>QTabWidget::North</enum>
+         </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Batch</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_27">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_26">
+               <item>
+                <widget class="QTreeWidget" name="tree_batch">
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_25">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_25">
+                   <item>
+                    <widget class="QPushButton" name="button_batch_remove">
+                     <property name="text">
+                      <string>Remove</string>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../icons/icons.qrc">
+                       <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="button_batch_clear">
+                     <property name="text">
+                      <string>Clear</string>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../icons/icons.qrc">
+                       <normaloff>:/actions/actions/editclear.png</normaloff>:/actions/actions/editclear.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_23">
+                   <item>
+                    <widget class="QPushButton" name="button_batch_run">
+                     <property name="text">
+                      <string>Run</string>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../icons/icons.qrc">
+                       <normaloff>:/actions/actions/agt_runit.png</normaloff>:/actions/actions/agt_runit.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout">
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_3">
+                       <item>
+                        <widget class="QLabel" name="label_19">
+                         <property name="toolTip">
+                          <string>Min rounds played</string>
+                         </property>
+                         <property name="text">
+                          <string>r_min</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spin_rounds_min">
+                         <property name="toolTip">
+                          <string>Min rounds played</string>
+                         </property>
+                         <property name="minimum">
+                          <number>5</number>
+                         </property>
+                         <property name="value">
+                          <number>5</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <layout class="QVBoxLayout" name="verticalLayout_12">
+                       <item>
+                        <widget class="QLabel" name="label_20">
+                         <property name="toolTip">
+                          <string>Max rounds played</string>
+                         </property>
+                         <property name="text">
+                          <string>r_max</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QSpinBox" name="spin_rounds_max">
+                         <property name="toolTip">
+                          <string>Max rounds played</string>
+                         </property>
+                         <property name="minimum">
+                          <number>6</number>
+                         </property>
+                         <property name="value">
+                          <number>50</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="button_add">
+                       <property name="maximumSize">
+                        <size>
+                         <width>1000000</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>Add</string>
+                       </property>
+                       <property name="icon">
+                        <iconset resource="../icons/icons.qrc">
+                         <normaloff>:/actions/actions/edit_add.png</normaloff>:/actions/actions/edit_add.png</iconset>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_21">
+               <item>
+                <widget class="QTreeWidget" name="tree_profiles">
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <item>
+                    <widget class="QPushButton" name="button_batch_save">
+                     <property name="text">
+                      <string>Save</string>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../icons/icons.qrc">
+                       <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line_batch"/>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_10">
+                   <item>
+                    <widget class="QPushButton" name="button_batch_load">
+                     <property name="text">
+                      <string>Load</string>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../icons/icons.qrc">
+                       <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="button_batch_delete">
+                     <property name="text">
+                      <string>Delete</string>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="../icons/icons.qrc">
+                       <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_24">
+             <item>
+              <widget class="QTreeWidget" name="tree_leagues">
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <column>
+                <property name="text">
+                 <string notr="true">1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTreeWidget" name="tree_nets">
+               <column>
+                <property name="text">
+                 <string notr="true">1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTreeWidget" name="tree_filters">
+               <column>
+                <property name="text">
+                 <string notr="true">1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTreeWidget" name="tree_ranges">
+               <column>
+                <property name="text">
+                 <string notr="true">1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTreeWidget" name="tree_bets">
+               <column>
+                <property name="text">
+                 <string notr="true">1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>Match filters</string>
+          </attribute>
+          <layout class="QHBoxLayout" name="horizontalLayout_30">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_16">
+             <item>
+              <widget class="QTreeWidget" name="tree_filters_profile">
+               <property name="maximumSize">
+                <size>
+                 <width>241</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <column>
+                <property name="text">
+                 <string notr="true">1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <item>
+                <widget class="QPushButton" name="button_filters_load">
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Load</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../icons/icons.qrc">
+                   <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="button_filters_delete">
+                 <property name="maximumSize">
+                  <size>
+                   <width>120</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Delete</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../icons/icons.qrc">
+                   <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_27">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_34">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_18">
+                 <item>
+                  <widget class="QGroupBox" name="groupBox">
+                   <property name="minimumSize">
+                    <size>
+                     <width>237</width>
+                     <height>116</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>237</width>
+                     <height>116</height>
+                    </size>
+                   </property>
+                   <property name="title">
+                    <string>Stats Home %</string>
+                   </property>
+                   <widget class="QComboBox" name="combo_points">
+                    <property name="geometry">
+                     <rect>
+                      <x>123</x>
+                      <y>20</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QCheckBox" name="check_points">
+                    <property name="geometry">
+                     <rect>
+                      <x>6</x>
+                      <y>20</y>
+                      <width>111</width>
+                      <height>16</height>
+                     </rect>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Points</string>
+                    </property>
+                    <property name="tristate">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_points">
+                    <property name="geometry">
+                     <rect>
+                      <x>180</x>
+                      <y>20</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_points_ha">
+                    <property name="geometry">
+                     <rect>
+                      <x>180</x>
+                      <y>40</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_points_ha">
+                    <property name="geometry">
+                     <rect>
+                      <x>123</x>
+                      <y>40</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QCheckBox" name="check_points_ha">
+                    <property name="geometry">
+                     <rect>
+                      <x>6</x>
+                      <y>40</y>
+                      <width>111</width>
+                      <height>16</height>
+                     </rect>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>PointsH/A</string>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_form_ha">
+                    <property name="geometry">
+                     <rect>
+                      <x>180</x>
+                      <y>80</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_form">
+                    <property name="geometry">
+                     <rect>
+                      <x>123</x>
+                      <y>60</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QCheckBox" name="check_form_ha">
+                    <property name="geometry">
+                     <rect>
+                      <x>6</x>
+                      <y>80</y>
+                      <width>111</width>
+                      <height>16</height>
+                     </rect>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>FormH/A</string>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_form">
+                    <property name="geometry">
+                     <rect>
+                      <x>180</x>
+                      <y>60</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QCheckBox" name="check_form">
+                    <property name="geometry">
+                     <rect>
+                      <x>6</x>
+                      <y>60</y>
+                      <width>111</width>
+                      <height>16</height>
+                     </rect>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Form</string>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_form_ha">
+                    <property name="geometry">
+                     <rect>
+                      <x>123</x>
+                      <y>80</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="groupBox_4">
+                   <property name="minimumSize">
+                    <size>
+                     <width>237</width>
+                     <height>116</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>237</width>
+                     <height>116</height>
+                    </size>
+                   </property>
+                   <property name="title">
+                    <string>Stats Away %</string>
+                   </property>
+                   <widget class="QComboBox" name="combo_points_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="geometry">
+                     <rect>
+                      <x>3</x>
+                      <y>20</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_points_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="geometry">
+                     <rect>
+                      <x>60</x>
+                      <y>20</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>100</number>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_points_ha_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="geometry">
+                     <rect>
+                      <x>60</x>
+                      <y>40</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>100</number>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_points_ha_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="geometry">
+                     <rect>
+                      <x>3</x>
+                      <y>40</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_form_ha_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="geometry">
+                     <rect>
+                      <x>60</x>
+                      <y>80</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>100</number>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_form_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="geometry">
+                     <rect>
+                      <x>3</x>
+                      <y>60</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_form_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="geometry">
+                     <rect>
+                      <x>60</x>
+                      <y>60</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>100</number>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_form_ha_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="geometry">
+                     <rect>
+                      <x>3</x>
+                      <y>80</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_26">
+                 <item>
+                  <widget class="QGroupBox" name="groupBox_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>231</width>
+                     <height>261</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>231</width>
+                     <height>277</height>
+                    </size>
+                   </property>
+                   <property name="title">
+                    <string>Series Home&lt;=&gt;Value</string>
+                   </property>
+                   <widget class="QComboBox" name="combo_h_wins">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>20</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_wins">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>20</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>20</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>Wins</string>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_winshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>40</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_3">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>40</y>
+                      <width>81</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>WinsHome</string>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_winshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>40</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_drawshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>80</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_draws">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>60</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_4">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>60</y>
+                      <width>81</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>Draws</string>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_drawshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>80</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_draws">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>60</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_nowinshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>160</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_nowins">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>140</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QLabel" name="label_6">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>140</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoWins</string>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_loses">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>100</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_7">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>100</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>Loses</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_8">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>120</y>
+                      <width>81</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>LosesHome</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_24">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>160</y>
+                      <width>91</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoWinsHome</string>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_loseshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>120</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_loses">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>100</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_nowinshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>160</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_loseshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>120</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_nowins">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>140</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_noloseshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>240</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_nodraws">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>180</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_nodrawshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>200</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_noloses">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>220</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_38">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>200</y>
+                      <width>101</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NodrawsHome</string>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_nodraws">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>180</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_noloseshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>240</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_h_nodrawshome">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>200</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_39">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>240</y>
+                      <width>101</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoLosesHome</string>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_h_noloses">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>220</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QLabel" name="label_40">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>220</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoLoses</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_41">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>180</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoDraws</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_15">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>80</y>
+                      <width>81</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>DrawsHome</string>
+                    </property>
+                   </widget>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="groupBox_7">
+                   <property name="minimumSize">
+                    <size>
+                     <width>231</width>
+                     <height>261</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>231</width>
+                     <height>261</height>
+                    </size>
+                   </property>
+                   <property name="title">
+                    <string>Series Away&lt;=&gt;Value</string>
+                   </property>
+                   <widget class="QLabel" name="label_42">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>20</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>Wins</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_43">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>40</y>
+                      <width>81</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>WinsAway</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_44">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>60</y>
+                      <width>81</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>Draws</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_45">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>80</y>
+                      <width>81</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>DrawsAway</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_46">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>140</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoWins</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_47">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>100</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>Loses</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_48">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>120</y>
+                      <width>81</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>LosesAway</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_49">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>160</y>
+                      <width>91</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoWinsAway</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_50">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>200</y>
+                      <width>101</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NodrawsAway</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_51">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>240</y>
+                      <width>101</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoLosesAway</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_52">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>220</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoLoses</string>
+                    </property>
+                   </widget>
+                   <widget class="QLabel" name="label_53">
+                    <property name="geometry">
+                     <rect>
+                      <x>10</x>
+                      <y>180</y>
+                      <width>64</width>
+                      <height>17</height>
+                     </rect>
+                    </property>
+                    <property name="text">
+                     <string>NoDraws</string>
+                    </property>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_loses">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>100</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_draws">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>60</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_nowins">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>140</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_nodrawsaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>200</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_noloses">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>220</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_wins">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>20</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_nodraws">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>180</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_nowinsaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>160</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_losesaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>120</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_drawsaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>80</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_winsaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>40</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QComboBox" name="combo_a_nolosesaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>110</x>
+                      <y>240</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                    <property name="currentIndex">
+                     <number>1</number>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>&gt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&gt;=</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>==</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>&lt;=</string>
+                     </property>
+                    </item>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_nolosesaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>240</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_losesaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>120</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_nodraws">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>180</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_loses">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>100</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_noloses">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>220</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_nowins">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>140</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_draws">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>60</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_nowinsaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>160</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_wins">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>20</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_winsaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>40</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_drawsaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>80</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                   <widget class="QSpinBox" name="spin_a_nodrawsaway">
+                    <property name="geometry">
+                     <rect>
+                      <x>170</x>
+                      <y>200</y>
+                      <width>51</width>
+                      <height>21</height>
+                     </rect>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>3</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>51</width>
+                      <height>21</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox_5">
+                 <property name="title">
+                  <string>Min odds</string>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_13">
+                    <item>
+                     <widget class="QLabel" name="label_22">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>1</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_1">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_17">
+                    <item>
+                     <widget class="QLabel" name="label_23">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>x</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_x">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_31">
+                    <item>
+                     <widget class="QLabel" name="label_25">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>2</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_2">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_32">
+                    <item>
+                     <widget class="QLabel" name="label_26">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>1x</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_1x">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_33">
+                    <property name="sizeConstraint">
+                     <enum>QLayout::SetDefaultConstraint</enum>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_27">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>x2</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_x2">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_4">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>158</width>
+                      <height>17</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_14">
+                 <item>
+                  <widget class="QLineEdit" name="line_filters">
+                   <property name="maximumSize">
+                    <size>
+                     <width>300</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="button_filters_save">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                     <horstretch>1</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>300</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Save</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>481</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>36</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_4">
+          <attribute name="title">
+           <string>Net ranges</string>
+          </attribute>
+          <layout class="QHBoxLayout" name="horizontalLayout_17">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="margin">
+            <number>9</number>
+           </property>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <item>
+              <widget class="QTreeWidget" name="tree_ranges_profile">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>241</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <column>
+                <property name="text">
+                 <string notr="true">1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_15"/>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                 <item>
+                  <widget class="QPushButton" name="button_ranges_load">
+                   <property name="text">
+                    <string>Load</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="button_ranges_delete">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>120</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Delete</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <widget class="QGroupBox" name="groupBox_8">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>174</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>323</width>
+                 <height>212</height>
+                </size>
+               </property>
+               <property name="title">
+                <string/>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_20">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_13">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_54">
+                      <property name="maximumSize">
+                       <size>
+                        <width>31</width>
+                        <height>17</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>1</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_1_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>61</width>
+                        <height>23</height>
+                       </size>
+                      </property>
+                      <property name="readOnly">
+                       <bool>false</bool>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>-1.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_1_max">
+                      <property name="maximumSize">
+                       <size>
+                        <width>61</width>
+                        <height>24</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>-0.800000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_28">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_5">
+                      <property name="maximumSize">
+                       <size>
+                        <width>31</width>
+                        <height>17</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>1x</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_1x_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>61</width>
+                        <height>23</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>-0.800000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_1x_max">
+                      <property name="maximumSize">
+                       <size>
+                        <width>61</width>
+                        <height>24</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>-0.100000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_29">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_56">
+                      <property name="maximumSize">
+                       <size>
+                        <width>31</width>
+                        <height>17</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>x</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_x_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>61</width>
+                        <height>23</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>-0.100000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_x_max">
+                      <property name="maximumSize">
+                       <size>
+                        <width>61</width>
+                        <height>23</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>0.100000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_30">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_57">
+                      <property name="maximumSize">
+                       <size>
+                        <width>31</width>
+                        <height>17</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>x2</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_x2_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>57</width>
+                        <height>23</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>0.100000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_x2_max">
+                      <property name="maximumSize">
+                       <size>
+                        <width>57</width>
+                        <height>23</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>0.800000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_54">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label_58">
+                      <property name="maximumSize">
+                       <size>
+                        <width>31</width>
+                        <height>17</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>2</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_2_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>57</width>
+                        <height>23</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>0.800000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_2_max">
+                      <property name="maximumSize">
+                       <size>
+                        <width>57</width>
+                        <height>23</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>-1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                      <property name="value">
+                       <double>1.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_19">
+                  <item>
+                   <widget class="QLineEdit" name="line_ranges"/>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_9">
+                    <item>
+                     <widget class="QPushButton" name="button_ranges_save">
+                      <property name="text">
+                       <string>Save</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../icons/icons.qrc">
+                        <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>199</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_3">
+          <attribute name="title">
+           <string>Bet filters</string>
+          </attribute>
+          <layout class="QHBoxLayout" name="horizontalLayout_19">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QTreeWidget" name="tree_bets_profile">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <column>
+                <property name="text">
+                 <string notr="true">1</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QPushButton" name="button_bets_load">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>120</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Load</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../icons/icons.qrc">
+                   <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="button_bets_delete">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>120</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Delete</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../icons/icons.qrc">
+                   <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBox_3">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>181</height>
+              </size>
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_29">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_40">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_7">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_6">
+                    <item>
+                     <widget class="QLabel" name="label_13">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Min accuracy%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_5">
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_8">
+                        <item>
+                         <widget class="QLabel" name="label_2">
+                          <property name="text">
+                           <string>1</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_9">
+                          <property name="text">
+                           <string>x</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_10">
+                          <property name="text">
+                           <string>2</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_11">
+                          <property name="text">
+                           <string>1x</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_12">
+                          <property name="text">
+                           <string>x2</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignCenter</set>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_4">
+                        <item>
+                         <widget class="QDoubleSpinBox" name="spin_acc_1">
+                          <property name="maximumSize">
+                           <size>
+                            <width>65</width>
+                            <height>27</height>
+                           </size>
+                          </property>
+                          <property name="value">
+                           <double>60.000000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="spin_acc_x">
+                          <property name="maximumSize">
+                           <size>
+                            <width>65</width>
+                            <height>27</height>
+                           </size>
+                          </property>
+                          <property name="value">
+                           <double>60.000000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="spin_acc_2">
+                          <property name="maximumSize">
+                           <size>
+                            <width>65</width>
+                            <height>27</height>
+                           </size>
+                          </property>
+                          <property name="value">
+                           <double>60.000000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="spin_acc_1x">
+                          <property name="maximumSize">
+                           <size>
+                            <width>65</width>
+                            <height>27</height>
+                           </size>
+                          </property>
+                          <property name="value">
+                           <double>70.000000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QDoubleSpinBox" name="spin_acc_x2">
+                          <property name="maximumSize">
+                           <size>
+                            <width>65</width>
+                            <height>27</height>
+                           </size>
+                          </property>
+                          <property name="value">
+                           <double>70.000000000000000</double>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <item>
+                     <widget class="QLabel" name="label_14">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Min net frequency%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_freq">
+                      <property name="maximumSize">
+                       <size>
+                        <width>65</width>
+                        <height>27</height>
+                       </size>
+                      </property>
+                      <property name="value">
+                       <double>50.000000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_11">
+                    <item>
+                     <widget class="QGroupBox" name="groupBox_6">
+                      <property name="title">
+                       <string>Min odds</string>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_28">
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_35">
+                         <item>
+                          <widget class="QLabel" name="label_28">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string>1</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_1">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="maximum">
+                            <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_36">
+                         <item>
+                          <widget class="QLabel" name="label_29">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string>x</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_x">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="maximum">
+                            <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_37">
+                         <item>
+                          <widget class="QLabel" name="label_30">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string>2</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_2">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="maximum">
+                            <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_38">
+                         <item>
+                          <widget class="QLabel" name="label_31">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string>1x</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_1x">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="maximum">
+                            <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_39">
+                         <property name="sizeConstraint">
+                          <enum>QLayout::SetDefaultConstraint</enum>
+                         </property>
+                         <item>
+                          <widget class="QLabel" name="label_32">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string>x2</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignCenter</set>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_x2">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="maximum">
+                            <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="line_bets_save">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_bets_save">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="text">
+                       <string>Save</string>
+                      </property>
+                      <property name="icon">
+                       <iconset resource="../icons/icons.qrc">
+                        <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_4">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>20</width>
+                        <height>40</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_preview">
+      <attribute name="title">
+       <string>Preview</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_24">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_20">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_18">
+           <item>
+            <widget class="QLabel" name="label_16">
+             <property name="text">
+              <string>All matches</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="table_preview"/>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_22">
+           <item>
+            <widget class="QLabel" name="label_17">
+             <property name="text">
+              <string>Filtered</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="table_filtered"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>Filtered: accuracy stats</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTreeWidget" name="tree_hits">
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_21">
+         <item>
+          <widget class="QPushButton" name="button_preview_show">
+           <property name="text">
+            <string>Show</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../icons/icons.qrc">
+             <normaloff>:/actions/actions/reload.png</normaloff>:/actions/actions/reload.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="button_preview_remove">
+           <property name="text">
+            <string>Remove</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../icons/icons.qrc">
+             <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_22">
+         <item>
+          <widget class="QPushButton" name="button_preview_save">
+           <property name="text">
+            <string>Save</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../icons/icons.qrc">
+             <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="line_preview_save"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_5">
+      <attribute name="title">
+       <string>Selected bets</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>Predictions are made only for next day not whole round !</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTreeWidget" name="tree_bets_selected">
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_23">
+         <item>
+          <widget class="QPushButton" name="button_bets_final_save">
+           <property name="text">
+            <string>Save</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../icons/icons.qrc">
+             <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../icons/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

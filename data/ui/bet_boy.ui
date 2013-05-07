@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BetTools</class>
+ <widget class="QMainWindow" name="BetTools">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>631</width>
+    <height>417</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>BetBoy</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QMdiArea" name="mdiArea">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="midLineWidth">
+       <number>0</number>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAsNeeded</enum>
+      </property>
+      <property name="background">
+       <brush brushstyle="NoBrush">
+        <color alpha="255">
+         <red>184</red>
+         <green>184</green>
+         <blue>184</blue>
+        </color>
+       </brush>
+      </property>
+      <property name="activationOrder">
+       <enum>QMdiArea::StackingOrder</enum>
+      </property>
+      <property name="viewMode">
+       <enum>QMdiArea::TabbedView</enum>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="tabsMovable">
+       <bool>true</bool>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Triangular</enum>
+      </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>631</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionStats_central"/>
+    <addaction name="actionMatch_selector"/>
+    <addaction name="actionSimulator"/>
+    <addaction name="actionUpdate_manager"/>
+    <addaction name="actionLinks_creator"/>
+    <addaction name="actionLeagues_creator"/>
+    <addaction name="actionExport_manager"/>
+    <addaction name="actionLearning_manager"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuTools"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionStats_central">
+   <property name="text">
+    <string>Stats central</string>
+   </property>
+  </action>
+  <action name="actionSimulator">
+   <property name="text">
+    <string>Simulator</string>
+   </property>
+  </action>
+  <action name="actionUpdate_manager">
+   <property name="text">
+    <string>Update manager</string>
+   </property>
+  </action>
+  <action name="actionLinks_creator">
+   <property name="text">
+    <string>Links creator</string>
+   </property>
+  </action>
+  <action name="actionLeagues_creator">
+   <property name="text">
+    <string>Leagues creator</string>
+   </property>
+  </action>
+  <action name="actionExport_manager">
+   <property name="text">
+    <string>Export manager</string>
+   </property>
+  </action>
+  <action name="actionLearning_manager">
+   <property name="text">
+    <string>Learning manager</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionMatch_selector">
+   <property name="text">
+    <string>Match selector</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../icons/icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -1,0 +1,35 @@
+<RCC>
+  <qresource prefix="actions">
+    <file>cancel.png</file>
+    <file>actions/1downarrow1.png</file>
+    <file>actions/1uparrow.png</file>
+    <file>actions/agt_back.png</file>
+    <file>actions/agt_forward.png</file>
+    <file>actions/agt_runit.png</file>
+    <file>actions/edit_add.png</file>
+    <file>actions/edit_remove.png</file>
+    <file>actions/editclear.png</file>
+    <file>actions/editdelete.png</file>
+    <file>actions/fileopen.png</file>
+    <file>actions/filesaveas.png</file>
+    <file>actions/player_play.png</file>
+    <file>actions/reload.png</file>
+    <file>actions/wizard.png</file>
+  </qresource>
+  <qresource prefix="scroll">
+    <file>1leftarrow.png</file>
+    <file>1rightarrow.png</file>
+  </qresource>
+  <qresource prefix="small">
+    <file>agt_action_success.png</file>
+    <file>1downarrow.png</file>
+    <file>1uparrow.png</file>
+  </qresource>
+  <qresource prefix="tree">
+    <file>stylesheet-branch-closed.png</file>
+    <file>stylesheet-branch-end.png</file>
+    <file>stylesheet-branch-more.png</file>
+    <file>stylesheet-branch-open.png</file>
+    <file>stylesheet-vline.png</file>
+  </qresource>
+</RCC>

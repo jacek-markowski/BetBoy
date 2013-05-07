@@ -1,0 +1,7 @@
+# Compiled source #
+###################
+*.pyc
+# Directories     #
+###################
+data/tmp
+data/export
