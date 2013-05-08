@@ -127,7 +127,7 @@ This module is for automatic database updates. It uses list of urls to download 
 Before you can update database, you have to prepare file with urls in **links creator**.
 	 Select urls base from saved and click load → urls list is dispalyed → select url to update click button add → click button update.
 
-	* errors:
+	* [errors](https://www.youtube.com/watch?v=5E4s_C_Tn04):
 Sometimes after update some leagues won't work properly. It's caused by to long lines in league file:
 for example:
  		* normal line is : 2012.10.10,Real,Arsenal,0,1
