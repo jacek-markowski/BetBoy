@@ -135,7 +135,7 @@ class Scrape(QtCore.QThread):
                 line = line.replace("'",'')
                 line = line.replace(' ','')
                 fix_file.write(line+new_line)
-            fix_file.close()
+        fix_file.close()
 
 class UpdateApp(QtGui.QWidget):
     '''Creates gui form and events  '''
@@ -261,9 +261,34 @@ class UpdateApp(QtGui.QWidget):
                     src = os.path.join('leagues','')+i
                     dst = os.path.join('tmp','leagues','')+i
                     shutil.copy(src, dst)
+                    self.fix_broken_leagues(src)
             log.close()
             self.gui.textBrowser.append('Errors: %d .See data/tmp/leagues/log.txt'%errors)
             self.gui.textBrowser.append('Files with errors copied to data/tmp/leagues')
+        ## auto fix broken leagues (delete lines)
+    def fix_broken_leagues(self,path):
+        ''' Removes too long lines from csv file'''
+        csv_file = open(path,'r')
+        tmp_file_open = reader(csv_file)
+        tmp_file = list(tmp_file_open)
+        csv_file.close()
+        match_list = []
+        for t in range(0, len(tmp_file)):
+            if len(tmp_file[t][3]) > 2:
+                pass
+                print tmp_file[t][3]
+            else:
+                match_list.append(tmp_file[t])
+        with open(path,'w') as fix_file:
+            for i in range(0, len(match_list)):
+                line = str(match_list[i])
+                line = line.replace('[','')
+                line = line.replace(']','')
+                line = line.replace("'",'')
+                line = line.replace(' ','')
+                #print 'write', line
+                fix_file.write(line+new_line)
+        fix_file.close()
 
     def update_fd(self):
         ''' Updates database from football-data.co.uk'''
