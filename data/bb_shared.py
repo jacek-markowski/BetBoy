@@ -75,6 +75,12 @@ class Shared(object):
                 pass
             else:
                 os.mkdir(os.path.join(os.getcwd(), 'leagues', i, ''))
+        tmp = ('leagues',)
+        for i in tmp:
+            if os.path.isdir(os.path.join(os.getcwd(), 'tmp', i, '')):
+                pass
+            else:
+                os.mkdir(os.path.join(os.getcwd(), 'tmp', i, ''))
 
     def odds_rescale(self,val,odds_level):
         ''' Rescaling odds from [-1,1]'''
@@ -105,10 +111,10 @@ class Shared(object):
                 leagues = os.listdir(os.path.join('leagues','')+path)
                 for i in leagues:
                     with open(os.path.join('leagues',path,'')+i,'r') as f:
-                        for a in f.readlines():
-                            if len(a)> 60:
+                        for a in reader(f):
+                            if len(a[3])> 5 or len(a[4])> 5:
                                 errors += 1
-                                line = path+self.nl+i+'>>>'+a+self.nl
+                                line = path+self.nl+i+'>>>'+str(a)+self.nl
                                 QtGui.QApplication.processEvents()
                                 log.write(line)
                                 file_path = os.path.join(path,'')+i
@@ -127,9 +133,9 @@ class Shared(object):
             tmp_file = list(tmp_file_open)
         match_list = []
         for t in range(0, len(tmp_file)):
-            if len(tmp_file[t][3]) > 2:
-                pass
+            if len(tmp_file[t][3]) > 4 or len(tmp_file[t][4]) > 4:
                 print tmp_file[t][3]
+                print tmp_file[t][4]
             else:
                 match_list.append(tmp_file[t])
         with open(path,'w') as fix_file:
