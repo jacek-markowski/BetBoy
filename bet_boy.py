@@ -31,9 +31,7 @@ from data.statistics_main import StatisticsApp
 from data.simulator_window import SimulatorApp
 from data.ui.about import Ui_About
 from data.match_selector import SelectorApp
-
-system = platform.system()
-
+from data.bb_shared import Shared
 
 class AboutApp(QtGui.QWidget):
    def __init__(self, parent=None):
@@ -41,13 +39,15 @@ class AboutApp(QtGui.QWidget):
         self.gui = Ui_About()
         self.gui.setupUi(self)
 
-class BBApp(QtGui.QMainWindow):
+class BBApp(QtGui.QMainWindow, Shared):
     '''Creates gui and events  '''
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
+        Shared.__init__(self)
         self.gui = Ui_BetTools()
         self.gui.setupUi(self)
         ### Set style
+        system = platform.system()
         if system == 'Windows':
             f_style="windows"
         elif system == 'Linux':
@@ -60,19 +60,8 @@ class BBApp(QtGui.QMainWindow):
             self.setStyleSheet(style.read())
         ### Set working directory
         os.chdir(os.path.join(os.getcwd(),'data',''))
-
-        if os.path.isdir(os.path.join(os.getcwd(),'export','')):
-            pass
-        else:
-            os.mkdir(os.path.join(os.getcwd(),'export',''))
-        if os.path.isdir(os.path.join(os.getcwd(),'tmp','')):
-            pass
-        else:
-            os.mkdir(os.path.join(os.getcwd(),'tmp',''))
-        if os.path.isdir(os.path.join(os.getcwd(),'tmp','leagues','')):
-            pass
-        else:
-            os.mkdir(os.path.join(os.getcwd(),'tmp','leagues',''))
+        ### Checks default directiories and create missing
+        self.default_directories()
         self.bindings()
         self.win_about()
     def closeEvent(self, event):
@@ -84,7 +73,6 @@ class BBApp(QtGui.QMainWindow):
             event.accept()
         else:
             event.ignore()
-
 
     def bindings(self):
         self.gui.actionSimulator.triggered.connect(self.win_simulator)
