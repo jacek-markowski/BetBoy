@@ -14,34 +14,32 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
 import sys
 import os
 from csv import reader
-import platform
+import locale
 
 from PySide import QtCore, QtGui
 from ui.simulator import Ui_Simulator
-from ng_engine import Database
-import locale
+from bb_engine import Database
+from bb_shared import Shared
 
-system = platform.system()
-if system == 'Windows':
-    new_line = '\r\n'
-elif system == 'Linux':
-    new_line = '\n'
-elif system == 'Darwin':
-    new_line = '\r'
-else:
-    new_line = '\r\n'
-
-class SimulatorApp(QtGui.QWidget, Database):
+class SimulatorApp(QtGui.QWidget, Database, Shared):
     '''Creates gui and events  '''
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         Database.__init__(self, parent)
+        Shared.__init__(self)
+        self.app = 'simulator'
         self.gui = Ui_Simulator()
         self.gui.setupUi(self)
+        self.gui.tree_leagues.headerItem().setText(0, ('Leagues'))
+        self.gui.tree_nets.headerItem().setText(0, ('Nets'))
+        self.gui.tree_ranges.headerItem().setText(0, ('Net ranges'))
+        self.gui.tree_ranges_profile.headerItem().setText(0, ('Net ranges'))
+        self.gui.tree_bets.headerItem().setText(0, ('Bet filters'))
+        self.gui.tree_profiles.headerItem().setText(0, ('Batches'))
+        self.gui.tree_filters.headerItem().setText(0, ('Match filters'))
         labels = ['Path',
                         'League',
                         'Net',
@@ -49,63 +47,85 @@ class SimulatorApp(QtGui.QWidget, Database):
                         'Net ranges',
                         'Bet filters',
                         'R_min',
-                        'R_max']
+                        'R_max',
+                        'Odds level']
         for i in range(0, len(labels)):
             self.gui.tree_batch.headerItem().setText(i,
                                                    (labels[i]))
-        labels = ['Path',
-                        'League',
-                        'Net',
-                        'Filter',
-                        'Ranges',
-                        'Bet_selector',
-                        'Net frequency',
-                        'R_min',
-                        'R_max',
-                        '1',
-                        '1%',
-                        '1x',
-                        '1x%',
-                        'x',
-                        'x%',
-                        'x2',
-                        'x2%',
-                        '2',
-                        '2%',
-                        '1 Profit',
-                        'x Profit',
-                        '2 Profit',
-                        '1x Profit',
-                        'x2 Profit']
+        labels = [
+        'Results',
+        'Path',
+        'League',
+        'Net',
+        'Filter',
+        'Ranges',
+        'Bet_selector',
+        'R_min',
+        'R_max',
+        'Odds level',
+        'Net frequency']
         for i in range(0, len(labels)):
             self.gui.tree_hits.headerItem().setText(i,
                                                   (labels[i]))
+        self.gui.tree_hits.setColumnWidth(0, 200)
         labels = ['Selected bets']
         for i in range(0, 1):
             self.gui.tree_bets_selected.headerItem().setText(i,
                                                    (labels[i]))
 
         self.bindings()
-        self.leagues_tree()
-        self.nets_tree()
-        self.ranges_tree()
-        self.bets_tree()
-        self.batch_profiles_tree()
-        self.filters_tree()
+        # try to show files in folders profile
+        trees = (
+        self.leagues_tree,
+        self.nets_tree,
+        self.ranges_tree,
+        self.bets_tree,
+        self.batch_profiles_tree,
+        self.filters_tree)
+        for i in trees:
+            try:
+                i()
+            except:
+                pass
         self.filter_combos_spins()
         # load filters at startup
-        self.bets_load()
-        self.ranges_load()
-        self.filters_load()
+        profiles = (self.bets_load, self.ranges_load, self.filters_load)
+        for i in profiles:
+            try:
+                i()
+            except:
+                pass
 
-    def delete_file(self, file_delete, path):
-        ''' Dialog for deleting file'''
-        reply = QtGui.QMessageBox.question(self, 'Delete?',
-            "Are you sure to delete %s?"%file_delete, QtGui.QMessageBox.Yes |
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        if reply == QtGui.QMessageBox.Yes:
-            if file_delete != 'default':
-                os.remove(path+file_delete)
+        # size of columns
+        labels = ['Date','Home','Away','Result','Bet','Odd','Net']
+        self.gui.table_preview.setColumnCount(len(labels[:-2]))
+        self.gui.table_preview.setHorizontalHeaderLabels(labels)
+        self.gui.table_preview.setRowCount(0)
+        self.gui.table_filtered.setColumnCount(len(labels))
+        self.gui.table_filtered.setHorizontalHeaderLabels(labels)
+        self.gui.table_filtered.setRowCount(0)
+        self.gui.table_preview.setItem(0, 1, QtGui.QTableWidgetItem('test'))
+        self.gui.table_filtered.setItem(0, 1, QtGui.QTableWidgetItem('test'))
+        self.gui.table_preview.clear()
+        self.gui.table_filtered.clear()
+        self.gui.table_filtered.setColumnWidth(0, 90)
+        self.gui.table_filtered.setColumnWidth(1, 90)
+        self.gui.table_filtered.setColumnWidth(2, 90)
+        self.gui.table_filtered.setColumnWidth(3, 60)
+        self.gui.table_filtered.setColumnWidth(4, 60)
+        self.gui.table_filtered.setColumnWidth(5, 60)
+        self.gui.table_filtered.setColumnWidth(6, 100)
+
+        self.gui.table_preview.setColumnWidth(0, 100)
+        self.gui.table_preview.setColumnWidth(1, 100)
+        self.gui.table_preview.setColumnWidth(2, 100)
+        self.gui.table_preview.setColumnWidth(3, 50)
+        self.gui.table_preview.setColumnWidth(4, 80)
+
+    def closeEvent(self, event):
+        self.stop_action = 1
+        event.accept()
+
 
     def bindings(self):
         ''' Widgets bindings'''
@@ -138,8 +158,8 @@ class SimulatorApp(QtGui.QWidget, Database):
         self.gui.button_filters_load.clicked.connect(self.filters_load)
         self.gui.tree_filters_profile.doubleClicked.connect(self.filters_load)
         self.gui.button_filters_delete.clicked.connect(self.filters_delete)
-        self.gui.button_batch_run.clicked.connect(self.batch_run)
-        self.gui.button_preview_show.clicked.connect(self.batch_preview_run)
+        self.gui.button_batch_run.clicked.connect(self.simulation_batch)
+        self.gui.button_preview_show.clicked.connect(self.simulation_show)
         self.gui.button_preview_remove.clicked.connect(self.batch_preview_remove)
         self.gui.button_preview_save.clicked.connect(self.batch_preview_save)
         self.gui.button_bets_final_save.clicked.connect(self.bets_final_save)
@@ -147,13 +167,13 @@ class SimulatorApp(QtGui.QWidget, Database):
         self.gui.combo_points_ha.currentIndexChanged.connect(self.filter_combos_spins)
         self.gui.combo_form.currentIndexChanged.connect(self.filter_combos_spins)
         self.gui.combo_form_ha.currentIndexChanged.connect(self.filter_combos_spins)
-
         self.gui.spin_points.valueChanged.connect(self.filter_combos_spins)
         self.gui.spin_points_ha.valueChanged.connect(self.filter_combos_spins)
         self.gui.spin_form.valueChanged.connect(self.filter_combos_spins)
         self.gui.spin_form_ha.valueChanged.connect(self.filter_combos_spins)
         self.gui.spin_rounds_min.valueChanged.connect(self.combos_rounds)
         self.gui.spin_rounds_max.valueChanged.connect(self.combos_rounds)
+        self.gui.button_stop.clicked.connect(self.simulation_stop)
 
     def combos_rounds(self):
         ''' Prevents spins to have conflicting values'''
@@ -166,6 +186,7 @@ class SimulatorApp(QtGui.QWidget, Database):
             if val[i].value() <= val[i-1].value():
                 number = val[i].value()
                 val[i-1].setValue(number-1)
+
     def filter_combos_spins(self):
         ''' Changes values of combos and spins for away team'''
         combos = [
@@ -214,7 +235,6 @@ class SimulatorApp(QtGui.QWidget, Database):
 
     def leagues_tree(self):
         ''' Fills tree with available csv files'''
-        self.gui.tree_leagues.headerItem().setText(0, ('Leagues'))
         self.gui.tree_leagues.sortItems(0, QtCore.Qt.SortOrder(0))
         paths = []
         for i in os.walk("leagues/"):
@@ -239,7 +259,6 @@ class SimulatorApp(QtGui.QWidget, Database):
         self.gui.tree_nets.clear()
         self.gui.tree_nets.sortItems(0, QtCore.Qt.SortOrder(0))
         self.gui.tree_nets.setSortingEnabled(1)
-        self.gui.tree_nets.headerItem().setText(0, ('Nets'))
         dir_exports = os.listdir(os.path.join('net'))
         for i in dir_exports:
             item_exp = QtGui.QTreeWidgetItem(self.gui.tree_nets)
@@ -251,7 +270,6 @@ class SimulatorApp(QtGui.QWidget, Database):
         self.gui.tree_profiles.clear()
         self.gui.tree_profiles.sortItems(0, QtCore.Qt.SortOrder(0))
         self.gui.tree_profiles.setSortingEnabled(1)
-        self.gui.tree_profiles.headerItem().setText(0, ('Batches'))
         dir_exports = os.listdir(os.path.join('profiles','simulation'))
         for i in dir_exports:
             item_exp = QtGui.QTreeWidgetItem(self.gui.tree_profiles)
@@ -262,7 +280,6 @@ class SimulatorApp(QtGui.QWidget, Database):
         self.gui.tree_ranges.clear()
         self.gui.tree_ranges.sortItems(0, QtCore.Qt.SortOrder(0))
         self.gui.tree_ranges.setSortingEnabled(1)
-        self.gui.tree_ranges.headerItem().setText(0, ('Net ranges'))
         dir_exports = os.listdir(os.path.join('profiles','ranges'))
         for i in dir_exports:
             item_exp = QtGui.QTreeWidgetItem(self.gui.tree_ranges)
@@ -272,7 +289,6 @@ class SimulatorApp(QtGui.QWidget, Database):
         self.gui.tree_ranges_profile.clear()
         self.gui.tree_ranges_profile.sortItems(0, QtCore.Qt.SortOrder(0))
         self.gui.tree_ranges_profile.setSortingEnabled(1)
-        self.gui.tree_ranges_profile.headerItem().setText(0, ('Net ranges'))
         dir_exports = os.listdir(os.path.join('profiles','ranges'))
         for i in dir_exports:
             item_exp = QtGui.QTreeWidgetItem(self.gui.tree_ranges_profile)
@@ -304,10 +320,9 @@ class SimulatorApp(QtGui.QWidget, Database):
         self.max_2
         ]
         file_name = self.gui.line_ranges.text()
-        save = open(os.path.join('profiles','ranges','')+file_name,'w')
-        for i in val:
-            save.write(str(i)+new_line)
-        save.close()
+        with open(os.path.join('profiles','ranges','')+file_name,'w') as save:
+            for i in val:
+                save.write(str(i)+self.nl)
         self.ranges_tree()
 
     def ranges_delete(self):
@@ -334,12 +349,12 @@ class SimulatorApp(QtGui.QWidget, Database):
         ]
         item = self.gui.tree_ranges_profile.currentItem()
         file_name = item.text(0)
-        load = open(os.path.join('profiles','ranges','')+file_name,'r')
-        load = list(load)
+        with open(os.path.join('profiles','ranges','')+file_name,'r') as f:
+            load = list(f)
         for i in range(0,len(val)):
             item =self.rm_lines(load[i])
             val[i].setValue(float(item))
-
+        self.gui.line_ranges.setText(file_name)
     def batch_remove(self):
         ''' Delete batch profile'''
         item = self.gui.tree_batch.currentItem()
@@ -352,64 +367,70 @@ class SimulatorApp(QtGui.QWidget, Database):
 
     def batch_add(self):
         ''' Add item to batch tree'''
-        item = self.gui.tree_nets.currentItem()
-        net = item.text(0)
-        item = self.gui.tree_leagues.currentItem()
-        league = item.text(0)
-        path =item.parent()
-        path = path.text(0)
-        item = self.gui.tree_filters.currentItem()
-        filters = item.text(0)
-        item = self.gui.tree_ranges.currentItem()
-        ranges = item.text(0)
-        item = self.gui.tree_bets.currentItem()
-        bets = item.text(0)
-        r_min = self.gui.spin_rounds_min.value()
-        r_max = self.gui.spin_rounds_max.value()
-        if path != None:
-            val = [path,
-                    league,
-                    net,
-                    filters,
-                    ranges,
-                    bets,
-                    r_min,
-                    r_max]
+        try:
+            item = self.gui.tree_nets.currentItem()
+            net = item.text(0)
+            item = self.gui.tree_leagues.currentItem()
+            league = item.text(0)
+            path =item.parent()
+            path = path.text(0)
+            item = self.gui.tree_filters.currentItem()
+            filters = item.text(0)
+            item = self.gui.tree_ranges.currentItem()
+            ranges = item.text(0)
+            item = self.gui.tree_bets.currentItem()
+            bets = item.text(0)
+            r_min = self.gui.spin_rounds_min.value()
+            r_max = self.gui.spin_rounds_max.value()
+            odds = self.gui.spin_odds_level.value()
+            if path != None:
+                val = [path,
+                        league,
+                        net,
+                        filters,
+                        ranges,
+                        bets,
+                        r_min,
+                        r_max,
+                        odds]
 
-            item = QtGui.QTreeWidgetItem(self.gui.tree_batch)
-            for i in range(0,len(val)):
-                item.setText(i,(str(val[i])))
+                item = QtGui.QTreeWidgetItem(self.gui.tree_batch)
+                for i in range(0,len(val)):
+                    item.setText(i,(str(val[i])))
+        except:
+            pass
 
     def batch_save(self):
         ''' Save items in bath tree'''
         file_name = self.gui.line_batch.text()
-        file_save = open(os.path.join('profiles','simulation','')+\
-                                                    str(file_name), 'w')
-        count = self.gui.tree_batch.topLevelItemCount()
-        for i in range(0,count):
-            item = self.gui.tree_batch.topLevelItem(i)
-            path = item.text(0)
-            league = item.text(1)
-            net = item.text(2)
-            filters = item.text(3)
-            ranges = item.text(4)
-            bets = item.text(5)
-            r_min = item.text(6)
-            r_max = item.text(7)
-            val = [path,
-                    league,
-                    net,
-                    filters,
-                    ranges,
-                    bets,
-                    r_min,
-                    r_max]
-            line = ''
-            for i in val:
-                line+=i+','
-            line = line +new_line
-            file_save.write(line)
-        file_save.close()
+        with open(os.path.join('profiles','simulation','')+\
+            str(file_name), 'w') as file_save:
+            count = self.gui.tree_batch.topLevelItemCount()
+            for i in range(0,count):
+                item = self.gui.tree_batch.topLevelItem(i)
+                path = item.text(0)
+                league = item.text(1)
+                net = item.text(2)
+                filters = item.text(3)
+                ranges = item.text(4)
+                bets = item.text(5)
+                r_min = item.text(6)
+                r_max = item.text(7)
+                odds = item.text(8)
+                val = [path,
+                        league,
+                        net,
+                        filters,
+                        ranges,
+                        bets,
+                        r_min,
+                        r_max,
+                        odds]
+                line = ''
+                for i in val:
+                    line+=i+','
+                line = line +self.nl
+                file_save.write(line)
         self.batch_profiles_tree()
 
     def batch_delete(self):
@@ -425,19 +446,18 @@ class SimulatorApp(QtGui.QWidget, Database):
         self.gui.tree_batch.clear()
         item = self.gui.tree_profiles.currentItem()
         file_name = item.text(0)
-        load = reader(open(os.path.join('profiles','simulation','')+\
-                                                            file_name,'r'))
-        for i in load:
-            item = QtGui.QTreeWidgetItem(self.gui.tree_batch)
-            for n in range(0,8):
-                item.setText(n,(i[n]))
+        with open(os.path.join('profiles','simulation','')+file_name,'r') as f:
+            load = reader(f)
+            for i in load:
+                item = QtGui.QTreeWidgetItem(self.gui.tree_batch)
+                for n in range(0,9):
+                    item.setText(n,(i[n]))
 
     def bets_tree(self):
         ''' Filss tree in both tabs with saved bets filters'''
         self.gui.tree_bets.clear()
         self.gui.tree_bets.sortItems(0, QtCore.Qt.SortOrder(0))
         self.gui.tree_bets.setSortingEnabled(1)
-        self.gui.tree_bets.headerItem().setText(0, ('Bet filters'))
         dir_exports = os.listdir(os.path.join('profiles','bets'))
         for i in dir_exports:
             item_exp = QtGui.QTreeWidgetItem(self.gui.tree_bets)
@@ -471,11 +491,12 @@ class SimulatorApp(QtGui.QWidget, Database):
         ]
         item = self.gui.tree_bets_profile.currentItem()
         file_name = item.text(0)
-        load = open(os.path.join('profiles','bets','')+file_name,'r')
-        load = list(load)
+        with open(os.path.join('profiles','bets','')+file_name,'r') as f:
+            load = list(f)
         for i in range(0,len(val)):
             item =self.rm_lines(load[i])
             val[i].setValue(float(item))
+        self.gui.line_bets_save.setText(file_name)
 
 
     def bets_delete(self):
@@ -489,20 +510,19 @@ class SimulatorApp(QtGui.QWidget, Database):
     def bets_final_save(self):
         ''' Save selected bets'''
         file_name = QtGui.QFileDialog.getSaveFileName(self)
-        file_save = open(file_name[0],'w')
-        count = self.gui.tree_bets_selected.topLevelItemCount()
-        for i in range(0,count):
-            item = self.gui.tree_bets_selected.topLevelItem(i)
-            simulation = item.text(0)
-            line = simulation+new_line
-            file_save.write(line)
-            child_num = item.childCount()
-            for i in range(0,child_num):
-                name = item.child(i)
-                name = name.text(0)
-                line = name+new_line
-                file_save.write('.........'+line)
-        file_save.close()
+        with open(file_name[0],'w') as file_save:
+            count = self.gui.tree_bets_selected.topLevelItemCount()
+            for i in range(0,count):
+                item = self.gui.tree_bets_selected.topLevelItem(i)
+                simulation = item.text(0)
+                line = simulation+self.nl
+                file_save.write(line)
+                child_num = item.childCount()
+                for i in range(0,child_num):
+                    name = item.child(i)
+                    name = name.text(0)
+                    line = name+self.nl
+                    file_save.write('.........'+line)
 
     def bets_save(self):
         ''' Saves bets profiles'''
@@ -532,10 +552,9 @@ class SimulatorApp(QtGui.QWidget, Database):
         odd_x2
         ]
         file_name = self.gui.line_bets_save.text()
-        save = open(os.path.join('profiles','bets','')+file_name,'w')
-        for i in val:
-            save.write(str(i)+new_line)
-        save.close()
+        with open(os.path.join('profiles','bets','')+file_name,'w') as save:
+            for i in val:
+                save.write(str(i)+self.nl)
         self.bets_tree()
 
     def batch_preview_remove(self):
@@ -547,195 +566,65 @@ class SimulatorApp(QtGui.QWidget, Database):
     def batch_preview_save(self):
         ''' Saves batch profile'''
         file_name = self.gui.line_preview_save.text()
-        file_save = open(os.path.join('profiles','simulation','')+\
-                                                    str(file_name), 'w')
-        count = self.gui.tree_hits.topLevelItemCount()
-        for i in range(0,count):
-            item = self.gui.tree_hits.topLevelItem(i)
-            path = item.text(0)
-            league = item.text(1)
-            net = item.text(2)
-            filters = item.text(3)
-            ranges = item.text(4)
-            bets = item.text(5)
+        with open(os.path.join('profiles','simulation','')+\
+        str(file_name), 'w') as file_save:
+            count = self.gui.tree_hits.topLevelItemCount()
+            for i in range(0,count):
+                item = self.gui.tree_hits.topLevelItem(i)
+                path = item.text(1)
+                league = item.text(2)
+                net = item.text(3)
+                filters = item.text(4)
+                ranges = item.text(5)
+                bets = item.text(6)
+                r_min = item.text(7)
+                r_max = item.text(8)
+                odds = item.text(9)
 
-            val = [path,
-                    league,
-                    net,
-                    filters,
-                    ranges,
-                    bets]
-            line = ''
-            for i in val:
-                line+=i+','
-            line = line +new_line
-            file_save.write(line)
-        file_save.close()
+                val = [path,
+                        league,
+                        net,
+                        filters,
+                        ranges,
+                        bets,
+                        r_min,
+                        r_max,
+                        odds]
+                line = ''
+                for i in val:
+                    line+=i+','
+                line = line +self.nl
+                file_save.write(line)
         self.batch_profiles_tree()
 
-    def batch_preview_run(self):
-        ''' Run selected simulation without clearing tree and bets'''
-        item = self.gui.tree_hits.currentItem()
-        sim = item
-        self.sim_stats = {
-        'Path':'-',
-        'League':'-',
-        'Net':'-',
-        'Filter':'-',
-        'Ranges':'-',
-        'Bet_selector':'-',
-        'R_min':'-',
-        'R_max':'-',
-        'matches':0.0,
-        'bets':0.0,
-        '1':0.0,
-        '1 hit':0.0,
-        '1x':0.0,
-        '1x hit':0.0,
-        'x':0.0,
-        'x hit':0.0,
-        'x2':0.0,
-        'x2 hit':0.0,
-        '2':0.0,
-        '2 hit':0.0,
-        '1LSP':0.0,
-        'xLSP':0.0,
-        '2LSP':0.0,
-        '1xLSP':0.0,
-        'x2LSP':0.0,}
-        self.sim_stats['Path']= str(sim.text(0))
-        self.sim_stats['League']= str(sim.text(1))
-        self.sim_stats['Net']= str(sim.text(2))
-        self.sim_stats['Filter']= str(sim.text(3))
-        self.sim_stats['Ranges']= str(sim.text(4))
-        self.sim_stats['Bet_selector']= str(sim.text(5))
-        self.sim_stats['R_min']= str(sim.text(7))
-        self.sim_stats['R_max']= str(sim.text(8))
+    def simulation_batch(self):
+        self.simulation_run(mode=0)
 
-        self.gui.table_preview.clear()
-        labels = ['Date','Home','Away','Result','Bet','Odd','Net']
-        self.gui.table_preview.setColumnCount(len(labels))
-        self.gui.table_preview.setHorizontalHeaderLabels(labels)
-        self.gui.table_preview.setRowCount(0)
-        self.gui.table_filtered.setColumnCount(len(labels))
-        self.gui.table_filtered.setHorizontalHeaderLabels(labels)
-        self.gui.table_filtered.setRowCount(0)
-        self.gui.tabWidget.setCurrentIndex(1)
-        # ranges
-        ranges = open(os.path.join('profiles','ranges','')+\
-                                        self.sim_stats['Ranges'],'r')
-        load = list(ranges)
-        ranges.close()
-        val = []
-        for i in range(0,len(load)):
-            item = self.rm_lines(load[i])
-            item = float(item)
-            val.append(item)
-        self.min_1 = val[0]
-        self.max_1 = val[1]
-        self.min_1x = val[2]
-        self.max_1x = val[3]
-        self.min_x = val[4]
-        self.max_x = val[5]
-        self.min_x2 = val[6]
-        self.max_x2 = val[7]
-        self.min_2 = val[8]
-        self.max_2 = val[9]
-        # filters
-        filters = open(os.path.join('profiles','filters','')+\
-                                        self.sim_stats['Filter'],'r')
-        load = list(filters)
-        val = []
-        for i in range(0,len(load)):
-            item = self.rm_lines(load[i])
-            val.append(item)
-
-        self.check_points = val[0]
-        self.check_points_ha = val[1]
-        self.check_form = val[2]
-        self.check_form_ha = val[3]
-        self.combo_points = val[4]
-        self.combo_points_ha = val[5]
-        self.combo_form = val[6]
-        self.combo_form_ha = val[7]
-        self.combo_h_wins = val[8]
-        self.combo_h_winshome = val[9]
-        self.combo_h_draws = val[10]
-        self.combo_h_drawshome = val[11]
-        self.combo_h_loses = val[12]
-        self.combo_h_loseshome = val[13]
-        self.combo_h_nowins = val[14]
-        self.combo_h_nowinshome = val[15]
-        self.combo_h_nodraws = val[16]
-        self.combo_h_nodrawshome = val[17]
-        self.combo_h_noloses = val[18]
-        self.combo_h_noloseshome = val[19]
-        self.combo_a_wins = val[20]
-        self.combo_a_winsaway = val[21]
-        self.combo_a_draws = val[22]
-        self.combo_a_drawsaway = val[23]
-        self.combo_a_loses = val[24]
-        self.combo_a_losesaway = val[25]
-        self.combo_a_nowins = val[26]
-        self.combo_a_nowinsaway = val[27]
-        self.combo_a_nodraws = val[28]
-        self.combo_a_nodrawsaway = val[29]
-        self.combo_a_noloses = val[30]
-        self.combo_a_nolosesaway = val[31]
-        self.spin_points = val[32]
-        self.spin_points_ha = val[33]
-        self.spin_form = val[34]
-        self.spin_form_ha = val[35]
-        self.spin_h_wins = val[36]
-        self.spin_h_winshome = val[37]
-        self.spin_h_draws = val[38]
-        self.spin_h_drawshome = val[39]
-        self.spin_h_loses = val[40]
-        self.spin_h_loseshome = val[41]
-        self.spin_h_nowins = val[42]
-        self.spin_h_nowinshome = val[43]
-        self.spin_h_nodraws = val[44]
-        self.spin_h_nodrawshome = val[45]
-        self.spin_h_noloses = val[46]
-        self.spin_h_noloseshome = val[47]
-        self.spin_a_wins = val[48]
-        self.spin_a_winsaway = val[49]
-        self.spin_a_draws = val[50]
-        self.spin_a_drawsaway = val[51]
-        self.spin_a_loses = val[52]
-        self.spin_a_losesaway = val[53]
-        self.spin_a_nowins = val[54]
-        self.spin_a_nowinsaway = val[55]
-        self.spin_a_nodraws = val[56]
-        self.spin_a_nodrawsaway = val[57]
-        self.spin_a_noloses = val[58]
-        self.spin_a_nolosesaway = val[59]
-        self.spin_odds_1 = val[60]
-        self.spin_odds_x = val[61]
-        self.spin_odds_2 = val[62]
-        self.spin_odds_1x = val[63]
-        self.spin_odds_x2 = val[64]
-
-        locale.setlocale(locale.LC_ALL, "C")
-        self.load_csv(os.path.join('leagues',
-                    self.sim_stats['Path'].lower(),''),
-                    self.sim_stats['League'],
-                    r_min = int(self.sim_stats['R_min']),
-                    r_max = int(self.sim_stats['R_max']),
-                    mode=2,
-                    net=self.sim_stats['Net'])
-
-    def batch_run(self):
-        ''' Runs all selected simulations'''
-        self.gui.tree_hits.clear()
-        self.gui.tree_bets_selected.clear()
-        count = self.gui.tree_batch.topLevelItemCount()
-        self.gui.tabWidget.setCurrentIndex(1)
-        self.start = 0
+    def simulation_show(self):
+        self.simulation_run(mode=1)
+    def simulation_stop(self):
+        ''' Stops simulation'''
+        self.stop_action = 1
+    def simulation_run(self,mode=0):
+        ''' Runs all selected simulations
+        mode 0 - batch simulation
+        mode 1 - show selected (after batch simulation)'''
+        self.stop_action = 0
+        if mode == 0:
+            self.gui.tree_hits.clear()
+            self.gui.tree_bets_selected.clear()
+            count = self.gui.tree_batch.topLevelItemCount()
+            self.gui.tabWidget.setCurrentIndex(1)
+        elif mode == 1:
+            self.gui.tree_bets_selected.clear()
+            count = 1
 
         for i in range(0,count):
-            self.start = 1
-            sim = self.gui.tree_batch.topLevelItem(i)
+            if mode == 0:
+                sim = self.gui.tree_batch.topLevelItem(i)
+            elif mode ==1:
+                item = self.gui.tree_hits.currentItem()
+                sim = item
             self.sim_stats = {
             'Path':'-',
             'League':'-',
@@ -747,6 +636,9 @@ class SimulatorApp(QtGui.QWidget, Database):
             'R_max':'-',
             'matches':0.0,
             'bets':0.0,
+            'Overall':0.0,
+            '1x,x2':0.0,
+            '1,x,2':0.0,
             '1':0.0,
             '1 hit':0.0,
             '1x':0.0,
@@ -757,11 +649,32 @@ class SimulatorApp(QtGui.QWidget, Database):
             'x2 hit':0.0,
             '2':0.0,
             '2 hit':0.0,
-            '1LSP':0.0,
-            'xLSP':0.0,
-            '2LSP':0.0,
-            '1xLSP':0.0,
-            'x2LSP':0.0}
+            'Overall yield':0.0,
+            '1x,x2 yield':0.0,
+            '1,x,2 yield':0.0,
+            '1 yield':0.0,
+            'x yield':0.0,
+            '2 yield':0.0,
+            '1x yield':0.0,
+            'x2 yield':0.0,
+            '1 balance':0.0,
+            'x balance':0.0,
+            '2 balance':0.0,
+            '1x balance':0.0,
+            'x2 balance':0.0,
+            'Overall odd_avg':0.0,
+            '1,x,2 odd_avg':0.0,
+            '1x,x2 odd_avg':0.0,
+            '1 odd_avg':0.0,
+            'x odd_avg':0.0,
+            '2 odd_avg':0.0,
+            '1x odd_avg':0.0,
+            'x2 odd_avg':0.0,
+            '1 odd_balance':0.0,
+            'x odd_balance':0.0,
+            '2 odd_balance':0.0,
+            '1x odd_balance':0.0,
+            'x2 odd_balance':0.0}
             self.sim_stats['Path']= str(sim.text(0))
             self.sim_stats['League']= str(sim.text(1))
             self.sim_stats['Net']= str(sim.text(2))
@@ -770,8 +683,9 @@ class SimulatorApp(QtGui.QWidget, Database):
             self.sim_stats['Bet_selector']= str(sim.text(5))
             self.sim_stats['R_min']= str(sim.text(6))
             self.sim_stats['R_max']= str(sim.text(7))
-            rounds_min = int(sim.text(6))
-            rounds_max = int(sim.text(7))
+            self.odds_level = float(sim.text(8))
+            rounds_min = int(self.sim_stats['R_min'])
+            rounds_max = int(self.sim_stats['R_max'])
             self.gui.table_preview.clear()
             labels = ['Date','Home','Away','Result','Bet','Odd','Net']
             self.gui.table_preview.setColumnCount(len(labels[:-2]))
@@ -780,25 +694,10 @@ class SimulatorApp(QtGui.QWidget, Database):
             self.gui.table_filtered.setColumnCount(len(labels))
             self.gui.table_filtered.setHorizontalHeaderLabels(labels)
             self.gui.table_filtered.setRowCount(0)
-             # size of columns
-            self.gui.table_filtered.setColumnWidth(0, 90)
-            self.gui.table_filtered.setColumnWidth(1, 90)
-            self.gui.table_filtered.setColumnWidth(2, 90)
-            self.gui.table_filtered.setColumnWidth(3, 60)
-            self.gui.table_filtered.setColumnWidth(4, 60)
-            self.gui.table_filtered.setColumnWidth(5, 60)
-            self.gui.table_filtered.setColumnWidth(6, 100)
-
-            self.gui.table_preview.setColumnWidth(0, 100)
-            self.gui.table_preview.setColumnWidth(1, 100)
-            self.gui.table_preview.setColumnWidth(2, 100)
-            self.gui.table_preview.setColumnWidth(3, 50)
-            self.gui.table_preview.setColumnWidth(4, 80)
             # ranges
-            ranges = open(os.path.join('profiles','ranges','')+\
-                                            self.sim_stats['Ranges'],'r')
-            load = list(ranges)
-            ranges.close()
+            with open(os.path.join('profiles','ranges','')+\
+            self.sim_stats['Ranges'],'r') as ranges:
+                load = list(ranges)
             val = []
             for i in range(0,len(load)):
                 item = self.rm_lines(load[i])
@@ -815,113 +714,51 @@ class SimulatorApp(QtGui.QWidget, Database):
             self.min_2 = val[8]
             self.max_2 = val[9]
             # filters
-            filters = open(os.path.join('profiles','filters','')+\
-                                            self.sim_stats['Filter'],'r')
-            load = list(filters)
-            val = []
-            for i in range(0,len(load)):
-                item = self.rm_lines(load[i])
-                val.append(item)
-
-            self.check_points = val[0]
-            self.check_points_ha = val[1]
-            self.check_form = val[2]
-            self.check_form_ha = val[3]
-            self.combo_points = val[4]
-            self.combo_points_ha = val[5]
-            self.combo_form = val[6]
-            self.combo_form_ha = val[7]
-            self.combo_h_wins = val[8]
-            self.combo_h_winshome = val[9]
-            self.combo_h_draws = val[10]
-            self.combo_h_drawshome = val[11]
-            self.combo_h_loses = val[12]
-            self.combo_h_loseshome = val[13]
-            self.combo_h_nowins = val[14]
-            self.combo_h_nowinshome = val[15]
-            self.combo_h_nodraws = val[16]
-            self.combo_h_nodrawshome = val[17]
-            self.combo_h_noloses = val[18]
-            self.combo_h_noloseshome = val[19]
-            self.combo_a_wins = val[20]
-            self.combo_a_winsaway = val[21]
-            self.combo_a_draws = val[22]
-            self.combo_a_drawsaway = val[23]
-            self.combo_a_loses = val[24]
-            self.combo_a_losesaway = val[25]
-            self.combo_a_nowins = val[26]
-            self.combo_a_nowinsaway = val[27]
-            self.combo_a_nodraws = val[28]
-            self.combo_a_nodrawsaway = val[29]
-            self.combo_a_noloses = val[30]
-            self.combo_a_nolosesaway = val[31]
-            self.spin_points = val[32]
-            self.spin_points_ha = val[33]
-            self.spin_form = val[34]
-            self.spin_form_ha = val[35]
-            self.spin_h_wins = val[36]
-            self.spin_h_winshome = val[37]
-            self.spin_h_draws = val[38]
-            self.spin_h_drawshome = val[39]
-            self.spin_h_loses = val[40]
-            self.spin_h_loseshome = val[41]
-            self.spin_h_nowins = val[42]
-            self.spin_h_nowinshome = val[43]
-            self.spin_h_nodraws = val[44]
-            self.spin_h_nodrawshome = val[45]
-            self.spin_h_noloses = val[46]
-            self.spin_h_noloseshome = val[47]
-            self.spin_a_wins = val[48]
-            self.spin_a_winsaway = val[49]
-            self.spin_a_draws = val[50]
-            self.spin_a_drawsaway = val[51]
-            self.spin_a_loses = val[52]
-            self.spin_a_losesaway = val[53]
-            self.spin_a_nowins = val[54]
-            self.spin_a_nowinsaway = val[55]
-            self.spin_a_nodraws = val[56]
-            self.spin_a_nodrawsaway = val[57]
-            self.spin_a_noloses = val[58]
-            self.spin_a_nolosesaway = val[59]
-            self.spin_odds_1 = val[60]
-            self.spin_odds_x = val[61]
-            self.spin_odds_2 = val[62]
-            self.spin_odds_1x = val[63]
-            self.spin_odds_x2 = val[64]
-
+            self.filters_load(self.sim_stats['Filter'])
             locale.setlocale(locale.LC_ALL, "C")
-            self.load_csv(os.path.join('leagues',
-                        self.sim_stats['Path'],''),
-                        self.sim_stats['League'],
-                        r_min=rounds_min,
-                        r_max=rounds_max,
-                        mode=2,
-                        net=self.sim_stats['Net'])
-            self.batch_stats()
-        if self.start == 1:
+            if self.stop_action == 0:
+                self.load_csv(os.path.join('leagues',
+                            self.sim_stats['Path'],''),
+                            self.sim_stats['League'],
+                            r_min=rounds_min,
+                            r_max=rounds_max,
+                            mode=2,
+                            net=self.sim_stats['Net'])
+            if mode == 0:
+                self.simulation_stats()
+        if mode == 0:
             self.gui.tabWidget.setCurrentIndex(2)  #change tab
 
-    def batch_stats(self):
+    def simulation_stats(self):
         ''' Adds simulation stats to tree preview'''
         item = QtGui.QTreeWidgetItem(self.gui.tree_hits)
-        item.setText(0,(self.sim_stats['Path']))
-        item.setText(1,(self.sim_stats['League']))
-        item.setText(2,(self.sim_stats['Net']))
-        item.setText(3,(self.sim_stats['Filter']))
-        item.setText(4,(self.sim_stats['Ranges']))
-        item.setText(5,(self.sim_stats['Bet_selector']))
+        item.setText(0,'.....')
+        item.setText(1,(self.sim_stats['Path']))
+        item.setText(2,(self.sim_stats['League']))
+        item.setText(3,(self.sim_stats['Net']))
+        item.setText(4,(self.sim_stats['Filter']))
+        item.setText(5,(self.sim_stats['Ranges']))
+        item.setText(6,(self.sim_stats['Bet_selector']))
         item.setText(7,(self.sim_stats['R_min']))
         item.setText(8,(self.sim_stats['R_max']))
+        item.setText(9,str(self.odds_level))
         ### net frequency
         matches = self.gui.table_filtered.rowCount()
         try:
             self.c_freq = self.sim_stats['bets']/matches*100
         except:
             self.c_freq = 0
-        item.setText(6,(str(self.c_freq)))
+        item.setText(10,(str(self.c_freq)))
+        # overall accuracy
+        self.simulation_overall_accuracy()
+        QtGui.QTreeWidgetItem(item).setText(0, '---------')
+        val = ['Overall','1,x,2','1x,x2']
+        for i in range(0,len(val)):
+            acc = str(round(self.sim_stats[val[i]],2))
+            line = val[i]+': '+acc
+            QtGui.QTreeWidgetItem(item).setText(0, line)
         ### bets
         val = ['1','1x','x','x2','2']
-        index = 9
         for i in range(0,len(val)):
             a = int(self.sim_stats[val[i]])
             b = int(self.sim_stats[val[i]+' hit'])
@@ -930,28 +767,45 @@ class SimulatorApp(QtGui.QWidget, Database):
                 percent = self.sim_stats[val[i]+' hit']/self.sim_stats[val[i]]*100
             except:
                 percent = 0
-            item.setText(index,(count))
-            item.setText(index+1,(str(round(percent,2))))
-            index+=2
+            line = val[i]+' hits: '+count
+            QtGui.QTreeWidgetItem(item).setText(0, line)
+            line = val[i]+' hits: '+str(round(percent,2))+'%'
+            QtGui.QTreeWidgetItem(item).setText(0, line)
+
+        ### profit/loss - yield
+        QtGui.QTreeWidgetItem(item).setText(0, '---------')
+        self.simulation_yield()
+        val = ['Overall yield','1,x,2 yield','1x,x2 yield','1 yield','x yield','2 yield','1x yield','x2 yield']
+        for i in range(0,len(val)):
+            profit = str(round(self.sim_stats[val[i]],2))
+            line = val[i]+': '+profit+' %'
+            QtGui.QTreeWidgetItem(item).setText(0, line)
+
+
         try:
             self.batch_bets()
         except:
             'no bets'
-        ### profit/loss
-        val = ['1LSP','xLSP','2LSP','1xLSP','x2LSP']
-        index = 19
-        for i in val:
-            profit = str(round(self.sim_stats[i],2))
-            item.setText(index,profit)
-            index+=1
+        ### avg_odds
+        QtGui.QTreeWidgetItem(item).setText(0, '---------')
+        self.simulation_avg_odds()
+        val = ['Overall odd_avg','1,x,2 odd_avg','1x,x2 odd_avg','1 odd_avg','x odd_avg','2 odd_avg','1x odd_avg','x2 odd_avg']
+        for i in range(0,len(val)):
+            odds = str(round(self.sim_stats[val[i]],2))
+            line = val[i]+': '+odds
+            QtGui.QTreeWidgetItem(item).setText(0, line)
 
 
+        try:
+            self.batch_bets()
+        except:
+            'no bets'
     def batch_bets(self):
         ''' Gives bets'''
          # bets filter
-        bets = open(os.path.join('profiles','bets','')+\
-                    self.sim_stats['Bet_selector'],'r')
-        load = list(bets)
+        with open(os.path.join('profiles','bets','')+\
+        self.sim_stats['Bet_selector'],'r') as bets:
+            load = list(bets)
         bets.close()
         val = []
         for i in range(0,len(load)):
@@ -998,13 +852,13 @@ class SimulatorApp(QtGui.QWidget, Database):
             home,away = i
             self.simulation_prediction(home,away,self.sim_stats['Net'])
             self.filter_status = ''
-            self.batch_filters()
-            self.ranges_color()
+            self.simulation_match_filters()
+            self.simulation_colors()
             if self.c_freq>=self.freq and self.filter_status == 'yes':
                 self.odds = self.simulation_prediction(home,away,'default',1)
-                self.odd_1 = self.odds_rescale(self.odds[0])
-                self.odd_x = self.odds_rescale(self.odds[1])
-                self.odd_2 = self.odds_rescale(self.odds[2])
+                self.odd_1 = self.odds_rescale(self.odds[0],odds_level=self.odds_level)
+                self.odd_x = self.odds_rescale(self.odds[1],odds_level=self.odds_level)
+                self.odd_2 = self.odds_rescale(self.odds[2],odds_level=self.odds_level)
                 self.odd_1x = 1/((1/self.odd_1) + (1/self.odd_x))
                 self.odd_x2 = 1/((1/self.odd_x) + (1/self.odd_2))
                 odd_filter =self.odds_filter(self.bet)
@@ -1065,39 +919,32 @@ class SimulatorApp(QtGui.QWidget, Database):
 
         rows_all = self.gui.table_preview.rowCount()
         rows_filtered = self.gui.table_filtered.rowCount()
-        self.filter_status = ''
-        self.count_stats = 0
-        self.batch_filters()
-        if self.filter_status == 'yes':
-            self.count_stats = 1
-            self.ranges_color()
-            self.count_stats = 0
-        else:
-            self.count_stats = 0
-            self.ranges_color()
+        self.filter_status = '' # when 'yes' then adds match to filtered
+        self.simulation_match_filters() # filter matches
+        self.simulation_colors() # count accuracy give colors (green-win etc.)
 
-        tab_all =[self.date,self.home,self.away,str(self.fth)+':'+\
+        table_all =[self.date,self.home,self.away,str(self.fth)+':'+\
             str(self.fta),self.bet]
-        tab_filtered =['self.date','self.home','self.away',"str(self.fth)+':'+\
+        table_filtered =['self.date','self.home','self.away',"str(self.fth)+':'+\
             str(self.fta)",'self.bet','odd_filter[1]','self.prediction']
         # all matches
-        for i in range(0,len(tab_all)):
+        for i in range(0,len(table_all)):
             self.gui.table_preview.setRowCount(rows_all+1)
-            item = QtGui.QTableWidgetItem(str(tab_all[i]))
+            item = QtGui.QTableWidgetItem(str(table_all[i]))
             self.gui.table_preview.setItem(rows_all, i, item)
             self.gui.table_preview.setItem(rows_all, 4,
                                            QtGui.QTableWidgetItem(self.bet))
             self.gui.table_preview.item(rows_all, i).\
                 setBackground(self.prediction_color)
         # filtered list table
-        for i in range(0,len(tab_filtered)):
-            if self.filter_status == 'yes':
+        if self.filter_status == 'yes':
+            for i in range(0,len(table_filtered)):
                 ####
                 # Odds filter
                 ####
                 odd_filter =self.odds_filter(self.bet)
                 if odd_filter[0] == 'yes':
-                    item = QtGui.QTableWidgetItem(str(eval(tab_filtered[i])))
+                    item = QtGui.QTableWidgetItem(str(eval(table_filtered[i])))
                     self.gui.table_filtered.setRowCount(rows_filtered+1)
                     self.gui.table_filtered.setItem(rows_filtered, i, item)
                     self.gui.table_filtered.item(rows_filtered, i).\
@@ -1121,111 +968,16 @@ class SimulatorApp(QtGui.QWidget, Database):
             status = 'no'
         return status
 
-    def batch_filters(self):
-        ''' Match filters check'''
-        self.filter_status = 'yes' # when 'yes' then adds match to filtered
-        ############
-        ## Points
-        ############
-        points = [
-        (self.check_points,self.t1_points,self.t2_points,self.combo_points,
-         self.spin_points,'points'),
-        (self.check_points_ha,self.t1_points_h,self.t2_points_a,
-         self.combo_points_ha,self.spin_points_ha,'pointsH/A'),
-        (self.check_form,self.t1_form,self.t2_form,self.combo_form,
-         self.spin_form,'form'),
-        (self.check_form_ha,self.t1_form_h,self.t2_form_a,self.combo_form_ha,
-         self.spin_form_ha,'formH/A')]
 
-        for i in points:
-            if i[0] == 'True' and self.filter_status == 'yes':
-                sum_points= i[1]+i[2]
-                if sum_points == 0:
-                    diff = 0
-                else:
-                    diff = i[1]/(float(sum_points))*100
-                line = str(diff)+i[3]+i[4]
-                if eval(line):
-                    pass
-                else:
-                    self.filter_status = 'no'
 
-        ############
-        ## Series
-        ############
-        T12 = [
-        (str(self.t1_wins)+self.combo_h_wins+self.spin_h_wins,'T1-wins'),
-        (str(self.t1_winshome)+self.combo_h_winshome+self.spin_h_winshome,
-         'T1-winshome'),
-        (str(self.t1_draws)+self.combo_h_draws+self.spin_h_draws,
-         'T1-draws'),
-        (str(self.t1_drawshome)+self.combo_h_drawshome+self.spin_h_drawshome,
-         'T1-drawshome'),
-        (str(self.t1_loses)+self.combo_h_loses+self.spin_h_loses,
-         'T1-loses'),
-        (str(self.t1_loseshome)+self.combo_h_loseshome+self.spin_h_loseshome,
-         'T1-loseshome'),
-        (str(self.t1_nowins)+self.combo_h_nowins+self.spin_h_nowins,
-         'T1-nowins'),
-        (str(self.t1_nowinshome)+self.combo_h_nowinshome+self.spin_h_nowinshome,
-         'T1-nowinshome'),
-        (str(self.t1_nodraws)+self.combo_h_nodraws+self.spin_h_nodraws,
-         'T1-nodraws'),
-        (str(self.t1_nodrawshome)+self.combo_h_nodrawshome+self.spin_h_nodrawshome,
-         'T1-nodrawshome'),
-        (str(self.t1_noloses)+self.combo_h_noloses+self.spin_h_noloses,
-         'T1-noloses'),
-        (str(self.t1_noloseshome)+self.combo_h_noloseshome+self.spin_h_noloseshome,
-         'T1-nolosesHome'),
-        (str(self.t2_wins)+self.combo_a_wins+self.spin_a_wins,'T2-wins'),
-        (str(self.t2_winsaway)+self.combo_a_winsaway+self.spin_a_winsaway,
-         'T2-winsaway'),
-        (str(self.t2_draws)+self.combo_a_draws+self.spin_a_draws,
-         'T2-draws'),
-        (str(self.t2_drawsaway)+self.combo_a_drawsaway+self.spin_a_drawsaway,
-         'T2-drawsaway'),
-        (str(self.t2_loses)+self.combo_a_loses+self.spin_a_loses,
-         'T2-loses'),
-        (str(self.t2_losesaway)+self.combo_a_losesaway+self.spin_a_losesaway,
-         'T2-losesaway'),
-        (str(self.t2_nowins)+self.combo_a_nowins+self.spin_a_nowins,
-         'T2-nowins'),
-        (str(self.t2_nowinsaway)+self.combo_a_nowinsaway+self.spin_a_nowinsaway,
-         'T2-nowinsaway'),
-        (str(self.t2_nodraws)+self.combo_a_nodraws+self.spin_a_nodraws,
-         'T2-nodraws'),
-        (str(self.t2_nodrawsaway)+self.combo_a_nodrawsaway+self.spin_a_nodrawsaway,
-         'T2-nodrawsaway'),
-        (str(self.t2_noloses)+self.combo_a_noloses+self.spin_a_noloses,
-         'T2-noloses'),
-        (str(self.t2_nolosesaway)+self.combo_a_nolosesaway+self.spin_a_nolosesaway,
-         'T2-nolosesaway')]
-        # HomeAway-series
-        for i in T12:
-            if self.filter_status == 'yes':
-                line=i[0]
-                'When getting file from linux on windows'
-                line = self.rm_lines(line)
-
-                if eval(line):
-                    pass
-                else:
-                    self.filter_status = 'no'
-    def odds_rescale(self,val):
-        ''' Rescaling odds from [-1,1]'''
-        old_range = 2
-        new_range = 19
-        odd = (((val + 1) * new_range) / old_range) + 1
-        odd = round(odd,2)
-        if odd<1:
-            odd = 1
-        return odd
-    def simulation_profit(self,bet):
-        '''Counts profit'''
+    def simulation_stats_balance(self,bet,mode):
+        '''Counts balance win - lost money( for yield calculations)
+        mode = 0 lost coupon
+        mode = 1 won coupon'''
         odds = self.simulation_prediction(self.home,self.away,'default',mode=1)
-        odd_1 = self.odds_rescale(odds[0])*0.9
-        odd_x = self.odds_rescale(odds[1])*0.9
-        odd_2 = self.odds_rescale(odds[2])*0.9
+        odd_1 = self.odds_rescale(odds[0],self.odds_level)
+        odd_x = self.odds_rescale(odds[1],self.odds_level)
+        odd_2 = self.odds_rescale(odds[2],self.odds_level)
         odd_1x = 1/((1/odd_1) + (1/odd_x))
         odd_x2 = 1/((1/odd_x) + (1/odd_2))
         if odd_1x<1:
@@ -1233,24 +985,140 @@ class SimulatorApp(QtGui.QWidget, Database):
         if odd_x2<1:
             odd_x2=1
         if bet == '1':
-            profit = 100*odd_1-100
-            self.sim_stats['1LSP'] = self.sim_stats['1LSP'] + profit
+            profit = 100*odd_1*mode
+            self.sim_stats['1 balance'] = self.sim_stats['1 balance'] + profit
+            self.sim_stats['1 odd_balance'] = self.sim_stats['1 odd_balance'] + odd_1
         if bet == 'x':
-            profit = 100*odd_x-100
-            self.sim_stats['xLSP'] = self.sim_stats['xLSP'] + profit
+            profit = 100*odd_x*mode
+            self.sim_stats['x balance'] = self.sim_stats['x balance'] + profit
+            self.sim_stats['x odd_balance'] = self.sim_stats['x odd_balance'] + odd_x
         if bet == '2':
-            profit = 100*odd_2-100
-            self.sim_stats['2LSP'] = self.sim_stats['2LSP'] + profit
+            profit = 100*odd_2*mode
+            self.sim_stats['2 balance'] = self.sim_stats['2 balance'] + profit
+            self.sim_stats['2 odd_balance'] = self.sim_stats['2 odd_balance'] + odd_2
         if bet == '1x':
-            profit = 100*odd_1x-100
-            self.sim_stats['1xLSP'] = self.sim_stats['1xLSP'] + profit
+            profit = 100*odd_1x*mode
+            self.sim_stats['1x balance'] = self.sim_stats['1x balance'] + profit
+            self.sim_stats['1x odd_balance'] = self.sim_stats['1x odd_balance'] + odd_1x
         if bet == 'x2':
-            print 'odd_x2',odd_x2
-            profit = 100*odd_x2-100
-            self.sim_stats['x2LSP'] = self.sim_stats['x2LSP'] + profit
+            profit = 100*odd_x2*mode
+            self.sim_stats['x2 balance'] = self.sim_stats['x2 balance'] + profit
+            self.sim_stats['x2 odd_balance'] = self.sim_stats['x2 odd_balance'] + odd_x2
 
-    def ranges_color(self):
-        ''' Gives colours to matches when hit , miss or no bet'''
+    def simulation_yield(self):
+        ''' Calculates yield'''
+        val = ('1','x','2','1x','x2')
+        for i in val:
+            stakes = self.sim_stats[i]*100
+            balance = self.sim_stats[i+' balance']
+            if stakes > 0:
+                calc_yield = (balance - stakes)/stakes*100
+            else:
+                calc_yield = 0
+            self.sim_stats[i+' yield'] = calc_yield
+
+        # Overall
+        stakes = (self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']\
+                +self.sim_stats['1x']+self.sim_stats['x2'])*100
+        balance = self.sim_stats['1 balance']+self.sim_stats['x balance']+\
+                self.sim_stats['2 balance']+self.sim_stats['1x balance']+\
+                self.sim_stats['x2 balance']
+        if stakes > 0:
+            calc_yield = (balance - stakes)/stakes*100
+        else:
+            calc_yield = 0
+        self.sim_stats['1,x,2 yield'] = calc_yield
+        # 1,x,2
+        stakes = (self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2'])*100
+        balance = self.sim_stats['1 balance']+self.sim_stats['x balance']+\
+                self.sim_stats['2 balance']
+        if stakes > 0:
+            calc_yield = (balance - stakes)/stakes*100
+        else:
+            calc_yield = 0
+        self.sim_stats['Overall yield']=calc_yield
+        # 1x, x2
+        stakes = (self.sim_stats['1x']+self.sim_stats['x2'])*100
+        balance = self.sim_stats['1x balance']+self.sim_stats['x2 balance']
+        if stakes > 0:
+            calc_yield = (balance - stakes)/stakes*100
+        else:
+            calc_yield = 0
+        self.sim_stats['1x,x2 yield'] = calc_yield
+
+    def simulation_avg_odds(self):
+        ''' Calculates average hit odds'''
+        val = ('1','x','2','1x','x2')
+        for i in val:
+            num = self.sim_stats[i]
+            sum_odds = self.sim_stats[i+' odd_balance']
+            if num > 0:
+                calc_avg = (sum_odds)/num
+            else:
+                calc_avg = 0
+            self.sim_stats[i+' odd_avg'] = calc_avg
+         # Overall
+        num = self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']\
+                +self.sim_stats['1x']+self.sim_stats['x2']
+        sum_odds = self.sim_stats['1 odd_balance']+self.sim_stats['x odd_balance']+\
+                self.sim_stats['2 odd_balance']+self.sim_stats['1x odd_balance']+\
+                self.sim_stats['x2 odd_balance']
+        if num > 0:
+            calc_avg = (sum_odds)/num
+        else:
+            calc_avg = 0
+        self.sim_stats['Overall odd_avg'] = calc_avg
+        # 1x,x2
+        num = self.sim_stats['1x']+self.sim_stats['x2']
+        sum_odds = self.sim_stats['1x odd_balance']+self.sim_stats['x2 odd_balance']
+        if num > 0:
+            calc_avg = (sum_odds)/num
+        else:
+            calc_avg = 0
+        self.sim_stats['1x,x2 odd_avg'] = calc_avg
+         # 1,x,2
+        num = self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']
+        sum_odds = self.sim_stats['1 odd_balance']+self.sim_stats['x odd_balance']+\
+                self.sim_stats['2 odd_balance']
+        if num > 0:
+            calc_avg = (sum_odds)/num
+        else:
+            calc_avg = 0
+        self.sim_stats['1,x,2 odd_avg'] = calc_avg
+    def simulation_overall_accuracy(self):
+        ''' Calculates overall accuracy'''
+        # Overall
+        bets = self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']\
+                +self.sim_stats['1x']+self.sim_stats['x2']
+        hits = self.sim_stats['1 hit']+self.sim_stats['x hit']+\
+                self.sim_stats['2 hit']+self.sim_stats['1x hit']+\
+                self.sim_stats['x2 hit']
+        if bets > 0:
+            calc_acc = hits/bets*100
+        else:
+            calc_acc = 0
+        self.sim_stats['Overall'] = calc_acc
+        # 1,x,2
+        bets = self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']
+        hits = self.sim_stats['1 hit']+self.sim_stats['x hit']+\
+                self.sim_stats['2 hit']
+        if bets > 0:
+            calc_acc = hits/bets*100
+        else:
+            calc_acc = 0
+        self.sim_stats['1,x,2'] = calc_acc
+        # 1x,x2
+        bets = self.sim_stats['1x']+self.sim_stats['x2']
+        hits = self.sim_stats['1x hit']+self.sim_stats['x2 hit']
+        if bets > 0:
+            calc_acc = hits/bets*100
+        else:
+            calc_acc = 0
+        self.sim_stats['1x,x2'] = calc_acc
+
+    def simulation_colors(self):
+        ''' Gives colours to matches when hit , miss or no bet
+        Calculate accuracy stats, yield'''
         green = QtGui.QColor('#11BD00')
         red = QtGui.QColor('#C40202')
         grey = QtGui.QColor('#7C7C7C')
@@ -1263,115 +1131,126 @@ class SimulatorApp(QtGui.QWidget, Database):
 
         if self.min_1<=self.prediction and self.prediction<self.max_1:
             self.bet = '1'
-            if self.count_stats == 1:
+            if self.filter_status ==  'yes':
                  odd_filter =self.odds_filter(self.bet)
                  if odd_filter[0] == 'yes':
                     self.sim_stats['1']+=1
-                    self.sim_stats['bets']+=1
+                    self.sim_stats['bets']+=1 # for net frequency calculations
             if result == 'home':
                 self.prediction_color = green
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
-                    if odd_filter[0] == 'yes':
+                    if odd_filter[0] == 'yes': # filter match by odds
                         self.sim_stats['1 hit']+=1
-                        self.simulation_profit(self.bet)
+                        self.simulation_stats_balance(self.bet,1)
             else:
                 self.prediction_color = red
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
-                    if odd_filter[0] == 'yes':
-                        self.sim_stats['1LSP'] = self.sim_stats['1LSP'] - 100
+                    if odd_filter[0] == 'yes': # filter match by odds
+                        self.simulation_stats_balance(self.bet,0)
+
         elif self.min_1x<=self.prediction and self.prediction<self.max_1x:
             self.bet = '1x'
-            if self.count_stats == 1:
+            if self.filter_status ==  'yes':
                 odd_filter =self.odds_filter(self.bet)
                 if odd_filter[0] == 'yes':
                     self.sim_stats['1x']+=1
                     self.sim_stats['bets']+=1
             if result == 'home' or result == 'draw':
                 self.prediction_color = green
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
                     if odd_filter[0] == 'yes':
                         self.sim_stats['1x hit']+=1
-                        self.simulation_profit(self.bet)
+                        self.simulation_stats_balance(self.bet,1)
             else:
                 self.prediction_color = red
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
-                    if odd_filter[0] == 'yes':
-                        self.sim_stats['1xLSP'] = self.sim_stats['1xLSP'] - 100
+                    if odd_filter[0] == 'yes': # filter match by odds
+                        self.simulation_stats_balance(self.bet,0)
+
         elif self.min_x<=self.prediction and self.prediction<self.max_x:
             self.bet = 'x'
-            if self.count_stats == 1:
+            if self.filter_status ==  'yes':
                 odd_filter =self.odds_filter(self.bet)
                 if odd_filter[0] == 'yes':
                     self.sim_stats['x']+=1
                     self.sim_stats['bets']+=1
             if result == 'draw':
                 self.prediction_color = green
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
                     if odd_filter[0] == 'yes':
                         self.sim_stats['x hit']+=1
-                        self.simulation_profit(self.bet)
+                        self.simulation_stats_balance(self.bet,1)
             else:
                 self.prediction_color = red
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
-                    if odd_filter[0] == 'yes':
-                        self.sim_stats['xLSP'] = self.sim_stats['xLSP'] - 100
+                    if odd_filter[0] == 'yes': # filter match by odds
+                        self.simulation_stats_balance(self.bet,0)
+
         elif self.min_x2<=self.prediction and self.prediction<self.max_x2:
             self.bet = 'x2'
-            if self.count_stats == 1:
+            if self.filter_status ==  'yes':
                 odd_filter =self.odds_filter(self.bet)
                 if odd_filter[0] == 'yes':
                     self.sim_stats['x2']+=1
                     self.sim_stats['bets']+=1
             if result == 'draw' or result == 'away':
                 self.prediction_color = green
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
                     if odd_filter[0] == 'yes':
                         self.sim_stats['x2 hit']+=1
-                        self.simulation_profit(self.bet)
+                        self.simulation_stats_balance(self.bet,1)
             else:
                 self.prediction_color = red
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
-                    if odd_filter[0] == 'yes':
-                        self.sim_stats['x2LSP'] = self.sim_stats['x2LSP'] -100
+                    if odd_filter[0] == 'yes': # filter match by odds
+                        self.simulation_stats_balance(self.bet,0)
+
 
         elif self.min_2<=self.prediction and self.prediction<self.max_2:
             self.bet = '2'
-            if self.count_stats == 1:
+            if self.filter_status ==  'yes':
                 odd_filter =self.odds_filter(self.bet)
                 if odd_filter[0] == 'yes':
                     self.sim_stats['2']+=1
                     self.sim_stats['bets']+=1
             if result == 'away':
                 self.prediction_color = green
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
                     if odd_filter[0] == 'yes':
                         self.sim_stats['2 hit']+=1
-                        self.simulation_profit(self.bet)
+                        self.simulation_stats_balance(self.bet,1)
             else:
                 self.prediction_color = red
-                if self.count_stats == 1:
+                if self.filter_status ==  'yes':
                     odd_filter =self.odds_filter(self.bet)
-                    if odd_filter[0] == 'yes':
-                        self.sim_stats['2LSP'] = self.sim_stats['2LSP'] - 100
+                    if odd_filter[0] == 'yes': # filter match by odds
+                        self.simulation_stats_balance(self.bet,0)
+
         else:
             self.prediction_color = grey
             self.bet = 'None'
+    def filters_delete(self):
+        ''' Deletes match filter'''
+        path = os.path.join('profiles','filters','')
+        item = self.gui.tree_filters_profile.currentItem()
+        file_delete = item.text(0)
+        self.delete_file(file_delete,path)
+        self.filters_tree()
 
     def filters_tree(self):
         ''' Tree with saved match filters'''
         self.gui.tree_filters.clear()
         self.gui.tree_filters.sortItems(0, QtCore.Qt.SortOrder(0))
         self.gui.tree_filters.setSortingEnabled(1)
-        self.gui.tree_filters.headerItem().setText(0, ('Match filters'))
         dir_exports = os.listdir(os.path.join('profiles','filters'))
         for i in dir_exports:
             item_exp = QtGui.QTreeWidgetItem(self.gui.tree_filters)
@@ -1387,258 +1266,6 @@ class SimulatorApp(QtGui.QWidget, Database):
             item_exp = QtGui.QTreeWidgetItem(self.gui.tree_filters_profile)
             item_exp.setText(0, (i))
         self.gui.tree_filters_profile.setCurrentItem(item_exp)
-
-    def filters_save(self):
-        ''' Save match filter'''
-        # stats diffrences
-        check_points = self.gui.check_points.isChecked()
-        check_points_ha = self.gui.check_points_ha.isChecked()
-        check_form = self.gui.check_form.isChecked()
-        check_form_ha = self.gui.check_form_ha.isChecked()
-        combo_points = self.gui.combo_points.currentText()
-        combo_points_ha = self.gui.combo_points_ha.currentText()
-        combo_form = self.gui.combo_form.currentText()
-        combo_form_ha = self.gui.combo_form_ha.currentText()
-        spin_points = self.gui.spin_points.value()
-        spin_points_ha = self.gui.spin_points_ha.value()
-        spin_form = self.gui.spin_form.value()
-        spin_form_ha = self.gui.spin_form_ha.value()
-        # series
-        combo_h_wins = self.gui.combo_h_wins.currentText()
-        combo_h_winshome = self.gui.combo_h_winshome.currentText()
-        combo_h_draws = self.gui.combo_h_draws.currentText()
-        combo_h_drawshome = self.gui.combo_h_drawshome.currentText()
-        combo_h_loses = self.gui.combo_h_loses.currentText()
-        combo_h_loseshome = self.gui.combo_h_loseshome.currentText()
-        combo_h_nowins = self.gui.combo_h_nowins.currentText()
-        combo_h_nowinshome = self.gui.combo_h_nowinshome.currentText()
-        combo_h_nodraws = self.gui.combo_h_nodraws.currentText()
-        combo_h_nodrawshome = self.gui.combo_h_nodrawshome.currentText()
-        combo_h_noloses = self.gui.combo_h_noloses.currentText()
-        combo_h_noloseshome = self.gui.combo_h_noloseshome.currentText()
-        combo_a_wins = self.gui.combo_a_wins.currentText()
-        combo_a_winsaway = self.gui.combo_a_winsaway.currentText()
-        combo_a_draws = self.gui.combo_a_draws.currentText()
-        combo_a_drawsaway = self.gui.combo_a_drawsaway.currentText()
-        combo_a_loses = self.gui.combo_a_loses.currentText()
-        combo_a_losesaway = self.gui.combo_a_losesaway.currentText()
-        combo_a_nowins = self.gui.combo_a_nowins.currentText()
-        combo_a_nowinsaway = self.gui.combo_a_nowinsaway.currentText()
-        combo_a_nodraws = self.gui.combo_a_nodraws.currentText()
-        combo_a_nodrawsaway = self.gui.combo_a_nodrawsaway.currentText()
-        combo_a_noloses = self.gui.combo_a_noloses.currentText()
-        combo_a_nolosesaway = self.gui.combo_a_nolosesaway.currentText()
-        spin_h_wins = self.gui.spin_h_wins.value()
-        spin_h_winshome = self.gui.spin_h_winshome.value()
-        spin_h_draws = self.gui.spin_h_draws.value()
-        spin_h_drawshome = self.gui.spin_h_drawshome.value()
-        spin_h_loses = self.gui.spin_h_loses.value()
-        spin_h_loseshome = self.gui.spin_h_loseshome.value()
-        spin_h_nowins = self.gui.spin_h_nowins.value()
-        spin_h_nowinshome = self.gui.spin_h_nowinshome.value()
-        spin_h_nodraws = self.gui.spin_h_nodraws.value()
-        spin_h_nodrawshome = self.gui.spin_h_nodrawshome.value()
-        spin_h_noloses = self.gui.spin_h_noloses.value()
-        spin_h_noloseshome = self.gui.spin_h_noloseshome.value()
-        spin_a_wins = self.gui.spin_a_wins.value()
-        spin_a_winsaway = self.gui.spin_a_winsaway.value()
-        spin_a_draws = self.gui.spin_a_draws.value()
-        spin_a_drawsaway = self.gui.spin_a_drawsaway.value()
-        spin_a_loses = self.gui.spin_a_loses.value()
-        spin_a_losesaway = self.gui.spin_a_losesaway.value()
-        spin_a_nowins = self.gui.spin_a_nowins.value()
-        spin_a_nowinsaway = self.gui.spin_a_nowinsaway.value()
-        spin_a_nodraws = self.gui.spin_a_nodraws.value()
-        spin_a_nodrawsaway = self.gui.spin_a_nodrawsaway.value()
-        spin_a_noloses = self.gui.spin_a_noloses.value()
-        spin_a_nolosesaway = self.gui.spin_a_nolosesaway.value()
-        # odds
-        spin_odd_1 = self.gui.spin_odd_1.value()
-        spin_odd_x = self.gui.spin_odd_x.value()
-        spin_odd_2 = self.gui.spin_odd_2.value()
-        spin_odd_1x = self.gui.spin_odd_1x.value()
-        spin_odd_x2 = self.gui.spin_odd_x2.value()
-
-        val =[
-        check_points,
-        check_points_ha,
-        check_form,
-        check_form_ha,
-        combo_points,
-        combo_points_ha,
-        combo_form,
-        combo_form_ha,
-        combo_h_wins,
-        combo_h_winshome,
-        combo_h_draws,
-        combo_h_drawshome,
-        combo_h_loses,
-        combo_h_loseshome,
-        combo_h_nowins,
-        combo_h_nowinshome,
-        combo_h_nodraws,
-        combo_h_nodrawshome,
-        combo_h_noloses,
-        combo_h_noloseshome,
-        combo_a_wins,
-        combo_a_winsaway,
-        combo_a_draws,
-        combo_a_drawsaway,
-        combo_a_loses,
-        combo_a_losesaway,
-        combo_a_nowins,
-        combo_a_nowinsaway,
-        combo_a_nodraws,
-        combo_a_nodrawsaway,
-        combo_a_noloses,
-        combo_a_nolosesaway,
-        spin_points,
-        spin_points_ha,
-        spin_form,
-        spin_form_ha,
-        spin_h_wins,
-        spin_h_winshome,
-        spin_h_draws,
-        spin_h_drawshome,
-        spin_h_loses,
-        spin_h_loseshome,
-        spin_h_nowins,
-        spin_h_nowinshome,
-        spin_h_nodraws,
-        spin_h_nodrawshome,
-        spin_h_noloses,
-        spin_h_noloseshome,
-        spin_a_wins,
-        spin_a_winsaway,
-        spin_a_draws,
-        spin_a_drawsaway,
-        spin_a_loses,
-        spin_a_losesaway,
-        spin_a_nowins,
-        spin_a_nowinsaway,
-        spin_a_nodraws,
-        spin_a_nodrawsaway,
-        spin_a_noloses,
-        spin_a_nolosesaway,
-        spin_odd_1,
-        spin_odd_x,
-        spin_odd_2,
-        spin_odd_1x,
-        spin_odd_x2
-        ]
-        file_name = self.gui.line_filters.text()
-        save = open(os.path.join('profiles','filters','')+file_name,'w')
-        for i in val:
-            save.write(str(i)+new_line)
-        save.close()
-        self.filters_tree()
-
-    def filters_load(self):
-        ''' Load match filter'''
-        val =[
-        self.gui.check_points,
-        self.gui.check_points_ha,
-        self.gui.check_form,
-        self.gui.check_form_ha,
-        self.gui.combo_points,
-        self.gui.combo_points_ha,
-        self.gui.combo_form,
-        self.gui.combo_form_ha,
-        self.gui.combo_h_wins,
-        self.gui.combo_h_winshome,
-        self.gui.combo_h_draws,
-        self.gui.combo_h_drawshome,
-        self.gui.combo_h_loses,
-        self.gui.combo_h_loseshome,
-        self.gui.combo_h_nowins,
-        self.gui.combo_h_nowinshome,
-        self.gui.combo_h_nodraws,
-        self.gui.combo_h_nodrawshome,
-        self.gui.combo_h_noloses,
-        self.gui.combo_h_noloseshome,
-        self.gui.combo_a_wins,
-        self.gui.combo_a_winsaway,
-        self.gui.combo_a_draws,
-        self.gui.combo_a_drawsaway,
-        self.gui.combo_a_loses,
-        self.gui.combo_a_losesaway,
-        self.gui.combo_a_nowins,
-        self.gui.combo_a_nowinsaway,
-        self.gui.combo_a_nodraws,
-        self.gui.combo_a_nodrawsaway,
-        self.gui.combo_a_noloses,
-        self.gui.combo_a_nolosesaway,
-        self.gui.spin_points,
-        self.gui.spin_points_ha,
-        self.gui.spin_form,
-        self.gui.spin_form_ha,
-        self.gui.spin_h_wins,
-        self.gui.spin_h_winshome,
-        self.gui.spin_h_draws,
-        self.gui.spin_h_drawshome,
-        self.gui.spin_h_loses,
-        self.gui.spin_h_loseshome,
-        self.gui.spin_h_nowins,
-        self.gui.spin_h_nowinshome,
-        self.gui.spin_h_nodraws,
-        self.gui.spin_h_nodrawshome,
-        self.gui.spin_h_noloses,
-        self.gui.spin_h_noloseshome,
-        self.gui.spin_a_wins,
-        self.gui.spin_a_winsaway,
-        self.gui.spin_a_draws,
-        self.gui.spin_a_drawsaway,
-        self.gui.spin_a_loses,
-        self.gui.spin_a_losesaway,
-        self.gui.spin_a_nowins,
-        self.gui.spin_a_nowinsaway,
-        self.gui.spin_a_nodraws,
-        self.gui.spin_a_nodrawsaway,
-        self.gui.spin_a_noloses,
-        self.gui.spin_a_nolosesaway,
-        self.gui.spin_odd_1,
-        self.gui.spin_odd_x,
-        self.gui.spin_odd_2,
-        self.gui.spin_odd_1x,
-        self.gui.spin_odd_x2
-        ]
-        item = self.gui.tree_filters_profile.currentItem()
-        file_name = item.text(0)
-        load = open(os.path.join('profiles','filters','')+file_name,'r')
-        load = list(load)
-        for i in range(0,len(val)):
-            if i <=3:  #checkbutton
-                state = self.rm_lines(load[i])
-                if state == 'True':
-                    state = 2
-                else:
-                    state = 0
-                state =QtCore.Qt.CheckState(state)
-                val[i].setCheckState(state)
-            if i >3 and i <= 31:  #combobox
-                item =self.rm_lines(load[i])
-                index = val[i].findText(item)
-                val[i].setCurrentIndex(index)
-            if i > 31:
-                item =self.rm_lines(load[i])
-                item =float(item)
-                val[i].setValue(item)
-
-    def filters_delete(self):
-        ''' Deletes match filter'''
-        path = os.path.join('profiles','filters','')
-        item = self.gui.tree_filters_profile.currentItem()
-        file_delete = item.text(0)
-        self.delete_file(file_delete,path)
-        self.filters_tree()
-
-    def rm_lines(self, item):
-        ''' Removes new lines from string'''
-        rem = item.replace('\n', '')
-        rem = rem.replace('\r', '')
-        rem = rem.replace(' ', '')
-        return rem
-
 
 
 if __name__ == "__main__":
