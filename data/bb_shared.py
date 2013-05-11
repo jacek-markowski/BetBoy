@@ -69,8 +69,8 @@ class Shared(object):
             else:
                 os.mkdir(os.path.join(os.getcwd(), 'profiles', i, ''))
 
-        leaguess = ('current', 'own', 'old', 'football_data')
-        for i in profiles:
+        leagues = ('current', 'own', 'old', 'football_data')
+        for i in leagues:
             if os.path.isdir(os.path.join(os.getcwd(), 'leagues', i, '')):
                 pass
             else:
