@@ -1,0 +1,6 @@
+0.4.0 12.05.2013:
+- added stop simulation button
+- added series (bts,under,over) to simulations 
+- yield calculations
+- average odds
+- bugfixes (fixing leagues at startup, stopping simulation,export, match selection after exit)
