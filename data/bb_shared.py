@@ -681,6 +681,22 @@ class Shared(object):
                     pass
                 else:
                     self.filter_status = 'no'
+        if self.app == 'selector':
+            ######
+            # Odds
+            ######
+            odds = [
+            (self.odd_1,self.spin_odds_1),
+            (self.odd_x,self.spin_odds_x),
+            (self.odd_2,self.spin_odds_2),
+            (self.odd_1x,self.spin_odds_1x),
+            (self.odd_x2,self.spin_odds_x2)]
+            for i in odds:
+                if self.filter_status == 'yes':
+                    if float(i[0])>=float(i[1]):
+                        pass
+                    else:
+                        self.filter_status = 'no'
 
 
 

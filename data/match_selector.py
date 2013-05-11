@@ -29,6 +29,7 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         QtGui.QWidget.__init__(self, parent)
         Database.__init__(self)
         Shared.__init__(self)
+        self.odds_level = 100
         self.app = 'selector'
         self.gui = Ui_Selector()
         self.gui.setupUi(self)
@@ -102,8 +103,8 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
             index = 1.0
             for i in dir_leagues:
                 path = os.path.join('leagues',league,'')
-                if self.stop_action == 0:
-                    self.batch_bets(path,i)
+                #if self.stop_action == 0:
+                self.batch_bets(path,i)
                 QtGui.QApplication.processEvents()
                 index += 1.0
                 prog_val = index/number_of_leagues*100
@@ -121,23 +122,25 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         self.filters_load(file_name)
         ####
         self.load_csv(path,league)
-        try:
-            min_date = self.relations_base.execute('''SELECT min(date_num)
-                                        From Results WHERE
-                                        gHomeEnd == "NULL"''')
-            min_date = min_date.fetchone()
-            min_date = min_date[0]
+        min_date = self.relations_base.execute('''SELECT min(date_num)
+                                    From Results WHERE
+                                    gHomeEnd == "NULL"''')
+        min_date = min_date.fetchone()
+        min_date = min_date[0]
+        if min_date:
             matches = self.relations_base.execute('''SELECT home,away
                             From Results WHERE
                             gHomeEnd == "NULL" and date_num=%f'''%min_date)
-
             matches = matches.fetchall()
+        else:
+            matches = 0
 
-            self.item_sim = QtGui.QTreeWidgetItem(self.gui.tree_selected)
-            line = league+' filter: '+file_name
-            self.item_sim.setText(0,(line))
-            self.gui.tree_selected.setCurrentItem(self.item_sim)
+        self.item_sim = QtGui.QTreeWidgetItem(self.gui.tree_selected)
+        line = league+' filter: '+file_name
+        self.item_sim.setText(0,(line))
+        self.gui.tree_selected.setCurrentItem(self.item_sim)
 
+        if matches:
             for i in matches:
                 home,away = i
                 self.simulation_filters(home,away)
@@ -152,13 +155,12 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
                     '  x2: '+str(round(self.odd_x2,2))
                     QtGui.QTreeWidgetItem(self.item_sim).setText(0, (line))
 
-            item = self.gui.tree_selected.currentItem()
-            child = item.childCount()
-            if child == 0:
-                index = self.gui.tree_selected.indexOfTopLevelItem(item)
-                self.gui.tree_selected.takeTopLevelItem(index)
-        except:
-            pass
+        item = self.gui.tree_selected.currentItem()
+        child = item.childCount()
+        if child == 0:
+            index = self.gui.tree_selected.indexOfTopLevelItem(item)
+            self.gui.tree_selected.takeTopLevelItem(index)
+
 
     def filters_tree(self):
         ''' Tree with saved match filters'''
