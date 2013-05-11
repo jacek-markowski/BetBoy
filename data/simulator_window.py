@@ -37,9 +37,9 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.tree_nets.headerItem().setText(0, ('Nets'))
         self.gui.tree_ranges.headerItem().setText(0, ('Net ranges'))
         self.gui.tree_ranges_profile.headerItem().setText(0, ('Net ranges'))
-        self.gui.tree_bets.headerItem().setText(0, ('Bet filters'))
+        self.gui.tree_bets.headerItem().setText(0, ('Selection filters'))
         self.gui.tree_profiles.headerItem().setText(0, ('Batches'))
-        self.gui.tree_filters.headerItem().setText(0, ('Match filters'))
+        self.gui.tree_filters.headerItem().setText(0, ('Simulation filters'))
         labels = ['Path',
                         'League',
                         'Net',
