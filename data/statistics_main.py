@@ -21,15 +21,17 @@ import locale
 from PySide import QtCore, QtGui
 
 from ui.statistics import Ui_MainWindow
-import ng_engine
+import bb_engine
+from bb_shared import Shared
 
-class StatisticsApp(QtGui.QMainWindow):
+class StatisticsApp(QtGui.QMainWindow, Shared):
     '''Creates gui form and events  '''
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
+        Shared.__init__(self)
         self.gui = Ui_MainWindow()
         self.gui.setupUi(self)
-        self.database = ng_engine.Database()
+        self.database = bb_engine.Database()
         self.combo_nets_fill()
         self.combo_ranges_fill()
         #main tab variables
@@ -52,7 +54,10 @@ class StatisticsApp(QtGui.QMainWindow):
         'c_lose': QtGui.QColor('#DE7C7C'),
         'palette': '#39A1B2'}
         self.leagues_tree()
-        self.tree_return()
+        try:
+            self.tree_return()
+        except:
+            pass
         self.bindings()
 
     def bindings(self):
@@ -112,14 +117,22 @@ class StatisticsApp(QtGui.QMainWindow):
         ''' Calls ng_engine module and loads csv file dependly of path
         and league name'''
         child = self.gui.treeLeagues.currentItem()
-        parent = child.parent()
-        switch = parent.text(0)
-        path = str(os.path.join('leagues', switch, ''))
-        name = child.text(0)
-        self.database.load_csv(path, name)
-        self.combo_teams_fill()
-        self.combo_scheudle_dates()
-        self.tables_fill()
+        try:
+            parent = child.parent()
+            switch = parent.text(0)
+            path = str(os.path.join('leagues', switch, ''))
+            name = child.text(0)
+        except:
+            path = False
+        if path:
+            try:
+                self.database.load_csv(path, name)
+            except:
+                self.find_broken_leagues()
+                self.database.load_csv(path, name)
+            self.combo_teams_fill()
+            self.combo_scheudle_dates()
+            self.tables_fill()
 
     def combo_teams_fill(self):
         ''' Fills combos with team names(home and away)'''
@@ -196,7 +209,10 @@ class StatisticsApp(QtGui.QMainWindow):
         self.scheudle()
         self.main_home()
         self.main_away()
-        self.tree_series()
+        try:
+            self.tree_series()
+        except:
+            pass
 
     def s_f(self, data, labels, table):
         ''' Creates table for standings and form'''
@@ -479,10 +495,6 @@ class StatisticsApp(QtGui.QMainWindow):
         self.gui.main_table_scheudle.resizeColumnsToContents()
         self.gui.main_table_scheudle.verticalHeader().\
                                                 setDefaultSectionSize(20)
-#        self.gui.main_table_scheudle.horizontalHeader().\
-#                                                setDefaultSectionSize(100)
-        #self.main_table_color(self.gui.main_table_scheudle, 10,
-         #                     self.main_v['palette'])
 
     def h_a(self, team, mode, table):
         ''' Creates table for home and away'''
@@ -495,7 +507,6 @@ class StatisticsApp(QtGui.QMainWindow):
         table.setColumnCount(len(labels))
         table.setHorizontalHeaderLabels(labels)
         if mode == 0:  #Overall
-            # SQL statement
             data = self.database.relations_base.execute('''Select
             date_txt,
             home,
@@ -630,9 +641,10 @@ class StatisticsApp(QtGui.QMainWindow):
         # Final configuring table
         table.resizeRowsToContents()
         table.resizeColumnsToContents()
-        #table.verticalHeader().setDefaultSectionSize(20)
-        #table.horizontalHeader().setDefaultSectionSize(90)
-        self.prediction()
+        try:
+            self.prediction()
+        except:
+            pass
     def prediction(self):
         ''' Gives prediction for match'''
         locale.setlocale(locale.LC_ALL, "C")
@@ -642,9 +654,8 @@ class StatisticsApp(QtGui.QMainWindow):
                                                          away,
                                                          self.v['net']())
         # ranges
-        ranges = open(os.path.join('profiles', 'ranges', '')+self.v['ranges']() ,'r')
-        load = list(ranges)
-        ranges.close()
+        with open(os.path.join('profiles', 'ranges', '')+self.v['ranges'](),'r') as ranges:
+            load = list(ranges)
         val = []
         for i in range(0, len(load)):
             item = load[i].replace('\n', '')
@@ -678,29 +689,19 @@ class StatisticsApp(QtGui.QMainWindow):
         ####
         # Odds
         ####
-
         odds = self.database.simulation_prediction(home,
                                                          away,
                                                          'default',mode=1)
         print 'odds',prediction
-        odd_1 = self.odds_rescale(odds[0])
-        odd_x = self.odds_rescale(odds[1])
-        odd_2 = self.odds_rescale(odds[2])
+        odd_1 = self.odds_rescale(odds[0],100)
+        odd_x = self.odds_rescale(odds[1],100)
+        odd_2 = self.odds_rescale(odds[2],100)
         odd_1x = 1/((1/odd_1) + (1/odd_x))
         odd_x2 = 1/((1/odd_x) + (1/odd_2))
         line ='1: '+str(odd_1)+'  x: '+str(odd_x)+'  2: '+str(odd_2)
         self.gui.label_odds.setText(line)
         print odd_1x,odd_x2
-    def odds_rescale(self,val):
-        ''' Rescaling odds from [-1,1]'''
-        # OldRange = (OldMax - OldMin)
-        # NewRange = (NewMax - NewMin)
-        # NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
-        old_range = 2
-        new_range = 19
-        odd = (((val + 1) * new_range) / old_range) + 1
-        odd = round(odd*0.9,2)
-        return odd
+
     def main_home(self):
         ''' Table home in main tab'''
         self.h_a(self.v['home_team'](),
