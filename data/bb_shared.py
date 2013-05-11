@@ -69,6 +69,13 @@ class Shared(object):
             else:
                 os.mkdir(os.path.join(os.getcwd(), 'profiles', i, ''))
 
+        leaguess = ('current', 'own', 'old', 'football_data')
+        for i in profiles:
+            if os.path.isdir(os.path.join(os.getcwd(), 'leagues', i, '')):
+                pass
+            else:
+                os.mkdir(os.path.join(os.getcwd(), 'leagues', i, ''))
+
     def odds_rescale(self,val,odds_level):
         ''' Rescaling odds from [-1,1]'''
         # OldRange = (OldMax - OldMin)
