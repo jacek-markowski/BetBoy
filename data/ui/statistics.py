@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'statistics.ui'
 #
-# Created: Tue May  7 19:01:49 2013
+# Created: Sat May 11 22:28:08 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -127,6 +127,7 @@ class Ui_MainWindow(object):
         self.label_prediction.setFont(font)
         self.label_prediction.setStyleSheet("QLabel{\n"
 "font: 13pt}")
+        self.label_prediction.setText("")
         self.label_prediction.setTextFormat(QtCore.Qt.AutoText)
         self.label_prediction.setScaledContents(True)
         self.label_prediction.setAlignment(QtCore.Qt.AlignCenter)
@@ -447,7 +448,6 @@ class Ui_MainWindow(object):
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Net", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("MainWindow", "Ranges", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("MainWindow", "Prediction:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_prediction.setText(QtGui.QApplication.translate("MainWindow", "aaaa", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_standings_mode.setItemText(0, QtGui.QApplication.translate("MainWindow", "Overall Classic", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_standings_mode.setItemText(1, QtGui.QApplication.translate("MainWindow", "Home Classic", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_standings_mode.setItemText(2, QtGui.QApplication.translate("MainWindow", "Away Classic", None, QtGui.QApplication.UnicodeUTF8))

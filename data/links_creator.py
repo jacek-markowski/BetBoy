@@ -17,25 +17,16 @@ limitations under the License.
 
 import sys
 import os
-import platform
 
 from PySide import QtCore, QtGui
 from ui.links import Ui_Links
+from bb_shared import Shared
 
-system = platform.system()
-if system == 'Windows':
-    new_line = '\r\n'
-elif system == 'Linux':
-    new_line = '\n'
-elif system == 'Darwin':
-    new_line = '\r'
-else:
-    new_line = '\r\n'
-
-class LinksApp(QtGui.QWidget):
+class LinksApp(QtGui.QWidget, Shared):
     '''Creates gui form and events  '''
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
+        Shared.__init__(self)
         self.gui = Ui_Links()
         self.gui.setupUi(self)
 
@@ -58,14 +49,6 @@ class LinksApp(QtGui.QWidget):
         self.tree_link_saved()
         self.tree_link_saved_fd()
 
-    def delete_file(self, file_delete, path):
-        ''' Deletes file'''
-        reply = QtGui.QMessageBox.question(self, 'Delete?',
-            "Are you sure to delete %s?"%file_delete, QtGui.QMessageBox.Yes |
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        if reply == QtGui.QMessageBox.Yes:
-            if file_delete != 'default':
-                os.remove(path+file_delete)
     def bindings(self):
         ''' Widgets connections'''
         self.gui.button_add.clicked.connect(self.add_url)
@@ -88,6 +71,10 @@ class LinksApp(QtGui.QWidget):
         self.gui.button_load_fd.clicked.connect(self.load_base_fd)
         self.gui.tree_link_bases.doubleClicked.connect(self.load_base)
         self.gui.button_check.clicked.connect(self.check_link)
+        self.gui.line_name.textChanged.connect(self.line_sync)
+    def line_sync(self):
+        ''' Line (league name) to line (save) synchronization'''
+        self.gui.line_save.setText(self.gui.line_name.text())
     def check_link(self):
         ''' Open url in browser'''
         item = self.gui.tree_url.currentItem()
@@ -122,34 +109,34 @@ class LinksApp(QtGui.QWidget):
     def save_urls(self):
         ''' Saves url profile - website scraping'''
         file_name = self.gui.line_save.text()
-        file_save = open(os.path.join('profiles', 'links', '')\
-                                                +str(file_name), 'w')
-        count = self.gui.tree_url.topLevelItemCount()
-        for i in range(0, count):
-            item = self.gui.tree_url.topLevelItem(i)
-            name = item.text(0)
-            url = item.text(1)
-            if i == count-1:
-                line = str(name+' '+url)
-            else:
-                line = str(name+' '+url+new_line)
-            file_save.write(line)
+        with open(os.path.join('profiles', 'links', '')\
+                    +str(file_name), 'w') as file_save:
+            count = self.gui.tree_url.topLevelItemCount()
+            for i in range(0, count):
+                item = self.gui.tree_url.topLevelItem(i)
+                name = item.text(0)
+                url = item.text(1)
+                if i == count-1:
+                    line = str(name+' '+url)
+                else:
+                    line = str(name+' '+url+self.nl)
+                file_save.write(line)
         self.tree_link_saved()
 
     def save_urls_fd(self):
         ''' Saves url profile - football data'''
         file_name = self.gui.line_save_fd.text()
-        file_save = open(os.path.join('profiles', 'football_data', '')\
-                                                +str(file_name), 'w')
-        count = self.gui.tree_url_fd.topLevelItemCount()
-        for i in range(0, count):
-            item = self.gui.tree_url_fd.topLevelItem(i)
-            url = item.text(0)
-            if i == count-1:
-                line = str(url)
-            else:
-                line = str(url+new_line)
-            file_save.write(line)
+        with open(os.path.join('profiles', 'football_data', '')\
+                +str(file_name), 'w') as file_save:
+            count = self.gui.tree_url_fd.topLevelItemCount()
+            for i in range(0, count):
+                item = self.gui.tree_url_fd.topLevelItem(i)
+                url = item.text(0)
+                if i == count-1:
+                    line = str(url)
+                else:
+                    line = str(url+self.nl)
+                file_save.write(line)
         self.tree_link_saved_fd()
 
     def tree_link_saved(self):
@@ -206,33 +193,26 @@ class LinksApp(QtGui.QWidget):
         ''' Load url profile to tree - website scraping'''
         child = self.gui.tree_link_bases.currentItem()
         file_name = str(child.text(0))
-        file_load = open(os.path.join('profiles', 'links', '')+file_name, 'r')
-        self.gui.tree_url.clear()
-        for i in file_load:
-            name, url = i.split(' ')
-            url = self.rm_lines(url)
-            item_url = QtGui.QTreeWidgetItem(self.gui.tree_url)
-            item_url.setText(0, name)
-            item_url.setText(1, url)
+        with open(os.path.join('profiles', 'links', '')+file_name, 'r') as file_load:
+            self.gui.tree_url.clear()
+            for i in file_load:
+                name, url = i.split(' ')
+                url = self.rm_lines(url)
+                item_url = QtGui.QTreeWidgetItem(self.gui.tree_url)
+                item_url.setText(0, name)
+                item_url.setText(1, url)
 
     def load_base_fd(self):
         ''' Load url profile to tree - football data'''
         child = self.gui.tree_link_bases_fd.currentItem()
         file_name = str(child.text(0))
-        file_load = open(os.path.join('profiles', 'football_data', '')+file_name, 'r')
-        self.gui.tree_url_fd.clear()
-        for i in file_load:
-            url = i
-            url = self.rm_lines(url)
-            item_url = QtGui.QTreeWidgetItem(self.gui.tree_url_fd)
-            item_url.setText(0, url)
-
-    def rm_lines(self, item):
-        ''' Removes new lines from string'''
-        rem = item.replace('\n', '')
-        rem = rem.replace('\r', '')
-        rem = rem.replace(' ', '')
-        return rem
+        with open(os.path.join('profiles', 'football_data', '')+file_name, 'r') as file_load:
+            self.gui.tree_url_fd.clear()
+            for i in file_load:
+                url = i
+                url = self.rm_lines(url)
+                item_url = QtGui.QTreeWidgetItem(self.gui.tree_url_fd)
+                item_url.setText(0, url)
 
 if __name__ == "__main__":
     APP = QtGui.QApplication(sys.argv)

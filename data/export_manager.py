@@ -17,23 +17,11 @@ limitations under the License.
 
 import sys
 import os
-import platform
 
 from PySide import QtCore, QtGui
 from ui.export import Ui_Export
-from ng_engine import Database
-
-
-
-system = platform.system()
-if system == 'Windows':
-    new_line = '\r\n'
-elif system == 'Linux':
-    new_line = '\n'
-elif system == 'Darwin':
-    new_line = '\r'
-else:
-    new_line = '\r\n'
+from bb_engine import Database
+from bb_shared import Shared
 
 class DoThread(QtCore.QThread):
     ''' New thread, export process'''
@@ -48,26 +36,20 @@ class DoThread(QtCore.QThread):
                    self.cmd[4], self.cmd[5])
 
 
-
-class ExportApp(QtGui.QWidget):
+class ExportApp(QtGui.QWidget, Shared):
     '''Creates gui and events  '''
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
+        Shared.__init__(self)
         self.gui = Ui_Export()
         self.gui.setupUi(self)
         # Calls ---------------------
         self.leagues_tree()
         self.profiles_tree()
         self.bindings()
-
-    def delete_file(self, file_delete, path):
-        ''' Deletes file'''
-        reply = QtGui.QMessageBox.question(self, 'Delete?',
-            "Are you sure to delete %s?"%file_delete, QtGui.QMessageBox.Yes |
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        if reply == QtGui.QMessageBox.Yes:
-            if file_delete != 'default':
-                os.remove(path+file_delete)
+    def closeEvent(self, event):
+        self.export.terminate()
+        event.accept()
 
     def bindings(self):
         '''Bindings for app widgets.
@@ -187,9 +169,9 @@ class ExportApp(QtGui.QWidget):
         self.gui.progress_2.setValue(0)
         self.threads = []
         for i in range(0, rows):
-            export_print_file = open(os.path.join('tmp','')+'print','w')
-            export_print_file.write('')
-            export_print_file.close()
+            with open(os.path.join('tmp','')+'print','w') as export_print_file:
+                export_print_file.write('')
+                export_print_file.close()
             name = self.gui.table_leagues.item(i, 0).text()
             path = self.gui.table_leagues.item(i, 1).text()
             r_min = self.gui.table_leagues.item(i, 2).text()
@@ -207,22 +189,21 @@ class ExportApp(QtGui.QWidget):
             mode
             )
             self.gui.progress_2.setFormat('%p% '+self.gui.progress_2_txt)
-            export = DoThread(cmd, self)
-            export.start()
+            self.export = DoThread(cmd, self)
+            self.export.start()
             self.gui.button_export.setEnabled(0)
             self.gui.text_export.append(' ')
             self.gui.text_export.append('%s'%(path+name))
             self.gui.text_export.append('-----------------')
             line_prev = ''
-            while export.isRunning():
+            while self.export.isRunning():
                 QtGui.QApplication.processEvents()
                 try:
-                    export_print_file = open(os.path.join('tmp','')+'print','r')
-                    line = export_print_file.readline()
-                    if line != line_prev and line != '':
-                        self.gui.text_export.append(line)
-                        line_prev = line
-                    export_print_file.close()
+                    with open(os.path.join('tmp','')+'print','r') as export_print_file:
+                        line = export_print_file.readline()
+                        if line != line_prev and line != '':
+                            self.gui.text_export.append(line)
+                            line_prev = line
                 except:
                     pass
             self.gui.progress_2.setValue(self.gui.progress_2_val)
@@ -241,9 +222,9 @@ class ExportApp(QtGui.QWidget):
                 path = self.gui.table_leagues.item(i, 1).text()
                 r_min = self.gui.table_leagues.item(i, 2).text()
                 r_max = self.gui.table_leagues.item(i, 3).text()
-                f_save.write(name+','+path+','+r_min+','+r_max+new_line)
-            f_save.close()
-            self.profiles_tree()
+                f_save.write(name+','+path+','+r_min+','+r_max+self.nl)
+
+        self.profiles_tree()
 
     def profile_load(self):
         ''' Loads profile into leagues table'''
@@ -252,7 +233,7 @@ class ExportApp(QtGui.QWidget):
         self.gui.table_leagues.setRowCount(0)
         child = self.gui.tree_profiles.currentItem()
         profile = child.text(0)
-        with open (os.path.join('profiles', 'export', '')+profile, 'r') as f_load:
+        with open(os.path.join('profiles', 'export', '')+profile, 'r') as f_load:
             for i in f_load:
                 i = self.rm_lines(i)
                 league, folder, r_min, r_max = i.split(',')
@@ -282,12 +263,6 @@ class ExportApp(QtGui.QWidget):
         self.delete_file(file_delete, path)
         self.profiles_tree()
 
-    def rm_lines(self, item):
-        ''' Removes new lines from string'''
-        rem = item.replace('\n', '')
-        rem = rem.replace('\r', '')
-        rem = rem.replace(' ', '')
-        return rem
 
 
 if __name__ == "__main__":

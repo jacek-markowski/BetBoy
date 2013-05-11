@@ -237,7 +237,7 @@ color:rgb(151, 255, 53);}</string>
 font: 13pt}</string>
                </property>
                <property name="text">
-                <string>aaaa</string>
+                <string/>
                </property>
                <property name="textFormat">
                 <enum>Qt::AutoText</enum>

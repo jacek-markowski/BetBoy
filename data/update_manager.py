@@ -20,30 +20,23 @@ import os
 from csv import reader
 import platform
 import urllib2
-import shutil
 
 from PySide import QtCore, QtGui
 from ui.update import Ui_Update
 import time
+from bb_shared import Shared
 
 
 
 matches = []
-
 system = platform.system()
-if system == 'Windows':
-    new_line = '\r\n'
-elif system == 'Linux':
-    new_line = '\n'
-elif system == 'Darwin':
-    new_line = '\r'
-else:
-    new_line = '\r\n'
 
-class Scrape(QtCore.QThread):
+
+class Scrape(QtCore.QThread, Shared):
     ''' Scrapes page'''
     def __init__(self, radio, league, parent=None):
         QtCore.QThread.__init__(self)
+        Shared.__init__(self)
         self.league = league
         self.path = radio
 
@@ -57,7 +50,8 @@ class Scrape(QtCore.QThread):
         print 'scrape', str(self.league)
         matches = []
         self.update_state = 1
-        html_page = open(os.path.join('tmp','')+'page','r').read()
+        with open(os.path.join('tmp','')+'page','r') as f:
+            html_page = f.read()
         re_patternA = '<td class="datetime">\s*(?P<date>.{8}).*?</td>.*? \
         <span class="home.*?">\s*(?P<team_home>.*?)\s*</span>.*? \
         <span class="away.*?">\s*(?P<team_away>.*?)\s*</span>.*? \
@@ -108,14 +102,14 @@ class Scrape(QtCore.QThread):
                 tmp_file.write(result_html[1].strip()+',')
                 tmp_file.write(result_html[2].strip()+',')
                 tmp_file.write(final_goals[0].strip()+',')
-                tmp_file.write(final_goals[1].strip()+new_line)
+                tmp_file.write(final_goals[1].strip()+self.nl)
                 html_page = re.sub(pattern_compiled, ' ', html_page, 1)
                 page_final = pattern_compiled.search(html_page)
-            tmp_file.close()
-        tmp_file = reader(open(os.path.join('tmp','')+'tmp','r'))
+        with open(os.path.join('tmp','')+'tmp','r') as f:
+            tmp_file = reader(f)
+            tmp_file = list(tmp_file)
+            tmp_file.reverse()
         # removes null matches in of middle file
-        tmp_file = list(tmp_file)
-        tmp_file.reverse()
         status = 'OK'
         match_list = []
         for i in range(0, len(tmp_file)):
@@ -134,13 +128,13 @@ class Scrape(QtCore.QThread):
                 line = line.replace(']','')
                 line = line.replace("'",'')
                 line = line.replace(' ','')
-                fix_file.write(line+new_line)
-        fix_file.close()
+                fix_file.write(line+self.nl)
 
-class UpdateApp(QtGui.QWidget):
+class UpdateApp(QtGui.QWidget, Shared):
     '''Creates gui form and events  '''
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
+        Shared.__init__(self)
         self.gui = Ui_Update()
         self.gui.setupUi(self)
         self.gui.tree_selected.headerItem().setText(0,
@@ -230,138 +224,74 @@ class UpdateApp(QtGui.QWidget):
             self.gui.textBrowser.append('--------------')
 
         self.gui.button_update.setEnabled(1)
-
-        ###find broken leagues
-        leagues = os.listdir('leagues')
-        paths = []
-        for i in leagues:
-            paths.append(i)
-            if os.path.isdir(os.path.join('tmp','leagues','')+i):
-                pass
-            else:
-                os.mkdir(os.path.join('tmp','leagues','')+i)
-        with open(os.path.join('tmp','leagues','')+'log.txt','w') as log:
-            errors = 0
-            for path in paths:
-                files =[]
-                leagues = os.listdir(os.path.join('leagues','')+path)
-                for i in leagues:
-                    x = open(os.path.join('leagues',path,'')+i)
-                    for a in x.readlines():
-                        if len(a)> 60:
-                            errors += 1
-                            line = path+new_line+i+'>>>'+a+new_line
-                            self.gui.textBrowser.append(line)
-                            QtGui.QApplication.processEvents()
-                            log.write(line)
-                            file_path = os.path.join(path,'')+i
-                            if not file_path in files[:]:
-                                files.append(file_path)
-                for i in files:
-                    src = os.path.join('leagues','')+i
-                    dst = os.path.join('tmp','leagues','')+i
-                    shutil.copy(src, dst)
-                    self.fix_broken_leagues(src)
-            log.close()
-            self.gui.textBrowser.append('Errors: %d .See data/tmp/leagues/log.txt'%errors)
-            self.gui.textBrowser.append('Files with errors copied to data/tmp/leagues')
-        ## auto fix broken leagues (delete lines)
-    def fix_broken_leagues(self,path):
-        ''' Removes too long lines from csv file'''
-        csv_file = open(path,'r')
-        tmp_file_open = reader(csv_file)
-        tmp_file = list(tmp_file_open)
-        csv_file.close()
-        match_list = []
-        for t in range(0, len(tmp_file)):
-            if len(tmp_file[t][3]) > 2:
-                pass
-                print tmp_file[t][3]
-            else:
-                match_list.append(tmp_file[t])
-        with open(path,'w') as fix_file:
-            for i in range(0, len(match_list)):
-                line = str(match_list[i])
-                line = line.replace('[','')
-                line = line.replace(']','')
-                line = line.replace("'",'')
-                line = line.replace(' ','')
-                #print 'write', line
-                fix_file.write(line+new_line)
-        fix_file.close()
-
+        self.find_broken_leagues()
     def update_fd(self):
         ''' Updates database from football-data.co.uk'''
         item = self.gui.tree_profiles_fd.currentItem()
         profile = item.text(0)
-        file_open = reader(open(os.path.join('profiles','football_data','')+profile),delimiter=' ')
-        for i in file_open:
-            url = i[0]
-            name = url.split('/')[-1]
-            if name != 'fixtures.csv':
-                url_dwonload = urllib2.urlopen(url)
-                f = open(os.path.join('tmp','')+'fb', 'wb')
-                meta = url_dwonload.info()
-                file_size = int(meta.getheaders("Content-Length")[0])
-                print "Downloading: %s Bytes: %s" % (name, file_size)
-                file_size_dl = 0
-                block_sz = 8192
-                while True:
-                    buffer = url_dwonload.read(block_sz)
-                    if not buffer:
-                        break
-                    file_size_dl += len(buffer)
-                    f.write(buffer)
-                    status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
-                    status = status + chr(8)*(len(status)+1)
-                    print status,
-                f.close()
-                self.convert_fd(name)
-                self.gui.textBrowser_fd.append('Downloaded: %s'%name)
-                self.gui.textBrowser_fd.append('-----------------')
-                QtGui.QApplication.processEvents()
-            else:
-                url_dwonload = urllib2.urlopen(url)
-                f = open(os.path.join('tmp','')+'fixtures', 'wb')
-                meta = url_dwonload.info()
-                file_size = int(meta.getheaders("Content-Length")[0])
-                print "Downloading: %s Bytes: %s" % (name, file_size)
-                file_size_dl = 0
-                block_sz = 8192
-                while True:
-                    buffer = url_dwonload.read(block_sz)
-                    if not buffer:
-                        break
-                    file_size_dl += len(buffer)
-                    f.write(buffer)
-                    status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
-                    status = status + chr(8)*(len(status)+1)
-                    print status,
-                f.close()
-                self.merge_fixtures(name)
-                self.gui.textBrowser_fd.append('Merged upcoming matches')
-                self.gui.textBrowser_fd.append('-----------------')
-                QtGui.QApplication.processEvents()
+        with open(os.path.join('profiles','football_data','')+profile) as f:
+            file_open = reader(f,delimiter=' ')
+            for i in file_open:
+                url = i[0]
+                name = url.split('/')[-1]
+                if name != 'fixtures.csv':
+                    url_dwonload = urllib2.urlopen(url)
+                    with open(os.path.join('tmp','')+'fb', 'wb') as f:
+                        meta = url_dwonload.info()
+                        file_size = int(meta.getheaders("Content-Length")[0])
+                        print "Downloading: %s Bytes: %s" % (name, file_size)
+                        file_size_dl = 0
+                        block_sz = 8192
+                        while True:
+                            buffer = url_dwonload.read(block_sz)
+                            if not buffer:
+                                break
+                            file_size_dl += len(buffer)
+                            f.write(buffer)
+                            status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
+                            status = status + chr(8)*(len(status)+1)
+                            print status,
+                        self.convert_fd(name)
+                        self.gui.textBrowser_fd.append('Downloaded: %s'%name)
+                        self.gui.textBrowser_fd.append('-----------------')
+                        QtGui.QApplication.processEvents()
+                else:
+                    url_dwonload = urllib2.urlopen(url)
+                    with open(os.path.join('tmp','')+'fixtures', 'wb') as f:
+                        meta = url_dwonload.info()
+                        file_size = int(meta.getheaders("Content-Length")[0])
+                        print "Downloading: %s Bytes: %s" % (name, file_size)
+                        file_size_dl = 0
+                        block_sz = 8192
+                        while True:
+                            buffer = url_dwonload.read(block_sz)
+                            if not buffer:
+                                break
+                            file_size_dl += len(buffer)
+                            f.write(buffer)
+                            status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
+                            status = status + chr(8)*(len(status)+1)
+                            print status,
+                        self.merge_fixtures(name)
+                        self.gui.textBrowser_fd.append('Merged upcoming matches')
+                        self.gui.textBrowser_fd.append('-----------------')
+                        QtGui.QApplication.processEvents()
 
     def merge_fixtures(self,name):
         ''' Adding upcoming matches to league files - football_data.co.uk'''
-        csv_file = reader(open(os.path.join('tmp','')+'fixtures','r'))
-        dir_bases = os.listdir(os.path.join('leagues','football_data'))
-        files = []
-        for i in dir_bases:
-            files.append(i)
-        for i in csv_file:
-            if i[0]+'.csv' in files:
-                file_old = open(os.path.join('leagues','football_data','')+i[0]+'.csv','a')
-#                last_date = reader(open(os.path.join('leagues','football_data','')+i[0]+'.csv','r'))
-#                last_date = list(last_date)
-#                last_date = last_date[-2][0]
-#                last_date = self.num_date(last_date)
-                date = self.fix_date(i[1])
-#                actual_date = self.num_date(date)
-                line = date+','+i[2]+','+i[3]+',NULL'+',NULL'
-                file_old.write(line+'\n')
-                file_old.close()
+        with open(os.path.join('tmp','')+'fixtures','r') as f:
+            csv_file = reader(f)
+            dir_bases = os.listdir(os.path.join('leagues','football_data'))
+            files = []
+            for i in dir_bases:
+                files.append(i)
+            for i in csv_file:
+                if i[0]+'.csv' in files:
+                    with open(os.path.join('leagues','football_data','')+i[0]+'.csv','a') as file_old:
+                        date = self.fix_date(i[1])
+                        line = date+','+i[2]+','+i[3]+',NULL'+',NULL'
+                        file_old.write(line+self.nl)
+
     def num_date(self,date):
         date_num = date[0:7]+date[8:]
         date_num = float(date_num)
@@ -369,24 +299,24 @@ class UpdateApp(QtGui.QWidget):
 
     def convert_fd(self,name):
         ''' Converts file from football-data.co.uk'''
-        csv_file = reader(open(os.path.join('tmp','')+'fb','r'))
-        out_file = open(os.path.join('leagues','football_data','')+name,'w')
-        for i in csv_file:
-            if i[1] == 'Date':
-                pass
-            if i[1] != 'Date':
-                if len(i[1])>4:
-                    date = self.fix_date(i[1])
-                    fth = i[4]
-                    fta = i[5]
-                    home = i[2].replace(' ','')
-                    away = i[3].replace(' ','')
-                    if fth == '' or fta == '':
+        with open(os.path.join('tmp','')+'fb','r') as f:
+            csv_file = reader(f)
+            with open(os.path.join('leagues','football_data','')+name,'w') as out_file:
+                for i in csv_file:
+                    if i[1] == 'Date':
                         pass
-                    else:
-                        line = date+','+home+','+away+','+fth+','+fta
-                        out_file.write(line+'\n')
-        out_file.close()
+                    if i[1] != 'Date':
+                        if len(i[1])>4:
+                            date = self.fix_date(i[1])
+                            fth = i[4]
+                            fta = i[5]
+                            home = i[2].replace(' ','')
+                            away = i[3].replace(' ','')
+                            if fth == '' or fta == '':
+                                pass
+                            else:
+                                line = date+','+home+','+away+','+fth+','+fta
+                                out_file.write(line+'\n')
     def fix_date(self,date):
         ''' Converts date to betboy format from football-data.co.uk'''
         try:
@@ -421,10 +351,9 @@ class UpdateApp(QtGui.QWidget):
                 html = html.encode('utf-8') #needed on windows
                 with open(os.path.join('tmp','')+'page','w') as save_file:
                     save_file.write(html)
-                    save_file.close()
-                    self.threads.append(self.scrape)
-                    self.scrape = Scrape(self.path, self.league)
-                    self.scrape.start()
+                self.threads.append(self.scrape)
+                self.scrape = Scrape(self.path, self.league)
+                self.scrape.start()
 
     def links_remove(self):
         ''' Remove links froma list'''
@@ -530,18 +459,18 @@ class UpdateApp(QtGui.QWidget):
     def save_urls(self):
         ''' Saves url profile'''
         file_name = self.gui.line_save.text()
-        file_save = open(os.path.join('profiles', 'links', '')\
-                                                +str(file_name), 'w')
-        count = self.gui.tree_selected.topLevelItemCount()
-        for i in range(0, count):
-            item = self.gui.tree_selected.topLevelItem(i)
-            name = item.text(0)
-            url = item.text(1)
-            if i == count-1:
-                line = str(name+' '+url)
-            else:
-                line = str(name+' '+url+new_line)
-            file_save.write(line)
+        with open(os.path.join('profiles', 'links', '')\
+        +str(file_name), 'w') as file_save:
+            count = self.gui.tree_selected.topLevelItemCount()
+            for i in range(0, count):
+                item = self.gui.tree_selected.topLevelItem(i)
+                name = item.text(0)
+                url = item.text(1)
+                if i == count-1:
+                    line = str(name+' '+url)
+                else:
+                    line = str(name+' '+url+self.nl)
+                file_save.write(line)
         self.links_tree()
 
     def rm_lines(self, item):

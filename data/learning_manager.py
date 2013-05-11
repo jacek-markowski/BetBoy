@@ -17,41 +17,24 @@ limitations under the License.
 """
 import sys
 import os
-import platform
 import subprocess
+import platform
+system = platform.system()
 
 from PySide import QtCore, QtGui
 from ui.learning import Ui_Learn
+from bb_shared import Shared
 
-
-system = platform.system()
-if system == 'Windows':
-    new_line = '\r\n'
-elif system == 'Linux':
-    new_line = '\n'
-elif system == 'Darwin':
-    new_line = '\r'
-else:
-    new_line = '\r\n'
-
-class LearningApp(QtGui.QWidget):
+class LearningApp(QtGui.QWidget, Shared):
     '''Creates gui form and events  '''
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
+        Shared.__init__(self)
         self.gui = Ui_Learn()
         self.gui.setupUi(self)
         self.bindings()
         self.exports_tree()
         self.nets_tree()
-
-    def delete_file(self, file_delete, path):
-        ''' Deletes file'''
-        reply = QtGui.QMessageBox.question(self, 'Delete?',
-            "Are you sure to delete %s?"%file_delete, QtGui.QMessageBox.Yes |
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        if reply == QtGui.QMessageBox.Yes:
-            if file_delete != 'default':
-                os.remove(path+file_delete)
 
     def bindings(self):
         '''Bindings for app widgets.

@@ -18,26 +18,17 @@ limitations under the License.
 import sys
 import os
 from csv import reader
-import platform
 
 from PySide import QtCore, QtGui
 from ui.leagues import Ui_Leagues
-import ng_engine
+import bb_engine
+from bb_shared import Shared
 
-system = platform.system()
-if system == 'Windows':
-    new_line = '\r\n'
-elif system == 'Linux':
-    new_line = '\n'
-elif system == 'Darwin':
-    new_line = '\r'
-else:
-    new_line = '\r\n'
-
-class LeaguesApp(QtGui.QWidget):
+class LeaguesApp(QtGui.QWidget,Shared):
     '''Creates gui form and events  '''
     def __init__(self, parent=None):
-        self.database = ng_engine.Database()
+        Shared.__init__(self)
+        self.database = bb_engine.Database()
         QtGui.QWidget.__init__(self, parent)
         self.gui = Ui_Leagues()
         self.gui.setupUi(self)
@@ -56,15 +47,6 @@ class LeaguesApp(QtGui.QWidget):
         self.tree_leagues_teams()
         self.tree_profiles()
         self.line_to_add()
-
-    def delete_file(self, file_delete, path):
-        ''' Deletes file'''
-        reply = QtGui.QMessageBox.question(self, 'Delete?',
-            "Are you sure to delete %s?"%file_delete, QtGui.QMessageBox.Yes |
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        if reply == QtGui.QMessageBox.Yes:
-            if file_delete != 'default':
-                os.remove(path+file_delete)
 
     def bindings(self):
         ''' Widgets connections'''
@@ -128,7 +110,7 @@ class LeaguesApp(QtGui.QWidget):
                 if i == count-1:
                     line = str(name)
                 else:
-                    line = str(name+new_line)
+                    line = str(name+self.nl)
                 file_save.write(line)
             self.tree_profiles()
 
@@ -242,8 +224,9 @@ class LeaguesApp(QtGui.QWidget):
             switch = parent.text(0)
             path = str(os.path.join('leagues', switch, ''))
             name = child.text(0)
-        league = reader(open(path+name,'r'))
-        league = list(league)
+        with open(path+name,'r') as item:
+            league = reader(item)
+            league = list(league)
         self.gui.tree_matches.clear()
         for i in league:
             item_match = QtGui.QTreeWidgetItem(self.gui.tree_matches)
@@ -331,9 +314,8 @@ class LeaguesApp(QtGui.QWidget):
                 away = str(item.text(2))
                 fth = str(item.text(3))
                 fta = str(item.text(4))
-                line = date+','+home+','+away+','+fth+','+fta+new_line
+                line = date+','+home+','+away+','+fth+','+fta+self.nl
                 save.write(line)
-            save.close()
             self.tree_leagues_teams()
 
     def league_delete(self):
@@ -347,12 +329,6 @@ class LeaguesApp(QtGui.QWidget):
             self.delete_file(file_delete, path)
             self.tree_leagues_teams()
 
-    def rm_lines(self, item):
-        ''' Removes new lines from string'''
-        rem = item.replace('\n', '')
-        rem = rem.replace('\r', '')
-        rem = rem.replace(' ', '')
-        return rem
 
 if __name__ == "__main__":
     APP = QtGui.QApplication(sys.argv)
