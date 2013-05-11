@@ -28,7 +28,7 @@ elif system == 'Linux':
 elif system == 'Darwin':
     new_line = '\r'
 else:
-    new_line = '\r\n'
+    new_line = '\n'
 
 print sys.argv[:]
 def start(file_in=sys.argv[1],
@@ -51,7 +51,10 @@ def start(file_in=sys.argv[1],
     train_data = libfann.training_data()
     train_data.read_train_from_file(os.path.join('export', '')+file_in)
     ann = libfann.neural_net()
-    ann.create_sparse_array(connection_rate, (num_input, num_neurons_hidden,
+    ann.create_sparse_array(connection_rate, (num_input,
+                                              num_neurons_hidden,
+                                              num_neurons_hidden+1,
+                                              num_neurons_hidden+2,
                                               num_output))
     ## start training the network
     ann.set_activation_function_output(eval(function_output))
@@ -67,6 +70,6 @@ def start(file_in=sys.argv[1],
                       iterations_between_reports, desired_error)
     # save network to disk
     ann.save(os.path.join('net','')+file_out)
-   
+
 if __name__ == "__main__":
     start()
