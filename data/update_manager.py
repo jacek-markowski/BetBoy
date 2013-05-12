@@ -316,8 +316,12 @@ class UpdateApp(QtGui.QWidget, Shared):
                     if i[1] != 'Date':
                         if len(i[1])>4:
                             date = self.fix_date(i[1])
-                            fth = i[4]
-                            fta = i[5]
+                            try:
+                                fth = i[4]
+                                fta = i[5]
+                            except:
+                                fth = ''
+                                fta = ''
                             home = i[2].replace(' ','')
                             away = i[3].replace(' ','')
                             if fth == '' or fta == '':
