@@ -355,6 +355,13 @@
 2013.05.05,Liverpool,Everton,0,0
 2013.05.05,ManUnited,Chelsea,0,1
 2013.05.06,Sunderland,Stoke,1,1
-2013.05.07,Man City,West Brom,NULL,NULL
-2013.05.07,Wigan,Swansea,NULL,NULL
-2013.05.08,Chelsea,Tottenham,NULL,NULL
+2013.05.07,ManCity,WestBrom,1,0
+2013.05.07,Wigan,Swansea,2,3
+2013.05.11,AstonVilla,Chelsea,NULL,NULL
+2013.05.12,Everton,WestHam,NULL,NULL
+2013.05.12,Fulham,Liverpool,NULL,NULL
+2013.05.12,ManUnited,Swansea,NULL,NULL
+2013.05.12,Norwich,WestBrom,NULL,NULL
+2013.05.12,QPR,Newcastle,NULL,NULL
+2013.05.12,Stoke,Tottenham,NULL,NULL
+2013.05.12,Sunderland,Southampton,NULL,NULL

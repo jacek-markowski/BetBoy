@@ -338,5 +338,15 @@
 2013.05.05,Sevilla,Espanol,3,0
 2013.05.05,Zaragoza,Vallecano,3,0
 2013.05.06,Getafe,Sociedad,2,1
-2013.05.08,Celta,Ath Madrid,NULL,NULL
-2013.05.08,Real Madrid,Malaga,NULL,NULL
+2013.05.08,Celta,AthMadrid,1,3
+2013.05.08,RealMadrid,Malaga,6,2
+2013.05.10,Levante,Zaragoza,NULL,NULL
+2013.05.11,AthBilbao,Mallorca,NULL,NULL
+2013.05.11,Espanol,RealMadrid,NULL,NULL
+2013.05.11,Osasuna,Getafe,NULL,NULL
+2013.05.11,Valladolid,LaCoruna,NULL,NULL
+2013.05.12,AthMadrid,Barcelona,NULL,NULL
+2013.05.12,Betis,Celta,NULL,NULL
+2013.05.12,Malaga,Sevilla,NULL,NULL
+2013.05.12,Vallecano,Valencia,NULL,NULL
+2013.05.13,Sociedad,Granada,NULL,NULL
