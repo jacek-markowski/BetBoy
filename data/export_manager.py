@@ -43,12 +43,17 @@ class ExportApp(QtGui.QWidget, Shared):
         Shared.__init__(self)
         self.gui = Ui_Export()
         self.gui.setupUi(self)
+        with open(os.path.join('tmp','')+'comm','w') as comm:
+            # communicates with export manager
+            comm.write('')
         # Calls ---------------------
         self.leagues_tree()
         self.profiles_tree()
         self.bindings()
     def closeEvent(self, event):
-        self.export.terminate()
+        with open(os.path.join('tmp','')+'comm','w') as comm:
+            # communicates with export manager
+            comm.write('stop')
         event.accept()
 
     def bindings(self):
@@ -189,8 +194,15 @@ class ExportApp(QtGui.QWidget, Shared):
             mode
             )
             self.gui.progress_2.setFormat('%p% '+self.gui.progress_2_txt)
-            self.export = DoThread(cmd, self)
-            self.export.start()
+            with open(os.path.join('tmp','')+'comm','r') as comm:
+            # communicates with export manager
+                comm_var = comm.readline()
+            if comm_var != '':
+                self.export.terminate()
+                break
+            else:
+                self.export = DoThread(cmd, self)
+                self.export.start()
             self.gui.button_export.setEnabled(0)
             self.gui.text_export.append(' ')
             self.gui.text_export.append('%s'%(path+name))

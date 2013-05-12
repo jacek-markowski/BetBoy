@@ -283,6 +283,9 @@ class Database(Shared):
         0-normal
         1-export
         2-simulation'''
+        with open(os.path.join('tmp','')+'comm','w') as comm:
+            # communicates with export manager
+            comm.write('')
         self.clear_tables()
         teams = self.return_teams(folder, name)
         for team in teams:
@@ -311,14 +314,18 @@ class Database(Shared):
         self.match_group = 0
         self.match_group_date = 0
         index = 0
-
         for i in results:
             day, home, away, fth, fta = i[:]
             rounds_m = self.relations_base.execute('''SELECT
             max(matches) FROM league''')
             rounds = rounds_m.fetchone()
             rounds = rounds[0]
-            if mode == 1 and self.stop_action == 0: #export
+            if mode == 1: #export
+                with open(os.path.join('tmp','')+'comm','r') as comm:
+                # communicates with export manager
+                    comm_var = comm.readline()
+                if comm_var != '':
+                    break
                 if r_min <= rounds <= r_max:
                     index += 1
                     self.scale_group_check(day)

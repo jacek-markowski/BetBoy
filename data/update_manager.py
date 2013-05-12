@@ -135,6 +135,9 @@ class UpdateApp(QtGui.QWidget, Shared):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         Shared.__init__(self)
+        with open(os.path.join('tmp','')+'comm','w') as comm:
+            # communicates with export manager
+            comm.write('')
         self.gui = Ui_Update()
         self.gui.setupUi(self)
         self.gui.tree_selected.headerItem().setText(0,
@@ -154,7 +157,9 @@ class UpdateApp(QtGui.QWidget, Shared):
         self.combo_path()
 
     def closeEvent(self, event):
-        self.scrape.terminate()
+        with open(os.path.join('tmp','')+'comm','w') as comm:
+            # communicates with export manager
+            comm.write('stop')
         self.find_broken_leagues()
         event.accept()
 
@@ -200,6 +205,11 @@ class UpdateApp(QtGui.QWidget, Shared):
         path = self.gui.combo_path.currentText()
         self.path = os.path.join('leagues', path, '')
         for i in range(0, count):
+            with open(os.path.join('tmp','')+'comm','r') as comm:
+            # communicates with export manager
+                comm_var = comm.readline()
+            if comm_var != '':
+                break
             self.page.setZoomFactor(0.7)
             self.update_state = 0
             child = self.gui.tree_selected.topLevelItem(i)
