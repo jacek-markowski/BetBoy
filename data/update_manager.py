@@ -289,7 +289,9 @@ class UpdateApp(QtGui.QWidget, Shared):
                 if i[0]+'.csv' in files:
                     with open(os.path.join('leagues','football_data','')+i[0]+'.csv','a') as file_old:
                         date = self.fix_date(i[1])
-                        line = date+','+i[2]+','+i[3]+',NULL'+',NULL'
+                        home = i[2].replace(' ','')
+                        away = i[3].replace(' ','')
+                        line = date+','+home+','+away+',NULL'+',NULL'
                         file_old.write(line+self.nl)
 
     def num_date(self,date):
