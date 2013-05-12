@@ -79,10 +79,9 @@ class ExportApp(QtGui.QWidget, Shared):
         self.gui.spin_max,
         ]
 
-        for i in range(1, len(val)):
-            if val[i].value() <= val[i-1].value():
-                number = val[i].value()
-                val[i-1].setValue(number-1)
+        if val[0].value() >= val[1].value():
+            number = val[0].value()
+            val[1].setValue(number)
 
     def leagues_tree(self):
         ''' Fills tree with available csv files'''

@@ -133,14 +133,14 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
                             gHomeEnd == "NULL" and date_num=%f'''%min_date)
             matches = matches.fetchall()
         else:
-            matches = 0
+            matches = []
 
-        self.item_sim = QtGui.QTreeWidgetItem(self.gui.tree_selected)
-        line = league+' filter: '+file_name
-        self.item_sim.setText(0,(line))
-        self.gui.tree_selected.setCurrentItem(self.item_sim)
 
-        if matches:
+        if len(matches)>0:
+            self.item_sim = QtGui.QTreeWidgetItem(self.gui.tree_selected)
+            line = league+' filter: '+file_name
+            self.item_sim.setText(0,(line))
+            self.gui.tree_selected.setCurrentItem(self.item_sim)
             for i in matches:
                 home,away = i
                 self.simulation_filters(home,away)
@@ -154,12 +154,6 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
                     '  1x: '+str(round(self.odd_1x,2))+\
                     '  x2: '+str(round(self.odd_x2,2))
                     QtGui.QTreeWidgetItem(self.item_sim).setText(0, (line))
-
-        item = self.gui.tree_selected.currentItem()
-        child = item.childCount()
-        if child == 0:
-            index = self.gui.tree_selected.indexOfTopLevelItem(item)
-            self.gui.tree_selected.takeTopLevelItem(index)
 
 
     def filters_tree(self):

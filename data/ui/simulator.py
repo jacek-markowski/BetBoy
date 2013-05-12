@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'simulator.ui'
 #
-# Created: Sun May 12 14:29:54 2013
+# Created: Sun May 12 16:42:18 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -85,7 +85,7 @@ class Ui_Simulator(object):
         self.label_20.setObjectName("label_20")
         self.verticalLayout_12.addWidget(self.label_20)
         self.spin_rounds_max = QtGui.QSpinBox(self.tab)
-        self.spin_rounds_max.setMinimum(6)
+        self.spin_rounds_max.setMinimum(1)
         self.spin_rounds_max.setProperty("value", 50)
         self.spin_rounds_max.setObjectName("spin_rounds_max")
         self.verticalLayout_12.addWidget(self.spin_rounds_max)

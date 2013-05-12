@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'export.ui'
 #
-# Created: Sun May 12 14:29:53 2013
+# Created: Sun May 12 16:42:17 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -144,7 +144,7 @@ class Ui_Export(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
         self.spin_max.setPalette(palette)
-        self.spin_max.setMinimum(6)
+        self.spin_max.setMinimum(1)
         self.spin_max.setMaximum(50)
         self.spin_max.setProperty("value", 50)
         self.spin_max.setObjectName("spin_max")

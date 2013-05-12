@@ -188,10 +188,9 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.spin_rounds_max,
         ]
 
-        for i in range(1, len(val)):
-            if val[i].value() <= val[i-1].value():
-                number = val[i].value()
-                val[i-1].setValue(number-1)
+        if val[0].value() >= val[1].value():
+            number = val[0].value()
+            val[1].setValue(number)
 
     def filter_combos_spins(self):
         ''' Changes values of combos and spins for away team'''
@@ -837,36 +836,38 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                                     gHomeEnd == "NULL"''')
         min_date = min_date.fetchone()
         min_date = min_date[0]
-        matches = self.relations_base.execute('''SELECT home,away
+        if min_date:
+            matches = self.relations_base.execute('''SELECT home,away
                         From Results WHERE
                         gHomeEnd == "NULL" and date_num=%f'''%min_date)
 
-        matches = matches.fetchall()
+            matches = matches.fetchall()
+        else:
+            matches = []
 
-        self.item_sim = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
-        line = str(
-        self.sim_stats['Path']+','+\
-        self.sim_stats['League']+','+\
-        self.sim_stats['Net']+','+\
-        self.sim_stats['Filter']+','+\
-        self.sim_stats['Ranges']+','+\
-        self.sim_stats['Bet_selector']+','+\
-        self.sim_stats['R_min']+','+\
-        self.sim_stats['R_max'])
-        self.item_sim.setText(0,(line))
-
-
-        for i in matches:
-            home,away = i
-            self.simulation_prediction(home,away,self.sim_stats['Net'])
-            self.filter_status = ''
-            self.simulation_filters(home,away)
-            self.simulation_match_filters()
-            self.simulation_colors()
-            if self.filter_status == 'yes':
-                odd_filter =self.odds_filter(self.bet)
-                if odd_filter[0] == 'yes':
-                    self.select_bet(home,away)
+        if len(matches)>0:
+            self.item_sim = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
+            line = str(
+            self.sim_stats['Path']+','+\
+            self.sim_stats['League']+','+\
+            self.sim_stats['Net']+','+\
+            self.sim_stats['Filter']+','+\
+            self.sim_stats['Ranges']+','+\
+            self.sim_stats['Bet_selector']+','+\
+            self.sim_stats['R_min']+','+\
+            self.sim_stats['R_max'])
+            self.item_sim.setText(0,(line))
+            for i in matches:
+                home,away = i
+                self.simulation_prediction(home,away,self.sim_stats['Net'])
+                self.filter_status = ''
+                self.simulation_filters(home,away)
+                self.simulation_match_filters()
+                self.simulation_colors()
+                if self.filter_status == 'yes':
+                    odd_filter =self.odds_filter(self.bet)
+                    if odd_filter[0] == 'yes':
+                        self.select_bet(home,away)
 
     def select_bet(self,home,away):
         ''' Bet filters for selecting bets'''

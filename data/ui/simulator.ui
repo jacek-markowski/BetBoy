@@ -153,7 +153,7 @@
                           <string>Max rounds played</string>
                          </property>
                          <property name="minimum">
-                          <number>6</number>
+                          <number>1</number>
                          </property>
                          <property name="value">
                           <number>50</number>
