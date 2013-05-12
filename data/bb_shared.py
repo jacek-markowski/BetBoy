@@ -441,12 +441,15 @@ class Shared(object):
         self.gui.spin_odd_1x,
         self.gui.spin_odd_x2
         ]
-        item = self.gui.tree_filters_profile.currentItem()
-        file_name = item.text(0)
+        if file_name == None:
+            item = self.gui.tree_filters_profile.currentItem()
+            file_name = str(item.text(0))
+            print file_name, '<'
         if self.app == 'simulator':
             path = os.path.join('profiles','filters','')
         elif self.app == 'selector':
             path = os.path.join('profiles','selector','')
+        print path,'<'
         with open(path+file_name,'r') as f:
             load = list(f)
         for i in range(0,len(val)):
@@ -469,7 +472,7 @@ class Shared(object):
 
         if file_name == None:
             item = self.gui.tree_filters_profile.currentItem()
-            file_name = item.text(0)
+            file_name = str(item.text(0))
         with open(path+file_name,'r') as f:
             val = list(f)
         filter_vars =(
@@ -697,6 +700,7 @@ class Shared(object):
                         pass
                     else:
                         self.filter_status = 'no'
+
 
 
 
