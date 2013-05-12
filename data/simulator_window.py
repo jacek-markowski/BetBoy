@@ -62,8 +62,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         'Bet_selector',
         'R_min',
         'R_max',
-        'Odds level',
-        'Net frequency']
+        'Odds level']
         for i in range(0, len(labels)):
             self.gui.tree_hits.headerItem().setText(i,
                                                   (labels[i]))
@@ -72,6 +71,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         for i in range(0, 1):
             self.gui.tree_bets_selected.headerItem().setText(i,
                                                    (labels[i]))
+
 
         self.bindings()
         # try to show files in folders profile
@@ -115,12 +115,18 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.table_filtered.setColumnWidth(4, 60)
         self.gui.table_filtered.setColumnWidth(5, 60)
         self.gui.table_filtered.setColumnWidth(6, 100)
-
         self.gui.table_preview.setColumnWidth(0, 100)
         self.gui.table_preview.setColumnWidth(1, 100)
         self.gui.table_preview.setColumnWidth(2, 100)
         self.gui.table_preview.setColumnWidth(3, 50)
         self.gui.table_preview.setColumnWidth(4, 80)
+        labels = ['Date','Home','Away','Result','Bet','Odd','Net']
+        self.gui.table_preview.setColumnCount(len(labels[:-2]))
+        self.gui.table_preview.setHorizontalHeaderLabels(labels)
+        self.gui.table_preview.setRowCount(0)
+        self.gui.table_filtered.setColumnCount(len(labels))
+        self.gui.table_filtered.setHorizontalHeaderLabels(labels)
+        self.gui.table_filtered.setRowCount(0)
 
     def closeEvent(self, event):
         self.stop_action = 1
@@ -482,7 +488,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.spin_acc_2,
         self.gui.spin_acc_1x,
         self.gui.spin_acc_x2,
-        self.gui.spin_freq,
         self.gui.spin_bet_odd_1,
         self.gui.spin_bet_odd_x,
         self.gui.spin_bet_odd_2,
@@ -531,7 +536,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         acc_2=self.gui.spin_acc_2.value()
         acc_1x=self.gui.spin_acc_1x.value()
         acc_x2=self.gui.spin_acc_x2.value()
-        freq=self.gui.spin_freq.value()
         odd_1=self.gui.spin_bet_odd_1.value()
         odd_x=self.gui.spin_bet_odd_x.value()
         odd_2=self.gui.spin_bet_odd_2.value()
@@ -544,7 +548,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         acc_2,
         acc_1x,
         acc_x2,
-        freq,
         odd_1,
         odd_x,
         odd_2,
@@ -675,15 +678,26 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             '2 odd_balance':0.0,
             '1x odd_balance':0.0,
             'x2 odd_balance':0.0}
-            self.sim_stats['Path']= str(sim.text(0))
-            self.sim_stats['League']= str(sim.text(1))
-            self.sim_stats['Net']= str(sim.text(2))
-            self.sim_stats['Filter']= str(sim.text(3))
-            self.sim_stats['Ranges']= str(sim.text(4))
-            self.sim_stats['Bet_selector']= str(sim.text(5))
-            self.sim_stats['R_min']= str(sim.text(6))
-            self.sim_stats['R_max']= str(sim.text(7))
-            self.odds_level = float(sim.text(8))
+            if mode == 0:
+                self.sim_stats['Path']= str(sim.text(0))
+                self.sim_stats['League']= str(sim.text(1))
+                self.sim_stats['Net']= str(sim.text(2))
+                self.sim_stats['Filter']= str(sim.text(3))
+                self.sim_stats['Ranges']= str(sim.text(4))
+                self.sim_stats['Bet_selector']= str(sim.text(5))
+                self.sim_stats['R_min']= str(sim.text(6))
+                self.sim_stats['R_max']= str(sim.text(7))
+                self.odds_level = float(sim.text(8))
+            elif mode == 1:
+                self.sim_stats['Path']= str(sim.text(1))
+                self.sim_stats['League']= str(sim.text(2))
+                self.sim_stats['Net']= str(sim.text(3))
+                self.sim_stats['Filter']= str(sim.text(4))
+                self.sim_stats['Ranges']= str(sim.text(5))
+                self.sim_stats['Bet_selector']= str(sim.text(6))
+                self.sim_stats['R_min']= str(sim.text(7))
+                self.sim_stats['R_max']= str(sim.text(8))
+                self.odds_level = float(sim.text(9))
             rounds_min = int(self.sim_stats['R_min'])
             rounds_max = int(self.sim_stats['R_max'])
             self.gui.table_preview.clear()
@@ -742,13 +756,13 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         item.setText(7,(self.sim_stats['R_min']))
         item.setText(8,(self.sim_stats['R_max']))
         item.setText(9,str(self.odds_level))
-        ### net frequency
-        matches = self.gui.table_filtered.rowCount()
-        try:
-            self.c_freq = self.sim_stats['bets']/matches*100
-        except:
-            self.c_freq = 0
-        item.setText(10,(str(self.c_freq)))
+#        ### net frequency
+#        matches = self.gui.table_filtered.rowCount()
+#        try:
+#            self.c_freq = self.sim_stats['bets']/matches*100
+#        except:
+#            self.c_freq = 0
+#        item.setText(10,(str(self.c_freq)))
         # overall accuracy
         self.simulation_overall_accuracy()
         QtGui.QTreeWidgetItem(item).setText(0, '---------')
@@ -781,11 +795,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             line = val[i]+': '+profit+' %'
             QtGui.QTreeWidgetItem(item).setText(0, line)
 
-
-        try:
-            self.batch_bets()
-        except:
-            'no bets'
         ### avg_odds
         QtGui.QTreeWidgetItem(item).setText(0, '---------')
         self.simulation_avg_odds()
@@ -817,12 +826,11 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.acc_2 = val[2]
         self.acc_1x = val[3]
         self.acc_x2 = val[4]
-        self.freq = val[5]
-        self.spin_odds_1=val[6]
-        self.spin_odds_x=val[7]
-        self.spin_odds_2=val[8]
-        self.spin_odds_1x=val[9]
-        self.spin_odds_x2=val[10]
+        self.spin_odds_1=val[5]
+        self.spin_odds_x=val[6]
+        self.spin_odds_2=val[7]
+        self.spin_odds_1x=val[8]
+        self.spin_odds_x2=val[9]
 
         min_date = self.relations_base.execute('''SELECT min(date_num)
                                     From Results WHERE
@@ -852,15 +860,10 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             home,away = i
             self.simulation_prediction(home,away,self.sim_stats['Net'])
             self.filter_status = ''
+            self.simulation_filters(home,away)
             self.simulation_match_filters()
             self.simulation_colors()
-            if self.c_freq>=self.freq and self.filter_status == 'yes':
-                self.odds = self.simulation_prediction(home,away,'default',1)
-                self.odd_1 = self.odds_rescale(self.odds[0],odds_level=self.odds_level)
-                self.odd_x = self.odds_rescale(self.odds[1],odds_level=self.odds_level)
-                self.odd_2 = self.odds_rescale(self.odds[2],odds_level=self.odds_level)
-                self.odd_1x = 1/((1/self.odd_1) + (1/self.odd_x))
-                self.odd_x2 = 1/((1/self.odd_x) + (1/self.odd_2))
+            if self.filter_status == 'yes':
                 odd_filter =self.odds_filter(self.bet)
                 if odd_filter[0] == 'yes':
                     self.select_bet(home,away)
@@ -1027,7 +1030,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             calc_yield = (balance - stakes)/stakes*100
         else:
             calc_yield = 0
-        self.sim_stats['1,x,2 yield'] = calc_yield
+        self.sim_stats['Overall yield'] = calc_yield
         # 1,x,2
         stakes = (self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2'])*100
         balance = self.sim_stats['1 balance']+self.sim_stats['x balance']+\
@@ -1036,7 +1039,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             calc_yield = (balance - stakes)/stakes*100
         else:
             calc_yield = 0
-        self.sim_stats['Overall yield']=calc_yield
+        self.sim_stats['1,x,2 yield']=calc_yield
         # 1x, x2
         stakes = (self.sim_stats['1x']+self.sim_stats['x2'])*100
         balance = self.sim_stats['1x balance']+self.sim_stats['x2 balance']

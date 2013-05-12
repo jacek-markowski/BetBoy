@@ -449,7 +449,7 @@
                   </size>
                  </property>
                  <property name="title">
-                  <string>Stats Home %</string>
+                  <string>Stats team home %</string>
                  </property>
                  <widget class="QComboBox" name="combo_points">
                   <property name="geometry">
@@ -597,7 +597,7 @@
                    </size>
                   </property>
                   <property name="text">
-                   <string>PointsH/A</string>
+                   <string>Points home</string>
                   </property>
                  </widget>
                  <widget class="QSpinBox" name="spin_form_ha">
@@ -670,7 +670,7 @@
                    </size>
                   </property>
                   <property name="text">
-                   <string>FormH/A</string>
+                   <string>Form home</string>
                   </property>
                  </widget>
                  <widget class="QSpinBox" name="spin_form">
@@ -763,7 +763,7 @@
                   </size>
                  </property>
                  <property name="title">
-                  <string>Stats Away %</string>
+                  <string>Stats team away %</string>
                  </property>
                  <widget class="QComboBox" name="combo_points_2">
                   <property name="enabled">
@@ -771,7 +771,7 @@
                   </property>
                   <property name="geometry">
                    <rect>
-                    <x>3</x>
+                    <x>83</x>
                     <y>20</y>
                     <width>51</width>
                     <height>21</height>
@@ -806,7 +806,7 @@
                   </property>
                   <property name="geometry">
                    <rect>
-                    <x>60</x>
+                    <x>140</x>
                     <y>20</y>
                     <width>51</width>
                     <height>21</height>
@@ -837,7 +837,7 @@
                   </property>
                   <property name="geometry">
                    <rect>
-                    <x>60</x>
+                    <x>140</x>
                     <y>40</y>
                     <width>51</width>
                     <height>21</height>
@@ -868,7 +868,7 @@
                   </property>
                   <property name="geometry">
                    <rect>
-                    <x>3</x>
+                    <x>83</x>
                     <y>40</y>
                     <width>51</width>
                     <height>21</height>
@@ -903,7 +903,7 @@
                   </property>
                   <property name="geometry">
                    <rect>
-                    <x>60</x>
+                    <x>140</x>
                     <y>80</y>
                     <width>51</width>
                     <height>21</height>
@@ -934,7 +934,7 @@
                   </property>
                   <property name="geometry">
                    <rect>
-                    <x>3</x>
+                    <x>83</x>
                     <y>60</y>
                     <width>51</width>
                     <height>21</height>
@@ -969,7 +969,7 @@
                   </property>
                   <property name="geometry">
                    <rect>
-                    <x>60</x>
+                    <x>140</x>
                     <y>60</y>
                     <width>51</width>
                     <height>21</height>
@@ -1000,7 +1000,7 @@
                   </property>
                   <property name="geometry">
                    <rect>
-                    <x>3</x>
+                    <x>83</x>
                     <y>80</y>
                     <width>51</width>
                     <height>21</height>
@@ -1029,6 +1029,58 @@
                    </property>
                   </item>
                  </widget>
+                 <widget class="QLabel" name="label_66">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>58</width>
+                    <height>17</height>
+                   </rect>
+                  </property>
+                  <property name="text">
+                   <string>Points</string>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="label_67">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>40</y>
+                    <width>71</width>
+                    <height>17</height>
+                   </rect>
+                  </property>
+                  <property name="text">
+                   <string>Points away</string>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="label_68">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>60</y>
+                    <width>58</width>
+                    <height>17</height>
+                   </rect>
+                  </property>
+                  <property name="text">
+                   <string>Form</string>
+                  </property>
+                 </widget>
+                 <widget class="QLabel" name="label_69">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>80</y>
+                    <width>71</width>
+                    <height>17</height>
+                   </rect>
+                  </property>
+                  <property name="text">
+                   <string>Form away</string>
+                  </property>
+                 </widget>
                 </widget>
                </item>
               </layout>
@@ -1050,7 +1102,7 @@
                   </size>
                  </property>
                  <property name="title">
-                  <string>Series Home&lt;=&gt;Value</string>
+                  <string>Series team home</string>
                  </property>
                  <widget class="QComboBox" name="combo_h_wins">
                   <property name="geometry">
@@ -2605,7 +2657,7 @@
                   </size>
                  </property>
                  <property name="title">
-                  <string>Series Away&lt;=&gt;Value</string>
+                  <string>Series team away</string>
                  </property>
                  <widget class="QLabel" name="label_42">
                   <property name="geometry">
@@ -5123,33 +5175,6 @@
                        </layout>
                       </item>
                      </layout>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_14">
-                    <item>
-                     <widget class="QLabel" name="label_14">
-                      <property name="text">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Min net frequency%&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QDoubleSpinBox" name="spin_freq">
-                      <property name="maximumSize">
-                       <size>
-                        <width>65</width>
-                        <height>27</height>
-                       </size>
-                      </property>
-                      <property name="value">
-                       <double>50.000000000000000</double>
-                      </property>
-                     </widget>
                     </item>
                    </layout>
                   </item>

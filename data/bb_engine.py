@@ -335,8 +335,9 @@ class Database(Shared):
                             print '==== Scaling====', day
                             export_print_file.write('Process data :'+day+' Round %d'%rounds)
                     self.export('tmp', home, away, rounds, fth, fta)
-
-            if mode == 2 and self.stop_action == 0: # simulation
+            if self.stop_action == 1:
+                break
+            if mode == 2: # simulation
                 if r_min <= rounds <= r_max:
                     self.scale_group_check(day)
                     if self.match_group == 1:
@@ -842,6 +843,15 @@ class Database(Shared):
         self.odd_2 = self.odds_rescale(self.odds[2],self.odds_level)
         self.odd_1x = 1/((1/self.odd_1) + (1/self.odd_x))
         self.odd_x2 = 1/((1/self.odd_x) + (1/self.odd_2))
+        odds = (
+        self.odd_1,
+        self.odd_x,
+        self.odd_2,
+        self.odd_1x,
+        self.odd_x2)
+        for i in odds:
+            if i < 1:
+                i = 1
 
     def process_csv(self, results):
         '''Calculates points,form,series etc.'''

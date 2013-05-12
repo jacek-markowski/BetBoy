@@ -681,6 +681,8 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
             bet = 'x2'
         elif min_2 <= prediction and prediction < max_2:
             bet = '2'
+        else:
+            bet = 'None'
         line = home+' - '+away+' : '+bet
         self.gui.label_prediction.setText(line)
         self.gui.label_home.setText(home)
@@ -698,6 +700,10 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         odd_2 = self.odds_rescale(odds[2],100)
         odd_1x = 1/((1/odd_1) + (1/odd_x))
         odd_x2 = 1/((1/odd_x) + (1/odd_2))
+        if odd_1x < 1:
+            odd_1x = 1
+        if odd_x2 < 1:
+            odd_x2 = 1
         line ='1: '+str(odd_1)+'  x: '+str(odd_x)+'  2: '+str(odd_2)
         self.gui.label_odds.setText(line)
         print odd_1x,odd_x2
