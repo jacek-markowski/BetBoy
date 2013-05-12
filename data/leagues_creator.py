@@ -61,6 +61,7 @@ class LeaguesApp(QtGui.QWidget,Shared):
         self.gui.tree_team_profiles.doubleClicked.connect(self.profile_load)
         self.gui.button_profile_delete.clicked.connect(self.profile_delete)
         self.gui.line_team.returnPressed.connect(self.team_add)
+        self.gui.tree_team_profiles.clicked.connect(self.load_name_profiles)
         #tab leauges
         self.gui.tree_teams.itemChanged.connect(self.teams_home_away)
         self.gui.button_league_load.clicked.connect(self.league_load)
@@ -76,6 +77,20 @@ class LeaguesApp(QtGui.QWidget,Shared):
         self.gui.button_match_remove.clicked.connect(self.match_remove)
         self.gui.button_league_save.clicked.connect(self.league_save)
         self.gui.button_league_delete.clicked.connect(self.league_delete)
+        self.gui.tree_leagues_own.clicked.connect(self.load_name)
+    def load_name(self):
+        ''' Sets loaded file name in text line'''
+        child = self.gui.tree_leagues_own.currentItem()
+        parent = child.parent()
+        if parent:
+            name = child.text(0)
+            self.gui.line_league_save.setText(name)
+    def load_name_profiles(self):
+        ''' Sets loaded file name in text line'''
+        child = self.gui.tree_team_profiles.currentItem()
+        name = child.text(0)
+        if name:
+            self.gui.line_teams_save.setText(name)
 
     def team_add(self):
         ''' Adds team to tree'''

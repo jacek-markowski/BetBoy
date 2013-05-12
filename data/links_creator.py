@@ -68,10 +68,17 @@ class LinksApp(QtGui.QWidget, Shared):
         self.gui.button_remove.clicked.connect(self.remove)
         self.gui.button_remove_fd.clicked.connect(self.remove_fd)
         self.gui.button_load.clicked.connect(self.load_base)
+
         self.gui.button_load_fd.clicked.connect(self.load_base_fd)
         self.gui.tree_link_bases.doubleClicked.connect(self.load_base)
         self.gui.button_check.clicked.connect(self.check_link)
         self.gui.line_name.textChanged.connect(self.line_sync)
+        self.gui.tree_link_bases.clicked.connect(self.load_name)
+    def load_name(self):
+        ''' Sets loaded file name in text line'''
+        child = self.gui.tree_link_bases.currentItem()
+        file_name = str(child.text(0))
+        self.gui.line_save.setText(file_name)
     def line_sync(self):
         ''' Line (league name) to line (save) synchronization'''
         self.gui.line_save.setText(self.gui.line_name.text())
@@ -201,6 +208,7 @@ class LinksApp(QtGui.QWidget, Shared):
                 item_url = QtGui.QTreeWidgetItem(self.gui.tree_url)
                 item_url.setText(0, name)
                 item_url.setText(1, url)
+
 
     def load_base_fd(self):
         ''' Load url profile to tree - football data'''
