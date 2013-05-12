@@ -153,14 +153,10 @@ class UpdateApp(QtGui.QWidget, Shared):
         self.links_profiles_fd() #football-data.co.uk
         self.combo_path()
 
-    def delete_file(self, file_delete, path):
-        '''Dialog for delete file '''
-        reply = QtGui.QMessageBox.question(self, 'Delete?',
-            "Are you sure to delete %s?"%file_delete, QtGui.QMessageBox.Yes |
-            QtGui.QMessageBox.No, QtGui.QMessageBox.No)
-        if reply == QtGui.QMessageBox.Yes:
-            if file_delete != 'default':
-                os.remove(path+file_delete)
+    def closeEvent(self, event):
+        self.scrape.terminate()
+        self.find_broken_leagues()
+        event.accept()
 
     def delete(self):
         ''' Deletes file'''
