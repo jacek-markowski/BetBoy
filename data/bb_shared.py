@@ -90,7 +90,7 @@ class Shared(object):
         old_range = 2
         new_range = 19
         odd = ((((val + 1) * new_range) / old_range) + 1)*odds_level/100.0
-        odd = round(odd*0.9,2)
+        odd = round(odd,2)
         if odd < 1:
             odd = 1
         return odd
