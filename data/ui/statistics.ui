@@ -380,6 +380,9 @@ font: 13pt}</string>
                <property name="selectionBehavior">
                 <enum>QAbstractItemView::SelectRows</enum>
                </property>
+               <property name="sortingEnabled">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -492,6 +495,9 @@ font: 13pt}</string>
                <property name="selectionBehavior">
                 <enum>QAbstractItemView::SelectRows</enum>
                </property>
+               <property name="sortingEnabled">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -575,6 +581,9 @@ font: 13pt}</string>
                </property>
                <property name="gridStyle">
                 <enum>Qt::SolidLine</enum>
+               </property>
+               <property name="sortingEnabled">
+                <bool>true</bool>
                </property>
                <attribute name="verticalHeaderVisible">
                 <bool>false</bool>

@@ -5472,26 +5472,50 @@
       <attribute name="title">
        <string>Preview</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_24">
+      <layout class="QVBoxLayout" name="verticalLayout_42">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_20">
+        <layout class="QHBoxLayout" name="horizontalLayout_14">
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout_18">
+          <layout class="QVBoxLayout" name="verticalLayout_24">
            <item>
-            <widget class="QLabel" name="label_16">
+            <layout class="QVBoxLayout" name="verticalLayout_18">
+             <item>
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>All matches</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="table_preview">
+               <property name="sortingEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="button_stop">
+               <property name="text">
+                <string>Stop</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_18">
              <property name="text">
-              <string>All matches</string>
+              <string>Filtered: accuracy stats</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QTableWidget" name="table_preview"/>
-           </item>
-           <item>
-            <widget class="QPushButton" name="button_stop">
-             <property name="text">
-              <string>Stop</string>
-             </property>
+            <widget class="QTreeWidget" name="tree_hits">
+             <column>
+              <property name="text">
+               <string notr="true">1</string>
+              </property>
+             </column>
             </widget>
            </item>
           </layout>
@@ -5506,27 +5530,15 @@
             </widget>
            </item>
            <item>
-            <widget class="QTableWidget" name="table_filtered"/>
+            <widget class="QTableWidget" name="table_filtered">
+             <property name="sortingEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_18">
-         <property name="text">
-          <string>Filtered: accuracy stats</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTreeWidget" name="tree_hits">
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
-        </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_21">

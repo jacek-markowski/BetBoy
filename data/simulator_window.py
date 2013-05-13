@@ -97,8 +97,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 pass
 
         # size of columns
-        labels = ['Date','Home','Away','Result','Bet','Odd','Net']
-        self.gui.table_preview.setColumnCount(len(labels[:-2]))
+        labels = ['Date','Home','Away','Result','Bet','Odd','Net','Status']
+        self.gui.table_preview.setColumnCount(len(labels))
         self.gui.table_preview.setHorizontalHeaderLabels(labels)
         self.gui.table_preview.setRowCount(0)
         self.gui.table_filtered.setColumnCount(len(labels))
@@ -120,8 +120,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.table_preview.setColumnWidth(2, 100)
         self.gui.table_preview.setColumnWidth(3, 50)
         self.gui.table_preview.setColumnWidth(4, 80)
-        labels = ['Date','Home','Away','Result','Bet','Odd','Net']
-        self.gui.table_preview.setColumnCount(len(labels[:-2]))
+        labels = ['Date','Home','Away','Result','Bet','Odd','Net','Status']
+        self.gui.table_preview.setColumnCount(len(labels))
         self.gui.table_preview.setHorizontalHeaderLabels(labels)
         self.gui.table_preview.setRowCount(0)
         self.gui.table_filtered.setColumnCount(len(labels))
@@ -746,8 +746,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             rounds_min = int(self.sim_stats['R_min'])
             rounds_max = int(self.sim_stats['R_max'])
             self.gui.table_preview.clear()
-            labels = ['Date','Home','Away','Result','Bet','Odd','Net']
-            self.gui.table_preview.setColumnCount(len(labels[:-2]))
+            labels = ['Date','Home','Away','Result','Bet','Odd','Net','Status']
+            self.gui.table_preview.setColumnCount(len(labels))
             self.gui.table_preview.setHorizontalHeaderLabels(labels)
             self.gui.table_preview.setRowCount(0)
             self.gui.table_filtered.setColumnCount(len(labels))
@@ -1035,24 +1035,21 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
 
     def batch_print(self):
         ''' Adds matches to all matches and filtered matches'''
-
         rows_all = self.gui.table_preview.rowCount()
         rows_filtered = self.gui.table_filtered.rowCount()
         self.filter_status = '' # when 'yes' then adds match to filtered
         self.simulation_match_filters() # filter matches
         self.simulation_colors() # count accuracy give colors (green-win etc.)
 
-        table_all =[self.date,self.home,self.away,str(self.fth)+':'+\
-            str(self.fta),self.bet]
-        table_filtered =['self.date','self.home','self.away',"str(self.fth)+':'+\
-            str(self.fta)",'self.bet','odd_filter[1]','self.prediction']
+
+        table =['self.date','self.home','self.away',"str(self.fth)+':'+\
+            str(self.fta)",'self.bet','odd_filter[1]','self.prediction','self.color']
         # all matches
-        for i in range(0,len(table_all)):
+        odd_filter =self.odds_filter(self.bet)
+        for i in range(0,len(table)):
+            item = QtGui.QTableWidgetItem(str(eval(table[i])))
             self.gui.table_preview.setRowCount(rows_all+1)
-            item = QtGui.QTableWidgetItem(str(table_all[i]))
             self.gui.table_preview.setItem(rows_all, i, item)
-            self.gui.table_preview.setItem(rows_all, 4,
-                                           QtGui.QTableWidgetItem(self.bet))
             self.gui.table_preview.item(rows_all, i).\
                 setBackground(self.prediction_color)
         # filtered list table
@@ -1061,12 +1058,12 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             self.sim_stats['matches_filter'] = self.sim_stats['matches_filter'] + 1
         if self.filter_status == 'yes':
             odd_filter =self.odds_filter(self.bet)
-            for i in range(0,len(table_filtered)):
+            for i in range(0,len(table)):
                 ####
                 # Odds filter
                 ####
                 if odd_filter[0] == 'yes':
-                    item = QtGui.QTableWidgetItem(str(eval(table_filtered[i])))
+                    item = QtGui.QTableWidgetItem(str(eval(table[i])))
                     self.gui.table_filtered.setRowCount(rows_filtered+1)
                     self.gui.table_filtered.setItem(rows_filtered, i, item)
                     self.gui.table_filtered.item(rows_filtered, i).\
@@ -1084,7 +1081,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         QtGui.QApplication.processEvents()
     def odds_filter(self,bet):
         ''' Filters matches by min odds'''
-
         if bet == '1' and self.odd_1 >=float(self.spin_odds_1):
             status = ('yes',self.odd_1)
         elif bet == 'x' and self.odd_x >=float(self.spin_odds_x):
@@ -1096,7 +1092,14 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         elif bet == 'x2' and self.odd_x2 >=float(self.spin_odds_x2):
             status = ('yes',self.odd_x2)
         else:
-            status = 'no'
+            bets = ('1','x','2','1x','x2')
+            if bet in bets:
+                for i in bets:
+                    if bet == i:
+                        status = ('no',eval('self.odd_'+i))
+            else:
+                status = ('no','-')
+
         return status
 
 
@@ -1369,6 +1372,12 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         else:
             self.prediction_color = grey
             self.bet = 'None'
+        if self.prediction_color == green:
+            self.color ='Hit'
+        elif self.prediction_color == red:
+            self.color ='Miss'
+        elif self.prediction_color == grey:
+            self.color ='None'
     def filters_delete(self):
         ''' Deletes match filter'''
         path = os.path.join('profiles','filters','')

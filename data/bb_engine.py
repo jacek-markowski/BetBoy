@@ -838,11 +838,11 @@ class Database(Shared):
         # Odds
         ####
         self.odds = self.simulation_prediction(home,away,'default',1)
-        self.odd_1 = self.odds_rescale(self.odds[0],self.odds_level)
-        self.odd_x = self.odds_rescale(self.odds[1],self.odds_level)
-        self.odd_2 = self.odds_rescale(self.odds[2],self.odds_level)
-        self.odd_1x = 1/((1/self.odd_1) + (1/self.odd_x))
-        self.odd_x2 = 1/((1/self.odd_x) + (1/self.odd_2))
+        self.odd_1 = round(self.odds_rescale(self.odds[0],self.odds_level),3)
+        self.odd_x = round(self.odds_rescale(self.odds[1],self.odds_level),3)
+        self.odd_2 = round(self.odds_rescale(self.odds[2],self.odds_level),3)
+        self.odd_1x = round(1/((1/self.odd_1) + (1/self.odd_x)),3)
+        self.odd_x2 = round(1/((1/self.odd_x) + (1/self.odd_2)),3)
         if self.odd_1 < 1:
             self.odd_1 = 1.0
         if self.odd_2 < 1:

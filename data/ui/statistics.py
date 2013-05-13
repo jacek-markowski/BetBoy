@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'statistics.ui'
 #
-# Created: Sun May 12 16:42:17 2013
+# Created: Mon May 13 17:29:29 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -454,6 +454,7 @@ class Ui_MainWindow(object):
         self.combo_standings_mode.setItemText(3, QtGui.QApplication.translate("MainWindow", "Overall BB Rating", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_standings_mode.setItemText(4, QtGui.QApplication.translate("MainWindow", "Home BB Rating", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_standings_mode.setItemText(5, QtGui.QApplication.translate("MainWindow", "Away BB Rating", None, QtGui.QApplication.UnicodeUTF8))
+        self.main_table_standings.setSortingEnabled(True)
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_standings), QtGui.QApplication.translate("MainWindow", "Standings", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_form_mode.setItemText(0, QtGui.QApplication.translate("MainWindow", "Overall Classic", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_form_mode.setItemText(1, QtGui.QApplication.translate("MainWindow", "Home Classic", None, QtGui.QApplication.UnicodeUTF8))
@@ -461,7 +462,9 @@ class Ui_MainWindow(object):
         self.combo_form_mode.setItemText(3, QtGui.QApplication.translate("MainWindow", "Overall BB Rating", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_form_mode.setItemText(4, QtGui.QApplication.translate("MainWindow", "Home BB Rating", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_form_mode.setItemText(5, QtGui.QApplication.translate("MainWindow", "Away BB Rating", None, QtGui.QApplication.UnicodeUTF8))
+        self.main_table_form.setSortingEnabled(True)
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_form), QtGui.QApplication.translate("MainWindow", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.main_table_scheudle.setSortingEnabled(True)
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_scheudle), QtGui.QApplication.translate("MainWindow", "Scheudle", None, QtGui.QApplication.UnicodeUTF8))
         self.label_home.setText(QtGui.QApplication.translate("MainWindow", "Home team", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_home_mode.setItemText(0, QtGui.QApplication.translate("MainWindow", "Overall", None, QtGui.QApplication.UnicodeUTF8))
