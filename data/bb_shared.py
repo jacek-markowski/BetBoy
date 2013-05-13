@@ -132,14 +132,14 @@ class Shared(object):
             tmp_file_open = reader(csv_file)
             tmp_file = list(tmp_file_open)
         match_list = []
-        for t in range(0, len(tmp_file)):
+        for t in xrange(0, len(tmp_file)):
             if len(tmp_file[t][3]) > 4 or len(tmp_file[t][4]) > 4:
                 print tmp_file[t][3]
                 print tmp_file[t][4]
             else:
                 match_list.append(tmp_file[t])
         with open(path,'w') as fix_file:
-            for i in range(0, len(match_list)):
+            for i in xrange(0, len(match_list)):
                 line = str(match_list[i])
                 line = line.replace('[','')
                 line = line.replace(']','')
@@ -565,7 +565,7 @@ class Shared(object):
             'spin_odds_2',
             'spin_odds_1x',
             'spin_odds_x2')
-        for i in range(0,len(val)):
+        for i in xrange(0,len(val)):
             vars(self)[filter_vars[i]] = val[i]
 
         self.gui.line_filters.setText(file_name)
@@ -573,21 +573,22 @@ class Shared(object):
     def simulation_match_filters(self):
         ''' Match filters check'''
         self.filter_status = 'yes' # when 'yes' then adds match to filtered
+
         ############
         ## Points
         ############
         points = [
         (self.check_points,self.t1_points,self.t2_points,self.combo_points,
-         self.spin_points,'points'),
+         self.spin_points,'T-points'),
         (self.check_points_ha,self.t1_points_h,self.t2_points_a,
-         self.combo_points_ha,self.spin_points_ha,'pointsH/A'),
+         self.combo_points_ha,self.spin_points_ha,'T-pointsH/A'),
         (self.check_form,self.t1_form,self.t2_form,self.combo_form,
-         self.spin_form,'form'),
+         self.spin_form,'T-form'),
         (self.check_form_ha,self.t1_form_h,self.t2_form_a,self.combo_form_ha,
-         self.spin_form_ha,'formH/A')]
+         self.spin_form_ha,'T-formH/A')]
 
         for i in points:
-            if i[0] == 'True' and self.filter_status == 'yes':
+            if i[0] == 'True':
                 sum_points= i[1]+i[2]
                 if sum_points == 0:
                     diff = 0
@@ -598,95 +599,100 @@ class Shared(object):
                     pass
                 else:
                     self.filter_status = 'no'
+                    # filter reports count
+                    self.sim_stats[i[5]] = self.sim_stats[i[5]] + 1
 
         ############
         ## Series
         ############
-        T12 = [
+        T12 = (
         (str(self.t1_wins)+self.combo_h_wins+self.spin_h_wins,'T1-wins'),
         (str(self.t1_winshome)+self.combo_h_winshome+self.spin_h_winshome,
-         'T1-winshome'),
+         'T1-wins_home'),
         (str(self.t1_draws)+self.combo_h_draws+self.spin_h_draws,
          'T1-draws'),
         (str(self.t1_drawshome)+self.combo_h_drawshome+self.spin_h_drawshome,
-         'T1-drawshome'),
+         'T1-draws_home'),
         (str(self.t1_loses)+self.combo_h_loses+self.spin_h_loses,
          'T1-loses'),
         (str(self.t1_loseshome)+self.combo_h_loseshome+self.spin_h_loseshome,
-         'T1-loseshome'),
+         'T1-loses_home'),
         (str(self.t1_nowins)+self.combo_h_nowins+self.spin_h_nowins,
          'T1-nowins'),
         (str(self.t1_nowinshome)+self.combo_h_nowinshome+self.spin_h_nowinshome,
-         'T1-nowinshome'),
+         'T1-nowins_home'),
         (str(self.t1_nodraws)+self.combo_h_nodraws+self.spin_h_nodraws,
          'T1-nodraws'),
         (str(self.t1_nodrawshome)+self.combo_h_nodrawshome+self.spin_h_nodrawshome,
-         'T1-nodrawshome'),
+         'T1-nodraws_home'),
         (str(self.t1_noloses)+self.combo_h_noloses+self.spin_h_noloses,
          'T1-noloses'),
         (str(self.t1_noloseshome)+self.combo_h_noloseshome+self.spin_h_noloseshome,
-         'T1-nolosesHome'),
+         'T1-noloses_home'),
         (str(self.t1_bts)+self.combo_h_bts+self.spin_h_bts,
          'T1-bts'),
         (str(self.t1_btshome)+self.combo_h_btshome+self.spin_h_btshome,
-         'T1-btshome'),
+         'T1-bts_home'),
         (str(self.t1_over)+self.combo_h_over+self.spin_h_over,
          'T1-over'),
         (str(self.t1_overhome)+self.combo_h_overhome+self.spin_h_overhome,
-         'T1-overhome'),
+         'T1-over_home'),
         (str(self.t1_under)+self.combo_h_under+self.spin_h_under,
          'T1-under'),
         (str(self.t1_underhome)+self.combo_h_underhome+self.spin_h_underhome,
-         'T1-underhome'),
+         'T1-under_home'),
         (str(self.t2_wins)+self.combo_a_wins+self.spin_a_wins,'T2-wins'),
         (str(self.t2_winsaway)+self.combo_a_winsaway+self.spin_a_winsaway,
-         'T2-winsaway'),
+         'T2-wins_away'),
         (str(self.t2_draws)+self.combo_a_draws+self.spin_a_draws,
          'T2-draws'),
         (str(self.t2_drawsaway)+self.combo_a_drawsaway+self.spin_a_drawsaway,
-         'T2-drawsaway'),
+         'T2-draws_away'),
         (str(self.t2_loses)+self.combo_a_loses+self.spin_a_loses,
          'T2-loses'),
         (str(self.t2_losesaway)+self.combo_a_losesaway+self.spin_a_losesaway,
-         'T2-losesaway'),
+         'T2-loses_away'),
         (str(self.t2_nowins)+self.combo_a_nowins+self.spin_a_nowins,
          'T2-nowins'),
         (str(self.t2_nowinsaway)+self.combo_a_nowinsaway+self.spin_a_nowinsaway,
-         'T2-nowinsaway'),
+         'T2-nowin_saway'),
         (str(self.t2_nodraws)+self.combo_a_nodraws+self.spin_a_nodraws,
          'T2-nodraws'),
         (str(self.t2_nodrawsaway)+self.combo_a_nodrawsaway+self.spin_a_nodrawsaway,
-         'T2-nodrawsaway'),
+         'T2-nodraws_away'),
         (str(self.t2_noloses)+self.combo_a_noloses+self.spin_a_noloses,
          'T2-noloses'),
         (str(self.t2_nolosesaway)+self.combo_a_nolosesaway+self.spin_a_nolosesaway,
-         'T2-nolosesaway'),
+         'T2-noloses_away'),
         (str(self.t2_bts)+self.combo_a_bts+self.spin_a_bts,
          'T2-bts'),
         (str(self.t2_btsaway)+self.combo_a_btsaway+self.spin_a_btsaway,
-         'T2-btsaway'),
+         'T2-bts_away'),
         (str(self.t2_over)+self.combo_a_over+self.spin_a_over,
          'T2-over'),
         (str(self.t2_overaway)+self.combo_a_overaway+self.spin_a_overaway,
-         'T2-overaway'),
+         'T2-over_away'),
         (str(self.t2_under)+self.combo_a_under+self.spin_a_under,
          'T2-under'),
         (str(self.t2_underaway)+self.combo_a_underaway+self.spin_a_underaway,
-         'T2-underaway')]
+         'T2-under_away'))
         # HomeAway-series
-        for i in T12:
-            if self.filter_status == 'yes':
-                line=i[0]
-                'When getting file from linux on windows'
-                line = self.rm_lines(line)
 
-                if eval(line):
-                    pass
-                else:
-                    self.filter_status = 'no'
+        for i in T12:
+            line=i[0]
+            'When getting file from linux on windows'
+            line = self.rm_lines(line)
+
+            if eval(line):
+                pass
+            else:
+                self.filter_status = 'no'
+                # for fiters report
+                self.sim_stats[i[1]] = self.sim_stats[i[1]] + 1
+
         if self.app == 'selector':
             ######
-            # Odds
+            # Odds - in match selector only !!!!
             ######
             odds = [
             (self.odd_1,self.spin_odds_1),

@@ -112,7 +112,7 @@ class Scrape(QtCore.QThread, Shared):
         # removes null matches in of middle file
         status = 'OK'
         match_list = []
-        for i in range(0, len(tmp_file)):
+        for i in xrange(0, len(tmp_file)):
             if tmp_file[i][3] == 'NULL' and status == 'OK':
                 match_list.append(tmp_file[i])
             elif tmp_file[i][3] != 'NULL' and status == 'OK':
@@ -122,7 +122,7 @@ class Scrape(QtCore.QThread, Shared):
                 match_list.append(tmp_file[i])
         with open(self.path+str(self.league),'w') as fix_file:
             match_list.reverse()
-            for i in range(0, len(match_list)):
+            for i in xrange(0, len(match_list)):
                 line = str(match_list[i])
                 line = line.replace('[','')
                 line = line.replace(']','')
@@ -204,7 +204,7 @@ class UpdateApp(QtGui.QWidget, Shared):
         self.gui.button_update.setEnabled(0)
         path = self.gui.combo_path.currentText()
         self.path = os.path.join('leagues', path, '')
-        for i in range(0, count):
+        for i in xrange(0, count):
             with open(os.path.join('tmp','')+'comm','r') as comm:
             # communicates with export manager
                 comm_var = comm.readline()
@@ -385,7 +385,7 @@ class UpdateApp(QtGui.QWidget, Shared):
     def links_add_all(self):
         ''' add alll url to list'''
         count = self.gui.tree_links.topLevelItemCount()
-        for i in range(0, count):
+        for i in xrange(0, count):
             child = self.gui.tree_links.topLevelItem(i)
             name = child.text(0)
             item = QtGui.QTreeWidgetItem(self.gui.tree_selected)

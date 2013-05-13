@@ -635,7 +635,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             'Bet_selector':'-',
             'R_min':'-',
             'R_max':'-',
-            'matches':0.0,
+            'matches_filter':0.0,
+            'matches_odds':0.0,
             'bets':0.0,
             'Overall':0.0,
             '1x,x2':0.0,
@@ -675,7 +676,53 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             'x odd_balance':0.0,
             '2 odd_balance':0.0,
             '1x odd_balance':0.0,
-            'x2 odd_balance':0.0}
+            'x2 odd_balance':0.0,
+            'T-odd_1':0.0,
+            'T-odd_x':0.0,
+            'T-odd_2':0.0,
+            'T-odd_1x':0.0,
+            'T-odd_x2':0.0,
+            'T-points':0.0,
+            'T-pointsH/A':0.0,
+            'T-form':0.0,
+            'T-formH/A':0.0,
+            'T1-wins':0.0,
+            'T1-wins_home':0.0,
+            'T1-draws':0.0,
+            'T1-draws_home':0.0,
+            'T1-loses':0.0,
+            'T1-loses_home':0.0,
+            'T1-nowins':0.0,
+            'T1-nowins_home':0.0,
+            'T1-nodraws':0.0,
+            'T1-nodraws_home':0.0,
+            'T1-noloses':0.0,
+            'T1-noloses_home':0.0,
+            'T1-bts':0.0,
+            'T1-bts_home':0.0,
+            'T1-over':0.0,
+            'T1-over_home':0.0,
+            'T1-under':0.0,
+            'T1-under_home':0.0,
+            'T2-wins':0.0,
+            'T2-wins_away':0.0,
+            'T2-draws':0.0,
+            'T2-draws_away':0.0,
+            'T2-loses':0.0,
+            'T2-loses_away':0.0,
+            'T2-nowins':0.0,
+            'T2-nowin_saway':0.0,
+            'T2-nodraws':0.0,
+            'T2-nodraws_away':0.0,
+            'T2-noloses':0.0,
+            'T2-noloses_away':0.0,
+            'T2-bts':0.0,
+            'T2-bts_away':0.0,
+            'T2-over':0.0,
+            'T2-over_away':0.0,
+            'T2-under':0.0,
+            'T2-under_away':0.0}
+
             if mode == 0:
                 self.sim_stats['Path']= str(sim.text(0))
                 self.sim_stats['League']= str(sim.text(1))
@@ -754,16 +801,9 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         item.setText(7,(self.sim_stats['R_min']))
         item.setText(8,(self.sim_stats['R_max']))
         item.setText(9,str(self.odds_level))
-#        ### net frequency
-#        matches = self.gui.table_filtered.rowCount()
-#        try:
-#            self.c_freq = self.sim_stats['bets']/matches*100
-#        except:
-#            self.c_freq = 0
-#        item.setText(10,(str(self.c_freq)))
-        # overall accuracy
+
         self.simulation_overall_accuracy()
-        QtGui.QTreeWidgetItem(item).setText(0, '---------')
+        QtGui.QTreeWidgetItem(item).setText(0, '*Accuracy*')
         val = ['Overall','1,x,2','1x,x2']
         for i in range(0,len(val)):
             acc = str(round(self.sim_stats[val[i]],2))
@@ -779,13 +819,11 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 percent = self.sim_stats[val[i]+' hit']/self.sim_stats[val[i]]*100
             except:
                 percent = 0
-            line = val[i]+' hits: '+count
-            QtGui.QTreeWidgetItem(item).setText(0, line)
-            line = val[i]+' hits: '+str(round(percent,2))+'%'
+            line = val[i]+' hits: '+count+', '+str(round(percent,2))+'%'
             QtGui.QTreeWidgetItem(item).setText(0, line)
 
         ### profit/loss - yield
-        QtGui.QTreeWidgetItem(item).setText(0, '---------')
+        QtGui.QTreeWidgetItem(item).setText(0, '*Yield*')
         self.simulation_yield()
         val = ['Overall yield','1,x,2 yield','1x,x2 yield','1 yield','x yield','2 yield','1x yield','x2 yield']
         for i in range(0,len(val)):
@@ -794,13 +832,92 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             QtGui.QTreeWidgetItem(item).setText(0, line)
 
         ### avg_odds
-        QtGui.QTreeWidgetItem(item).setText(0, '---------')
+        QtGui.QTreeWidgetItem(item).setText(0, '*Average hit odds*')
         self.simulation_avg_odds()
         val = ['Overall odd_avg','1,x,2 odd_avg','1x,x2 odd_avg','1 odd_avg','x odd_avg','2 odd_avg','1x odd_avg','x2 odd_avg']
         for i in range(0,len(val)):
             odds = str(round(self.sim_stats[val[i]],2))
             line = val[i]+': '+odds
             QtGui.QTreeWidgetItem(item).setText(0, line)
+        ### filter series report
+        matches_sum = self.sim_stats['matches_filter']+self.sim_stats['matches_odds']
+        QtGui.QTreeWidgetItem(item).setText(0, '*Matches removed* %f'%matches_sum)
+        QtGui.QTreeWidgetItem(item).setText(0, '**By points/series**')
+        self.simulation_avg_odds()
+        val = (
+        'T-points',
+        'T-pointsH/A',
+        'T-form',
+        'T-formH/A',
+        'T1-wins',
+        'T1-wins_home',
+        'T1-draws',
+        'T1-draws_home',
+        'T1-loses',
+        'T1-loses_home',
+        'T1-nowins',
+        'T1-nowins_home',
+        'T1-nodraws',
+        'T1-nodraws_home',
+        'T1-noloses',
+        'T1-noloses_home',
+        'T1-bts',
+        'T1-bts_home',
+        'T1-over',
+        'T1-over_home',
+        'T1-under',
+        'T1-under_home',
+        'T2-wins',
+        'T2-wins_away',
+        'T2-draws',
+        'T2-draws_away',
+        'T2-loses',
+        'T2-loses_away',
+        'T2-nowins',
+        'T2-nowin_saway',
+        'T2-nodraws',
+        'T2-nodraws_away',
+        'T2-noloses',
+        'T2-noloses_away',
+        'T2-bts',
+        'T2-bts_away',
+        'T2-over',
+        'T2-over_away',
+        'T2-under',
+        'T2-under_away')
+        matches = self.sim_stats['matches_filter']
+        line = 'Count: '+str(matches)
+        QtGui.QTreeWidgetItem(item).setText(0, line)
+        for i in range(0,len(val)):
+            filter_item = self.sim_stats[val[i]]
+            if matches>0:
+                report = str(round(filter_item/matches*100.0, 2))
+            else:
+                report = 0
+            if filter_item > 0:
+                line = val[i]+': '+str(filter_item)+', '+str(report)+' %'
+                QtGui.QTreeWidgetItem(item).setText(0, line)
+        ### filter odds report
+        QtGui.QTreeWidgetItem(item).setText(0, '**By odds**')
+        self.simulation_avg_odds()
+        val = (
+        'T-odd_1',
+        'T-odd_x',
+        'T-odd_2',
+        'T-odd_1x',
+        'T-odd_x2')
+        matches = self.sim_stats['matches_odds']
+        line = 'Count: '+str(matches)+', 100%'
+        QtGui.QTreeWidgetItem(item).setText(0, line)
+        for i in range(0,len(val)):
+            filter_item = self.sim_stats[val[i]]
+            if matches>0:
+                report = str(round(filter_item/matches*100.0, 2))
+            else:
+                report = 0
+            if filter_item > 0:
+                line = val[i]+': '+str(filter_item)+', '+str(report)+' %'
+                QtGui.QTreeWidgetItem(item).setText(0, line)
 
 
         try:
@@ -939,32 +1056,44 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             self.gui.table_preview.item(rows_all, i).\
                 setBackground(self.prediction_color)
         # filtered list table
+        if self.filter_status == 'no':
+            # counts removed matches
+            self.sim_stats['matches_filter'] = self.sim_stats['matches_filter'] + 1
         if self.filter_status == 'yes':
+            odd_filter =self.odds_filter(self.bet)
             for i in range(0,len(table_filtered)):
                 ####
                 # Odds filter
                 ####
-                odd_filter =self.odds_filter(self.bet)
                 if odd_filter[0] == 'yes':
                     item = QtGui.QTableWidgetItem(str(eval(table_filtered[i])))
                     self.gui.table_filtered.setRowCount(rows_filtered+1)
                     self.gui.table_filtered.setItem(rows_filtered, i, item)
                     self.gui.table_filtered.item(rows_filtered, i).\
                         setBackground(self.prediction_color)
+            if odd_filter == 'no':
+                bets = ('1','x','2','1x','x2')
+                for i in bets:
+                    if self.bet == i:
+                        item = 'T-odd_'+i
+                        self.sim_stats[item] = self.sim_stats[item] + 1
+                self.sim_stats['matches_odds'] = self.sim_stats['matches_odds'] + 1
+
         self.gui.table_preview.setCurrentCell(rows_all,0)
         self.gui.table_filtered.setCurrentCell(rows_filtered,0)
         QtGui.QApplication.processEvents()
     def odds_filter(self,bet):
         ''' Filters matches by min odds'''
-        if bet == '1' and self.odd_1>=float(self.spin_odds_1):
+
+        if bet == '1' and self.odd_1 >=float(self.spin_odds_1):
             status = ('yes',self.odd_1)
-        elif bet == 'x' and self.odd_x>=float(self.spin_odds_x):
+        elif bet == 'x' and self.odd_x >=float(self.spin_odds_x):
             status = ('yes',self.odd_x)
-        elif bet == '2' and self.odd_2>=float(self.spin_odds_2):
+        elif bet == '2' and self.odd_2 >=float(self.spin_odds_2):
             status = ('yes',self.odd_2)
-        elif bet == '1x' and self.odd_1x>=float(self.spin_odds_1x):
+        elif bet == '1x' and self.odd_1x >=float(self.spin_odds_1x):
             status = ('yes',self.odd_1x)
-        elif bet == 'x2' and self.odd_x2>=float(self.spin_odds_x2):
+        elif bet == 'x2' and self.odd_x2 >=float(self.spin_odds_x2):
             status = ('yes',self.odd_x2)
         else:
             status = 'no'

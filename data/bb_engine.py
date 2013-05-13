@@ -760,7 +760,7 @@ class Database(Shared):
         t1_stats = self.relations_base.execute('''SELECT points,pointsHome,
                 form,formHome FROM league
                 WHERE team="%s"'''%home)
-        t1 = list(t1_stats)
+        t1 = tuple(t1_stats)
         for i in t1:
             self.t1_points = i[0]
             self.t1_points_h = i[1]
@@ -774,7 +774,7 @@ class Database(Shared):
                 series_over25Home,series_under25,series_under25Home
                 FROM series
                 WHERE team="%s"'''%home)
-        t1 = list(t1_series)
+        t1 = tuple(t1_series)
         for i in t1:
             self.t1_wins = i[0]
             self.t1_winshome = i[1]
@@ -798,7 +798,7 @@ class Database(Shared):
         t2_stats = self.relations_base.execute('''SELECT points,pointsHome,
                 form,formHome FROM league
                 WHERE team="%s"'''%away)
-        t2 = list(t2_stats)
+        t2 = tuple(t2_stats)
         for i in t2:
             self.t2_points = i[0]
             self.t2_points_a = i[1]
@@ -813,7 +813,7 @@ class Database(Shared):
                 series_under25,series_under25Away
                 FROM series
                 WHERE team="%s"'''%away)
-        t2 = list(t2_series)
+        t2 = tuple(t2_series)
         for i in t2:
             self.t2_wins = i[0]
             self.t2_winsaway = i[1]
@@ -843,16 +843,16 @@ class Database(Shared):
         self.odd_2 = self.odds_rescale(self.odds[2],self.odds_level)
         self.odd_1x = 1/((1/self.odd_1) + (1/self.odd_x))
         self.odd_x2 = 1/((1/self.odd_x) + (1/self.odd_2))
-        odds = (
-        self.odd_1,
-        self.odd_x,
-        self.odd_2,
-        self.odd_1x,
-        self.odd_x2)
-        for i in odds:
-            if i < 1:
-                i = 1
-
+        if self.odd_1 < 1:
+            self.odd_1 = 1.0
+        if self.odd_2 < 1:
+            self.odd_2 = 1.0
+        if self.odd_x < 1:
+            self.odd_x = 1.0
+        if self.odd_x2 < 1:
+            self.odd_x2 = 1.0
+        if self.odd_1x < 1:
+            self.odd_1x = 1.0
     def process_csv(self, results):
         '''Calculates points,form,series etc.'''
         date, team_home, team_away, goals_home, goals_away = results
