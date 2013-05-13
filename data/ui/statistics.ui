@@ -381,7 +381,7 @@ font: 13pt}</string>
                 <enum>QAbstractItemView::SelectRows</enum>
                </property>
                <property name="sortingEnabled">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -496,7 +496,7 @@ font: 13pt}</string>
                 <enum>QAbstractItemView::SelectRows</enum>
                </property>
                <property name="sortingEnabled">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -583,7 +583,7 @@ font: 13pt}</string>
                 <enum>Qt::SolidLine</enum>
                </property>
                <property name="sortingEnabled">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
                <attribute name="verticalHeaderVisible">
                 <bool>false</bool>
