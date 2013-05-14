@@ -568,7 +568,7 @@ class Shared(object):
         for i in xrange(0,len(val)):
             vars(self)[filter_vars[i]] = val[i]
 
-        self.gui.line_filters.setText(file_name)
+
 
     def simulation_match_filters(self):
         ''' Match filters check'''

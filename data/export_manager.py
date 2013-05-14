@@ -68,6 +68,7 @@ class ExportApp(QtGui.QWidget, Shared):
         self.gui.button_save.clicked.connect(self.profile_save)
         self.gui.button_load.clicked.connect(self.profile_load)
         self.gui.tree_profiles.doubleClicked.connect(self.profile_load)
+        self.gui.tree_profiles.clicked.connect(self.profile_name)
         self.gui.button_delete.clicked.connect(self.profile_delete)
         self.gui.spin_min.valueChanged.connect(self.spins_manage)
         self.gui.spin_max.valueChanged.connect(self.spins_manage)
@@ -236,6 +237,11 @@ class ExportApp(QtGui.QWidget, Shared):
                 f_save.write(name+','+path+','+r_min+','+r_max+self.nl)
 
         self.profiles_tree()
+
+    def profile_name(self):
+        child = self.gui.tree_profiles.currentItem()
+        profile = child.text(0)
+        self.gui.line_export.setText(profile)
 
     def profile_load(self):
         ''' Loads profile into leagues table'''

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'learning.ui'
 #
-# Created: Mon May 13 17:29:28 2013
+# Created: Tue May 14 12:29:00 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -230,7 +230,7 @@ class Ui_Learn(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
         self.spin_reports.setPalette(palette)
-        self.spin_reports.setMinimum(10)
+        self.spin_reports.setMinimum(1)
         self.spin_reports.setMaximum(1000)
         self.spin_reports.setSingleStep(10)
         self.spin_reports.setProperty("value", 10)

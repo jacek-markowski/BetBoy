@@ -223,6 +223,32 @@
                 </widget>
                </item>
                <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <item>
+                  <widget class="QPushButton" name="button_batch_load">
+                   <property name="text">
+                    <string>Load</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="button_batch_delete">
+                   <property name="text">
+                    <string>Delete</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
                 <layout class="QVBoxLayout" name="verticalLayout_4">
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -239,32 +265,6 @@
                    </item>
                    <item>
                     <widget class="QLineEdit" name="line_batch"/>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_10">
-                   <item>
-                    <widget class="QPushButton" name="button_batch_load">
-                     <property name="text">
-                      <string>Load</string>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
-                       <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="button_batch_delete">
-                     <property name="text">
-                      <string>Delete</string>
-                     </property>
-                     <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
-                       <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
-                     </property>
-                    </widget>
                    </item>
                   </layout>
                  </item>
@@ -354,43 +354,6 @@
               </widget>
              </item>
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_14">
-               <item>
-                <widget class="QLineEdit" name="line_filters">
-                 <property name="maximumSize">
-                  <size>
-                   <width>300</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="button_filters_save">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-                   <horstretch>1</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>300</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Save</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
-                   <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_6">
                <item>
                 <widget class="QPushButton" name="button_filters_load">
@@ -423,6 +386,43 @@
                  <property name="icon">
                   <iconset resource="../icons/icons.qrc">
                    <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_14">
+               <item>
+                <widget class="QLineEdit" name="line_filters">
+                 <property name="maximumSize">
+                  <size>
+                   <width>300</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="button_filters_save">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                   <horstretch>1</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>300</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Save</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../icons/icons.qrc">
+                   <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -4399,6 +4399,19 @@
                     </item>
                    </layout>
                   </item>
+                  <item>
+                   <spacer name="horizontalSpacer_4">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
                  </layout>
                 </widget>
                </item>
@@ -4472,44 +4485,6 @@
               <layout class="QVBoxLayout" name="verticalLayout_10">
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_15"/>
-               </item>
-               <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_16">
-                 <item>
-                  <widget class="QPushButton" name="button_ranges_load">
-                   <property name="text">
-                    <string>Load</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../icons/icons.qrc">
-                     <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="button_ranges_delete">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>120</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Delete</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../icons/icons.qrc">
-                     <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
                </item>
               </layout>
              </item>
@@ -4881,6 +4856,44 @@
                  </layout>
                 </item>
                 <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_16">
+                  <item>
+                   <widget class="QPushButton" name="button_ranges_load">
+                    <property name="text">
+                     <string>Load</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../icons/icons.qrc">
+                      <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="button_ranges_delete">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>120</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Delete</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../icons/icons.qrc">
+                      <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
                  <layout class="QVBoxLayout" name="verticalLayout_19">
                   <item>
                    <widget class="QLineEdit" name="line_ranges"/>
@@ -4956,68 +4969,6 @@
                 </property>
                </column>
               </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <item>
-                <widget class="QPushButton" name="button_bets_load">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>120</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Load</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
-                   <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="button_bets_delete">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>120</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Delete</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
-                   <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
-                 </property>
-                </widget>
-               </item>
-              </layout>
              </item>
             </layout>
            </item>
@@ -5388,6 +5339,68 @@
                      </widget>
                     </item>
                     <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_2">
+                      <item>
+                       <widget class="QPushButton" name="button_bets_load">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>120</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Load</string>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="../icons/icons.qrc">
+                          <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="button_bets_delete">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>120</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="text">
+                         <string>Delete</string>
+                        </property>
+                        <property name="icon">
+                         <iconset resource="../icons/icons.qrc">
+                          <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
                      <widget class="QLineEdit" name="line_bets_save">
                       <property name="sizePolicy">
                        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -5472,7 +5485,7 @@
       <attribute name="title">
        <string>Preview</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_42">
+      <layout class="QVBoxLayout" name="verticalLayout_45">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_14">
          <item>
@@ -5498,6 +5511,10 @@
                <property name="text">
                 <string>Stop</string>
                </property>
+               <property name="icon">
+                <iconset resource="../icons/icons.qrc">
+                 <normaloff>:/actions/cancel.png</normaloff>:/actions/cancel.png</iconset>
+               </property>
               </widget>
              </item>
             </layout>
@@ -5518,6 +5535,69 @@
              </column>
             </widget>
            </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_44">
+             <item>
+              <widget class="QPushButton" name="button_save_reports">
+               <property name="text">
+                <string>Save reports</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../icons/icons.qrc">
+                 <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_43">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_42">
+                 <item>
+                  <widget class="QPushButton" name="button_preview_show">
+                   <property name="text">
+                    <string>Show</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/actions/actions/reload.png</normaloff>:/actions/actions/reload.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="button_preview_remove">
+                   <property name="text">
+                    <string>Remove</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_22">
+                 <item>
+                  <widget class="QPushButton" name="button_preview_save">
+                   <property name="text">
+                    <string>Save profile</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="line_preview_save"/>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
           </layout>
          </item>
          <item>
@@ -5537,50 +5617,6 @@
             </widget>
            </item>
           </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_21">
-         <item>
-          <widget class="QPushButton" name="button_preview_show">
-           <property name="text">
-            <string>Show</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../icons/icons.qrc">
-             <normaloff>:/actions/actions/reload.png</normaloff>:/actions/actions/reload.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_preview_remove">
-           <property name="text">
-            <string>Remove</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../icons/icons.qrc">
-             <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_22">
-         <item>
-          <widget class="QPushButton" name="button_preview_save">
-           <property name="text">
-            <string>Save</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../icons/icons.qrc">
-             <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="line_preview_save"/>
          </item>
         </layout>
        </item>
