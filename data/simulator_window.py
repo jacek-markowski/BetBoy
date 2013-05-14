@@ -502,11 +502,16 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.spin_acc_2,
         self.gui.spin_acc_1x,
         self.gui.spin_acc_x2,
-        self.gui.spin_bet_odd_1,
-        self.gui.spin_bet_odd_x,
-        self.gui.spin_bet_odd_2,
-        self.gui.spin_bet_odd_1x,
-        self.gui.spin_bet_odd_x2
+        self.gui.spin_bet_odd_1_min,
+        self.gui.spin_bet_odd_x_min,
+        self.gui.spin_bet_odd_2_min,
+        self.gui.spin_bet_odd_1x_min,
+        self.gui.spin_bet_odd_x2_min,
+        self.gui.spin_bet_odd_1_max,
+        self.gui.spin_bet_odd_x_max,
+        self.gui.spin_bet_odd_2_max,
+        self.gui.spin_bet_odd_1x_max,
+        self.gui.spin_bet_odd_x2_max
         ]
         item = self.gui.tree_bets_profile.currentItem()
         file_name = item.text(0)
@@ -550,11 +555,17 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         acc_2=self.gui.spin_acc_2.value()
         acc_1x=self.gui.spin_acc_1x.value()
         acc_x2=self.gui.spin_acc_x2.value()
-        odd_1=self.gui.spin_bet_odd_1.value()
-        odd_x=self.gui.spin_bet_odd_x.value()
-        odd_2=self.gui.spin_bet_odd_2.value()
-        odd_1x=self.gui.spin_bet_odd_1x.value()
-        odd_x2=self.gui.spin_bet_odd_x2.value()
+        odd_1_min=self.gui.spin_bet_odd_1_min.value()
+        odd_x_min=self.gui.spin_bet_odd_x_min.value()
+        odd_2_min=self.gui.spin_bet_odd_2_min.value()
+        odd_1x_min=self.gui.spin_bet_odd_1x_min.value()
+        odd_x2_min=self.gui.spin_bet_odd_x2_min.value()
+
+        odd_1_max=self.gui.spin_bet_odd_1_max.value()
+        odd_x_max=self.gui.spin_bet_odd_x_max.value()
+        odd_2_max=self.gui.spin_bet_odd_2_max.value()
+        odd_1x_max=self.gui.spin_bet_odd_1x_max.value()
+        odd_x2_max=self.gui.spin_bet_odd_x2_max.value()
 
         val = [
         acc_1,
@@ -562,11 +573,16 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         acc_2,
         acc_1x,
         acc_x2,
-        odd_1,
-        odd_x,
-        odd_2,
-        odd_1x,
-        odd_x2
+        odd_1_min,
+        odd_x_min,
+        odd_2_min,
+        odd_1x_min,
+        odd_x2_min,
+        odd_1_max,
+        odd_x_max,
+        odd_2_max,
+        odd_1x_max,
+        odd_x2_max
         ]
         file_name = self.gui.line_bets_save.text()
         with open(os.path.join('profiles','bets','')+file_name,'w') as save:
@@ -1000,11 +1016,17 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.acc_2 = val[2]
         self.acc_1x = val[3]
         self.acc_x2 = val[4]
-        self.spin_odds_x=val[6]
-        self.spin_odds_1=val[5]
-        self.spin_odds_2=val[7]
-        self.spin_odds_1x=val[8]
-        self.spin_odds_x2=val[9]
+        self.spin_odds_1_min=val[5]
+        self.spin_odds_x_min=val[6]
+        self.spin_odds_2_min=val[7]
+        self.spin_odds_1x_min=val[8]
+        self.spin_odds_x2_min=val[9]
+        self.spin_odds_1_max=val[10]
+        self.spin_odds_x_max=val[11]
+        self.spin_odds_2_max=val[12]
+        self.spin_odds_1x_max=val[13]
+        self.spin_odds_x2_max=val[14]
+
 
         min_date = self.relations_base.execute('''SELECT min(date_num)
                                     From Results WHERE
@@ -1108,7 +1130,12 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         # all matches
         odd_filter =self.odds_filter(self.bet)
         for i in range(0,len(table)):
-            item = QtGui.QTableWidgetItem(str(eval(table[i])))
+            if i == 7:
+                item = QtGui.QTableWidgetItem()
+                item.setData(QtCore.Qt.EditRole,(eval(table[i])))
+            else:
+                item = QtGui.QTableWidgetItem(str(eval(table[i])))
+            #item = QtGui.QTableWidgetItem(str(eval(table[i])))
             self.gui.table_preview.setRowCount(rows_all+1)
             self.gui.table_preview.setItem(rows_all, i, item)
             self.gui.table_preview.item(rows_all, i).\
@@ -1126,13 +1153,16 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                         self.sim_stats['T-odd_'+i] = self.sim_stats['T-odd_'+i] +1
                 self.sim_stats['matches_odds'] = self.sim_stats['matches_odds'] + 1
         if self.filter_status == 'yes':
-            #odd_filter =self.odds_filter(self.bet)
             for i in range(0,len(table)):
                 ####
                 # Odds filter
                 ####
                 if odd_filter[0] == 'yes':
-                    item = QtGui.QTableWidgetItem(str(eval(table[i])))
+                    if i == 7:
+                        item = QtGui.QTableWidgetItem()
+                        item.setData(QtCore.Qt.EditRole,(eval(table[i])))
+                    else:
+                        item = QtGui.QTableWidgetItem(str(eval(table[i])))
                     self.gui.table_filtered.setRowCount(rows_filtered+1)
                     self.gui.table_filtered.setItem(rows_filtered, i, item)
                     self.gui.table_filtered.item(rows_filtered, i).\
@@ -1144,17 +1174,16 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.table_filtered.setCurrentCell(rows_filtered,0)
         QtGui.QApplication.processEvents()
     def odds_filter(self,bet):
-        print 'odds_filte'
         ''' Filters matches by min odds'''
-        if bet == '1' and self.odd_1 >=float(self.spin_odds_1):
+        if bet == '1' and float(self.spin_odd_1_max)>=self.odd_1 >=float(self.spin_odd_1_min):
             status = ('yes',self.odd_1)
-        elif bet == 'x' and self.odd_x >=float(self.spin_odds_x):
+        elif bet == 'x' and float(self.spin_odd_x_max)>=self.odd_x >=float(self.spin_odd_x_min):
             status = ('yes',self.odd_x)
-        elif bet == '2' and self.odd_2 >=float(self.spin_odds_2):
+        elif bet == '2' and float(self.spin_odd_2_max)>=self.odd_2 >=float(self.spin_odd_2_min):
             status = ('yes',self.odd_2)
-        elif bet == '1x' and self.odd_1x >=float(self.spin_odds_1x):
+        elif bet == '1x' and float(self.spin_odd_1x_max)>=self.odd_1x >=float(self.spin_odd_1x_min):
             status = ('yes',self.odd_1x)
-        elif bet == 'x2' and self.odd_x2 >=float(self.spin_odds_x2):
+        elif bet == 'x2' and float(self.spin_odd_x2_max)>=self.odd_x2 >=float(self.spin_odd_x2_min):
             status = ('yes',self.odd_x2)
         else:
             status = ('no',0)

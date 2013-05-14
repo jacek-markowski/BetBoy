@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'leagues.ui'
 #
-# Created: Tue May 14 12:58:31 2013
+# Created: Wed May 15 00:09:05 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!

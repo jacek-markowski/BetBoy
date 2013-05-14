@@ -59,7 +59,7 @@ def start(file_in=sys.argv[1],
     ## start training the network
     ann.set_activation_function_output(eval(function_output))
     ann.set_activation_function_hidden(eval(function_hidden))
-    ann.set_bit_fail_limit(0.05)
+    ann.set_bit_fail_limit(0.03)
     ann.set_rprop_increase_factor(1.225)
     ann.set_rprop_decrease_factor(0.325)
     ann.set_rprop_delta_min(-10.0)

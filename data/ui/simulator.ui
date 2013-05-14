@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>872</width>
-    <height>704</height>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -432,6 +432,9 @@
            </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_34">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_18">
                <item>
@@ -4198,11 +4201,14 @@
                <item>
                 <widget class="QGroupBox" name="groupBox_5">
                  <property name="title">
-                  <string>Min odds</string>
+                  <string>Odds min,max</string>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_5">
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_13">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_22">
                       <property name="maximumSize">
@@ -4220,7 +4226,26 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="spin_odd_1">
+                     <widget class="QDoubleSpinBox" name="spin_odd_1_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_1_max">
                       <property name="maximumSize">
                        <size>
                         <width>51</width>
@@ -4242,6 +4267,9 @@
                   </item>
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_17">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_23">
                       <property name="maximumSize">
@@ -4259,7 +4287,26 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="spin_odd_x">
+                     <widget class="QDoubleSpinBox" name="spin_odd_x_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_x_max">
                       <property name="maximumSize">
                        <size>
                         <width>51</width>
@@ -4281,6 +4328,9 @@
                   </item>
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_31">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_25">
                       <property name="maximumSize">
@@ -4298,7 +4348,26 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="spin_odd_2">
+                     <widget class="QDoubleSpinBox" name="spin_odd_2_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_2_max">
                       <property name="maximumSize">
                        <size>
                         <width>51</width>
@@ -4320,6 +4389,9 @@
                   </item>
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_32">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_26">
                       <property name="maximumSize">
@@ -4337,7 +4409,26 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="spin_odd_1x">
+                     <widget class="QDoubleSpinBox" name="spin_odd_1x_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_1x_max">
                       <property name="maximumSize">
                        <size>
                         <width>51</width>
@@ -4359,6 +4450,9 @@
                   </item>
                   <item>
                    <layout class="QVBoxLayout" name="verticalLayout_33">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
                     <property name="sizeConstraint">
                      <enum>QLayout::SetDefaultConstraint</enum>
                     </property>
@@ -4379,7 +4473,26 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QDoubleSpinBox" name="spin_odd_x2">
+                     <widget class="QDoubleSpinBox" name="spin_odd_x2_min">
+                      <property name="maximumSize">
+                       <size>
+                        <width>51</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <double>1.000000000000000</double>
+                      </property>
+                      <property name="maximum">
+                       <double>20.000000000000000</double>
+                      </property>
+                      <property name="singleStep">
+                       <double>0.010000000000000</double>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QDoubleSpinBox" name="spin_odd_x2_max">
                       <property name="maximumSize">
                        <size>
                         <width>51</width>
@@ -5140,7 +5253,7 @@
                     <item>
                      <widget class="QGroupBox" name="groupBox_6">
                       <property name="title">
-                       <string>Min odds</string>
+                       <string>Odds min,max</string>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_28">
                        <item>
@@ -5162,7 +5275,7 @@
                           </widget>
                          </item>
                          <item>
-                          <widget class="QDoubleSpinBox" name="spin_bet_odd_1">
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_1_min">
                            <property name="maximumSize">
                             <size>
                              <width>51</width>
@@ -5174,6 +5287,22 @@
                            </property>
                            <property name="maximum">
                             <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_1_max">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="minimum">
+                            <double>1.000000000000000</double>
                            </property>
                            <property name="singleStep">
                             <double>0.010000000000000</double>
@@ -5201,7 +5330,7 @@
                           </widget>
                          </item>
                          <item>
-                          <widget class="QDoubleSpinBox" name="spin_bet_odd_x">
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_x_min">
                            <property name="maximumSize">
                             <size>
                              <width>51</width>
@@ -5213,6 +5342,22 @@
                            </property>
                            <property name="maximum">
                             <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_x_max">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="minimum">
+                            <double>1.000000000000000</double>
                            </property>
                            <property name="singleStep">
                             <double>0.010000000000000</double>
@@ -5240,7 +5385,7 @@
                           </widget>
                          </item>
                          <item>
-                          <widget class="QDoubleSpinBox" name="spin_bet_odd_2">
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_2_min">
                            <property name="maximumSize">
                             <size>
                              <width>51</width>
@@ -5252,6 +5397,22 @@
                            </property>
                            <property name="maximum">
                             <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_2_max">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="minimum">
+                            <double>1.000000000000000</double>
                            </property>
                            <property name="singleStep">
                             <double>0.010000000000000</double>
@@ -5279,7 +5440,7 @@
                           </widget>
                          </item>
                          <item>
-                          <widget class="QDoubleSpinBox" name="spin_bet_odd_1x">
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_1x_min">
                            <property name="maximumSize">
                             <size>
                              <width>51</width>
@@ -5291,6 +5452,22 @@
                            </property>
                            <property name="maximum">
                             <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_1x_max">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="minimum">
+                            <double>1.000000000000000</double>
                            </property>
                            <property name="singleStep">
                             <double>0.010000000000000</double>
@@ -5321,7 +5498,7 @@
                           </widget>
                          </item>
                          <item>
-                          <widget class="QDoubleSpinBox" name="spin_bet_odd_x2">
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_x2_min">
                            <property name="maximumSize">
                             <size>
                              <width>51</width>
@@ -5333,6 +5510,22 @@
                            </property>
                            <property name="maximum">
                             <double>20.000000000000000</double>
+                           </property>
+                           <property name="singleStep">
+                            <double>0.010000000000000</double>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QDoubleSpinBox" name="spin_bet_odd_x2_max">
+                           <property name="maximumSize">
+                            <size>
+                             <width>51</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="minimum">
+                            <double>1.000000000000000</double>
                            </property>
                            <property name="singleStep">
                             <double>0.010000000000000</double>

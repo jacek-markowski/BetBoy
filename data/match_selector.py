@@ -37,7 +37,10 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         self.filters_tree()
         self.leagues_tree()
         self.bindings()
-        self.filters_load()
+        try:
+            self.filters_load()
+        except:
+            pass
 
     def closeEvent(self, event):
         self.stop_action = 1

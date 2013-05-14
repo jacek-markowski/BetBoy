@@ -88,7 +88,7 @@ class Shared(object):
         # NewRange = (NewMax - NewMin)
         # NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
         old_range = 2
-        new_range = 19
+        new_range = 14
         odd = ((((val + 1) * new_range) / old_range) + 1)*odds_level/100.0
         odd = round(odd,2)
         if odd < 1:
@@ -241,11 +241,17 @@ class Shared(object):
         spin_a_under = self.gui.spin_a_under.value()
         spin_a_underaway = self.gui.spin_a_underaway.value()
         # odds
-        spin_odd_1 = self.gui.spin_odd_1.value()
-        spin_odd_x = self.gui.spin_odd_x.value()
-        spin_odd_2 = self.gui.spin_odd_2.value()
-        spin_odd_1x = self.gui.spin_odd_1x.value()
-        spin_odd_x2 = self.gui.spin_odd_x2.value()
+        spin_odd_1_min = self.gui.spin_odd_1_min.value()
+        spin_odd_x_min = self.gui.spin_odd_x_min.value()
+        spin_odd_2_min = self.gui.spin_odd_2_min.value()
+        spin_odd_1x_min = self.gui.spin_odd_1x_min.value()
+        spin_odd_x2_min = self.gui.spin_odd_x2_min.value()
+
+        spin_odd_1_max = self.gui.spin_odd_1_max.value()
+        spin_odd_x_max = self.gui.spin_odd_x_max.value()
+        spin_odd_2_max = self.gui.spin_odd_2_max.value()
+        spin_odd_1x_max = self.gui.spin_odd_1x_max.value()
+        spin_odd_x2_max = self.gui.spin_odd_x2_max.value()
 
         val =[
         check_points,
@@ -332,11 +338,16 @@ class Shared(object):
         spin_a_overaway,
         spin_a_under,
         spin_a_underaway,
-        spin_odd_1,
-        spin_odd_x,
-        spin_odd_2,
-        spin_odd_1x,
-        spin_odd_x2
+        spin_odd_1_min,
+        spin_odd_x_min,
+        spin_odd_2_min,
+        spin_odd_1x_min,
+        spin_odd_x2_min,
+        spin_odd_1_max,
+        spin_odd_x_max,
+        spin_odd_2_max,
+        spin_odd_1x_max,
+        spin_odd_x2_max
         ]
         file_name = self.gui.line_filters.text()
         if self.app == 'simulator':
@@ -435,12 +446,18 @@ class Shared(object):
         self.gui.spin_a_overaway,
         self.gui.spin_a_under,
         self.gui.spin_a_underaway,
-        self.gui.spin_odd_1,
-        self.gui.spin_odd_x,
-        self.gui.spin_odd_2,
-        self.gui.spin_odd_1x,
-        self.gui.spin_odd_x2
+        self.gui.spin_odd_1_min,
+        self.gui.spin_odd_x_min,
+        self.gui.spin_odd_2_min,
+        self.gui.spin_odd_1x_min,
+        self.gui.spin_odd_x2_min,
+        self.gui.spin_odd_1_max,
+        self.gui.spin_odd_x_max,
+        self.gui.spin_odd_2_max,
+        self.gui.spin_odd_1x_max,
+        self.gui.spin_odd_x2_max
         ]
+
         if file_name == None:
             item = self.gui.tree_filters_profile.currentItem()
             file_name = str(item.text(0))
@@ -560,11 +577,16 @@ class Shared(object):
             'spin_a_overaway',
             'spin_a_under',
             'spin_a_underaway',
-            'spin_odds_1',
-            'spin_odds_x',
-            'spin_odds_2',
-            'spin_odds_1x',
-            'spin_odds_x2')
+            'spin_odd_1_min',
+            'spin_odd_x_min',
+            'spin_odd_2_min',
+            'spin_odd_1x_min',
+            'spin_odd_x2_min',
+            'spin_odd_1_max',
+            'spin_odd_x_max',
+            'spin_odd_2_max',
+            'spin_odd_1x_max',
+            'spin_odd_x2_max')
         for i in xrange(0,len(val)):
             vars(self)[filter_vars[i]] = val[i]
 
@@ -695,17 +717,19 @@ class Shared(object):
             # Odds - in match selector only !!!!
             ######
             odds = [
-            (self.odd_1,self.spin_odds_1),
-            (self.odd_x,self.spin_odds_x),
-            (self.odd_2,self.spin_odds_2),
-            (self.odd_1x,self.spin_odds_1x),
-            (self.odd_x2,self.spin_odds_x2)]
+            (self.spin_odd_1_max,self.odd_1,self.spin_odd_1_min),
+            (self.spin_odd_x_max,self.odd_x,self.spin_odd_x_min),
+            (self.spin_odd_2_max,self.odd_2,self.spin_odd_2_min),
+            (self.spin_odd_1x_max,self.odd_1x,self.spin_odd_1x_min),
+            (self.spin_odd_x2_max,self.odd_x2,self.spin_odd_x2_min)]
             for i in odds:
                 if self.filter_status == 'yes':
-                    if float(i[0])>=float(i[1]):
+                    if float(i[0])>=float(i[1])>=float(i[2]):
                         pass
                     else:
                         self.filter_status = 'no'
+                        #print float(i[0]),float(i[1]),float(i[2])
+                        print 'sada'
 
 
 
