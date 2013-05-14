@@ -1034,7 +1034,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         min_date = min_date.fetchone()
         min_date = min_date[0]
         if min_date:
-            matches = self.relations_base.execute('''SELECT home,away
+            matches = self.relations_base.execute('''SELECT date_txt,home,away
                         From Results WHERE
                         gHomeEnd == "NULL" and date_num=%f'''%min_date)
 
@@ -1056,7 +1056,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             str(self.odds_level))
             self.item_sim.setText(0,(line))
             for i in matches:
-                home,away = i
+                date,home,away = i
                 self.simulation_prediction(home,away,self.sim_stats['Net'])
                 self.filter_status = ''
                 self.simulation_filters(home,away)
@@ -1065,9 +1065,9 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 if self.filter_status == 'yes':
                     odd_filter =self.odds_filter(self.bet)
                     if odd_filter[0] == 'yes':
-                        self.select_bet(home,away)
+                        self.select_bet(home,away,date)
 
-    def select_bet(self,home,away):
+    def select_bet(self,home,away,date):
         ''' Bet filters for selecting bets'''
         try:
             c_acc_1 = self.sim_stats['1 hit']/self.sim_stats['1']*100
@@ -1091,27 +1091,27 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             c_acc_x2 = 0
         ###########
         if self.bet == '1' and c_acc_1>=self.acc_1:
-            line = self.date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
+            line = date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
                                                         str(round(self.odd_1,2))
             #item = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
             QtGui.QTreeWidgetItem(self.item_sim).setText(0, (line))
         if self.bet == 'x' and c_acc_x>=self.acc_x:
-            line = self.date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
+            line = date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
                                                         str(round(self.odd_x,2))
             #item = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
             QtGui.QTreeWidgetItem(self.item_sim).setText(0, (line))
         if self.bet == '2' and c_acc_2>=self.acc_2:
-            line = self.date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
+            line = date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
                                                         str(round(self.odd_2,2))
             #item = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
             QtGui.QTreeWidgetItem(self.item_sim).setText(0, (line))
         if self.bet == '1x' and c_acc_1x>=self.acc_1x:
-            line = self.date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
+            line = date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
                                                         str(round(self.odd_1x,2))
             #item = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
             QtGui.QTreeWidgetItem(self.item_sim).setText(0, (line))
         if self.bet == 'x2' and c_acc_x2>=self.acc_x2:
-            line = self.date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
+            line = date+' '+home+' - '+away+' :'+self.bet+'  odd: '+\
                                                         str(round(self.odd_x2,2))
             #item = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
             QtGui.QTreeWidgetItem(self.item_sim).setText(0, (line))
