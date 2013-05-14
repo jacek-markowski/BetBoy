@@ -4463,7 +4463,7 @@
              <item>
               <widget class="QTreeWidget" name="tree_ranges_profile">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -4962,6 +4962,12 @@
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>241</width>
+                 <height>16777215</height>
+                </size>
                </property>
                <column>
                 <property name="text">

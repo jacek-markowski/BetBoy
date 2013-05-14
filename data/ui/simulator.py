@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'simulator.ui'
 #
-# Created: Tue May 14 12:29:01 2013
+# Created: Tue May 14 12:58:31 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -1141,7 +1141,7 @@ class Ui_Simulator(object):
         self.verticalLayout_9 = QtGui.QVBoxLayout()
         self.verticalLayout_9.setObjectName("verticalLayout_9")
         self.tree_ranges_profile = QtGui.QTreeWidget(self.tab_4)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tree_ranges_profile.sizePolicy().hasHeightForWidth())
@@ -1345,6 +1345,7 @@ class Ui_Simulator(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tree_bets_profile.sizePolicy().hasHeightForWidth())
         self.tree_bets_profile.setSizePolicy(sizePolicy)
+        self.tree_bets_profile.setMaximumSize(QtCore.QSize(241, 16777215))
         self.tree_bets_profile.setObjectName("tree_bets_profile")
         self.tree_bets_profile.headerItem().setText(0, "1")
         self.verticalLayout_2.addWidget(self.tree_bets_profile)
