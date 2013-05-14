@@ -47,6 +47,7 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         ''' Bindings for widgets'''
         self.gui.button_filters_save.clicked.connect(self.filters_save)
         self.gui.button_filters_load.clicked.connect(self.filters_load)
+        self.gui.tree_filters_profile.clicked.connect(self.filters_name)
         self.gui.button_select.clicked.connect(self.match_select)
         self.gui.button_filters_delete.clicked.connect(self.filters_delete)
 
@@ -58,6 +59,10 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         self.delete_file(file_delete,path)
         self.filters_tree()
 
+    def filters_name(self):
+        item = self.gui.tree_filters_profile.currentItem()
+        file_name = str(item.text(0))
+        self.gui.line_filters.setText(file_name)
     def leagues_tree(self):
         ''' Creates leageues tree'''
         self.gui.tree_leagues.headerItem().setText(0, ('Leagues'))
@@ -128,7 +133,7 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         min_date = min_date.fetchone()
         min_date = min_date[0]
         if min_date:
-            matches = self.relations_base.execute('''SELECT home,away
+            matches = self.relations_base.execute('''SELECT date_txt,home,away
                             From Results WHERE
                             gHomeEnd == "NULL" and date_num=%f'''%min_date)
             matches = matches.fetchall()
@@ -142,12 +147,12 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
             self.item_sim.setText(0,(line))
             self.gui.tree_selected.setCurrentItem(self.item_sim)
             for i in matches:
-                home,away = i
+                date,home,away = i
                 self.simulation_filters(home,away)
                 self.filter_status = ''
                 self.simulation_match_filters()
                 if self.filter_status == 'yes':
-                    line = home+' - '+away+\
+                    line = date+' '+home+' - '+away+\
                     '  1: '+str(round(self.odd_1,2))+\
                     '  x: '+str(round(self.odd_x,2))+\
                     '  2: '+str(round(self.odd_2,2))+\
