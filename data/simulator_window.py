@@ -120,7 +120,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.table_preview.setColumnWidth(2, 100)
         self.gui.table_preview.setColumnWidth(3, 50)
         self.gui.table_preview.setColumnWidth(4, 80)
-        labels = ['Date','Home','Away','Result','Bet','Odd','Net','Status']
+        labels = ['Date','Home','Away','Result','Goals','Bet','Odd','Net','Status']
         self.gui.table_preview.setColumnCount(len(labels))
         self.gui.table_preview.setHorizontalHeaderLabels(labels)
         self.gui.table_preview.setRowCount(0)
@@ -627,6 +627,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         mode 0 - batch simulation
         mode 1 - show selected (after batch simulation)'''
         self.stop_action = 0
+        self.gui.table_filtered.setSortingEnabled(False)
+        self.gui.table_preview.setSortingEnabled(False)
         if mode == 0:
             self.gui.tree_hits.clear()
             self.gui.tree_bets_selected.clear()
@@ -762,7 +764,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             rounds_max = int(self.sim_stats['R_max'])
             self.gui.table_preview.clear()
             self.gui.table_filtered.clear()
-            labels = ['Date','Home','Away','Result','Bet','Odd','Net','Status']
+            labels = ['Date','Home','Away','Result','Goals','Bet','Odd','Net','Status']
             self.gui.table_preview.setColumnCount(len(labels))
             self.gui.table_preview.setHorizontalHeaderLabels(labels)
             self.gui.table_preview.setRowCount(0)
@@ -803,6 +805,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 self.simulation_stats()
         if mode == 0 and self.stop_action == 0:
             self.gui.tabWidget.setCurrentIndex(2)  #change tab
+        self.gui.table_filtered.setSortingEnabled(True)
+        self.gui.table_preview.setSortingEnabled(True)
 
     def simulation_stats(self):
         ''' Adds simulation stats to tree preview'''
@@ -1099,7 +1103,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.simulation_colors() # count accuracy give colors (green-win etc.)
 
 
-        table =['self.date','self.home','self.away',"str(self.fth)+':'+\
+        table =['self.date','self.home','self.away','self.result',"str(self.fth)+':'+\
             str(self.fta)",'self.bet','odd_filter[1]','self.prediction','self.color']
         # all matches
         odd_filter =self.odds_filter(self.bet)
@@ -1313,10 +1317,13 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         grey = QtGui.QColor('#7C7C7C')
         if self.fth == self.fta:
             result = 'draw'
+            self.result = 'x'
         elif self.fth > self.fta:
             result = 'home'
+            self.result = '1'
         elif self.fth < self.fta:
             result = 'away'
+            self.result = '2'
 
         if self.min_1<=self.prediction and self.prediction<self.max_1:
             self.bet = '1'
