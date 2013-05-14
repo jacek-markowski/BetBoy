@@ -38,12 +38,12 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.tree_ranges.headerItem().setText(0, ('Net ranges'))
         self.gui.tree_ranges_profile.headerItem().setText(0, ('Net ranges'))
         self.gui.tree_bets.headerItem().setText(0, ('Selection filters'))
-        self.gui.tree_profiles.headerItem().setText(0, ('Batches'))
+        self.gui.tree_profiles.headerItem().setText(0, ('Profiles'))
         self.gui.tree_filters.headerItem().setText(0, ('Simulation filters'))
         labels = ['Path',
                         'League',
                         'Net',
-                        'Match filter',
+                        'Simulation filter',
                         'Net ranges',
                         'Bet filters',
                         'R_min',
@@ -147,24 +147,26 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.spin_2_min.valueChanged.connect(self.spins_manage)
         self.gui.button_ranges_save.clicked.connect(self.ranges_save)
         self.gui.button_ranges_load.clicked.connect(self.ranges_load)
-        self.gui.tree_ranges_profile.doubleClicked.connect(self.ranges_load)
+        self.gui.tree_ranges_profile.clicked.connect(self.ranges_name)
         self.gui.button_ranges_delete.clicked.connect(self.ranges_delete)
         self.gui.button_add.clicked.connect(self.batch_add)
         self.gui.button_batch_remove.clicked.connect(self.batch_remove)
         self.gui.button_batch_clear.clicked.connect(self.batch_clear)
         self.gui.button_batch_save.clicked.connect(self.batch_save)
         self.gui.button_batch_load.clicked.connect(self.batch_load)
-        self.gui.tree_profiles.doubleClicked.connect(self.batch_load)
+        self.gui.tree_profiles.clicked.connect(self.batch_name)
         self.gui.button_batch_delete.clicked.connect(self.batch_delete)
         self.gui.button_bets_load.clicked.connect(self.bets_load)
-        self.gui.tree_bets_profile.clicked.connect(self.bets_load)
+        self.gui.tree_bets_profile.clicked.connect(self.bets_name)
         self.gui.button_bets_save.clicked.connect(self.bets_save)
         self.gui.button_bets_delete.clicked.connect(self.bets_delete)
         self.gui.button_filters_save.clicked.connect(self.filters_save)
         self.gui.button_filters_load.clicked.connect(self.filters_load)
+        self.gui.tree_filters_profile.clicked.connect(self.filters_name)
         self.gui.button_filters_delete.clicked.connect(self.filters_delete)
         self.gui.button_batch_run.clicked.connect(self.simulation_batch)
         self.gui.button_preview_show.clicked.connect(self.simulation_show)
+        self.gui.button_save_reports.clicked.connect(self.simulation_reports_save)
         self.gui.button_preview_remove.clicked.connect(self.batch_preview_remove)
         self.gui.button_preview_save.clicked.connect(self.batch_preview_save)
         self.gui.button_bets_final_save.clicked.connect(self.bets_final_save)
@@ -337,6 +339,10 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.delete_file(file_delete,path)
         self.ranges_tree()
 
+    def ranges_name(self):
+        item = self.gui.tree_ranges_profile.currentItem()
+        file_name = item.text(0)
+        self.gui.line_ranges.setText(file_name)
     def ranges_load(self):
         ''' Load ranges profiles'''
         val = [
@@ -358,7 +364,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         for i in range(0,len(val)):
             item =self.rm_lines(load[i])
             val[i].setValue(float(item))
-        self.gui.line_ranges.setText(file_name)
+
     def batch_remove(self):
         ''' Delete batch profile'''
         item = self.gui.tree_batch.currentItem()
@@ -445,6 +451,11 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.delete_file(file_delete,path)
         self.batch_profiles_tree()
 
+    def batch_name(self):
+        item = self.gui.tree_profiles.currentItem()
+        file_name = item.text(0)
+        self.gui.line_batch.setText(file_name)
+
     def batch_load(self):
         ''' Loads batch profile'''
         self.gui.tree_batch.clear()
@@ -478,6 +489,11 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             item_exp.setText(0, (i))
         self.gui.tree_bets_profile.setCurrentItem(item_exp)
 
+    def bets_name(self):
+        item = self.gui.tree_bets_profile.currentItem()
+        file_name = item.text(0)
+        self.gui.line_bets_save.setText(file_name)
+
     def bets_load(self):
         ''' Load bets profiles'''
         val = [
@@ -499,7 +515,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         for i in range(0,len(val)):
             item =self.rm_lines(load[i])
             val[i].setValue(float(item))
-        self.gui.line_bets_save.setText(file_name)
+
 
 
     def bets_delete(self):
@@ -617,7 +633,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             count = self.gui.tree_batch.topLevelItemCount()
             self.gui.tabWidget.setCurrentIndex(1)
         elif mode == 1:
-            self.gui.tree_bets_selected.clear()
             count = 1
 
         for i in range(0,count):
@@ -746,6 +761,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             rounds_min = int(self.sim_stats['R_min'])
             rounds_max = int(self.sim_stats['R_max'])
             self.gui.table_preview.clear()
+            self.gui.table_filtered.clear()
             labels = ['Date','Home','Away','Result','Bet','Odd','Net','Status']
             self.gui.table_preview.setColumnCount(len(labels))
             self.gui.table_preview.setHorizontalHeaderLabels(labels)
@@ -785,7 +801,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                             net=self.sim_stats['Net'])
             if mode == 0:
                 self.simulation_stats()
-        if mode == 0:
+        if mode == 0 and self.stop_action == 0:
             self.gui.tabWidget.setCurrentIndex(2)  #change tab
 
     def simulation_stats(self):
@@ -805,10 +821,30 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.simulation_overall_accuracy()
         QtGui.QTreeWidgetItem(item).setText(0, '*Accuracy*')
         val = ['Overall','1,x,2','1x,x2']
-        for i in range(0,len(val)):
-            acc = str(round(self.sim_stats[val[i]],2))
-            line = val[i]+': '+acc
-            QtGui.QTreeWidgetItem(item).setText(0, line)
+        overall = self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']+\
+                    self.sim_stats['1x']+self.sim_stats['x2']
+        overall_hit = self.sim_stats['1 hit']+self.sim_stats['x hit']+self.sim_stats['2 hit']+\
+                    self.sim_stats['1x hit']+self.sim_stats['x2 hit']
+        single = self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']
+        single_hit = self.sim_stats['1 hit']+self.sim_stats['x hit']+self.sim_stats['2 hit']
+        double = self.sim_stats['1x']+self.sim_stats['x2']
+        double_hit = self.sim_stats['1x hit']+self.sim_stats['x2 hit']
+
+        # overall acc
+        acc = str(round(self.sim_stats['Overall'],2))
+        line_acc = str(overall_hit)+'/'+str(overall)
+        line = 'Overall'+': '+line_acc+','+acc
+        QtGui.QTreeWidgetItem(item).setText(0, line)
+        # 1,x,2 acc
+        acc = str(round(self.sim_stats['1,x,2'],2))
+        line_acc = str(single_hit)+'/'+str(single)
+        line = '1,x,2'+': '+line_acc+','+acc
+        QtGui.QTreeWidgetItem(item).setText(0, line)
+        # 1x,x2 acc
+        acc = str(round(self.sim_stats['1x,x2'],2))
+        line_acc = str(double_hit)+'/'+str(double)
+        line = '1x,x2'+': '+line_acc+','+acc
+        QtGui.QTreeWidgetItem(item).setText(0, line)
         ### bets
         val = ['1','1x','x','x2','2']
         for i in range(0,len(val)):
@@ -840,8 +876,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             line = val[i]+': '+odds
             QtGui.QTreeWidgetItem(item).setText(0, line)
         ### filter series report
-        matches_sum = self.sim_stats['matches_filter']+self.sim_stats['matches_odds']
-        QtGui.QTreeWidgetItem(item).setText(0, '*Matches removed* %f'%matches_sum)
+        matches_sum = int(self.sim_stats['matches_filter']+self.sim_stats['matches_odds'])
+        QtGui.QTreeWidgetItem(item).setText(0, '*Matches removed* %d'%matches_sum)
         QtGui.QTreeWidgetItem(item).setText(0, '**By points/series**')
         self.simulation_avg_odds()
         val = (
@@ -921,9 +957,29 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
 
 
         try:
-            self.batch_bets()
+            if self.stop_action == 0:
+                self.batch_bets()
         except:
             'no bets'
+    def simulation_reports_save(self):
+        ''' Save selected bets'''
+        file_name = QtGui.QFileDialog.getSaveFileName(self)
+        with open(file_name[0],'w') as file_save:
+            count = self.gui.tree_hits.topLevelItemCount()
+            for i in range(0,count):
+                item = self.gui.tree_hits.topLevelItem(i)
+                simulation = item.text(1) + ',' + item.text(2) + ',' +\
+                    item.text(3) + ',' +item.text(4) + ',' +\
+                    item.text(5) + ',' +item.text(6) + ',' +item.text(7) + ',' +\
+                    item.text(8) + ',' +item.text(9)
+                line = simulation+self.nl
+                file_save.write(line)
+                child_num = item.childCount()
+                for i in range(0,child_num):
+                    name = item.child(i)
+                    name = name.text(0)
+                    line = name+self.nl
+                    file_save.write('.........'+line)
     def batch_bets(self):
         ''' Gives bets'''
          # bets filter
@@ -970,7 +1026,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             self.sim_stats['Ranges']+','+\
             self.sim_stats['Bet_selector']+','+\
             self.sim_stats['R_min']+','+\
-            self.sim_stats['R_max'])
+            self.sim_stats['R_max']+','+\
+            str(self.odds_level))
             self.item_sim.setText(0,(line))
             for i in matches:
                 home,away = i
@@ -1054,10 +1111,18 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 setBackground(self.prediction_color)
         # filtered list table
         if self.filter_status == 'no':
-            # counts removed matches
+            # counts removed matches by filters
             self.sim_stats['matches_filter'] = self.sim_stats['matches_filter'] + 1
+        if odd_filter[0] == 'no':
+            #counts removed matches by odd
+            bets = ['1','x','2','1x','x2']
+            if self.bet in bets:
+                for i in bets:
+                    if self.bet == i:
+                        self.sim_stats['T-odd_'+i] = self.sim_stats['T-odd_'+i] +1
+                self.sim_stats['matches_odds'] = self.sim_stats['matches_odds'] + 1
         if self.filter_status == 'yes':
-            odd_filter =self.odds_filter(self.bet)
+            #odd_filter =self.odds_filter(self.bet)
             for i in range(0,len(table)):
                 ####
                 # Odds filter
@@ -1068,18 +1133,14 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                     self.gui.table_filtered.setItem(rows_filtered, i, item)
                     self.gui.table_filtered.item(rows_filtered, i).\
                         setBackground(self.prediction_color)
-            if odd_filter == 'no':
-                bets = ('1','x','2','1x','x2')
-                for i in bets:
-                    if self.bet == i:
-                        item = 'T-odd_'+i
-                        self.sim_stats[item] = self.sim_stats[item] + 1
-                self.sim_stats['matches_odds'] = self.sim_stats['matches_odds'] + 1
+
+
 
         self.gui.table_preview.setCurrentCell(rows_all,0)
         self.gui.table_filtered.setCurrentCell(rows_filtered,0)
         QtGui.QApplication.processEvents()
     def odds_filter(self,bet):
+        print 'odds_filte'
         ''' Filters matches by min odds'''
         if bet == '1' and self.odd_1 >=float(self.spin_odds_1):
             status = ('yes',self.odd_1)
@@ -1092,13 +1153,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         elif bet == 'x2' and self.odd_x2 >=float(self.spin_odds_x2):
             status = ('yes',self.odd_x2)
         else:
-            bets = ('1','x','2','1x','x2')
-            if bet in bets:
-                for i in bets:
-                    if bet == i:
-                        status = ('no',eval('self.odd_'+i))
-            else:
-                status = ('no','-')
+            status = ('no',0)
 
         return status
 
@@ -1378,6 +1433,12 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             self.color ='Miss'
         elif self.prediction_color == grey:
             self.color ='None'
+
+    def filters_name(self):
+        item = self.gui.tree_filters_profile.currentItem()
+        file_name = str(item.text(0))
+        self.gui.line_filters.setText(file_name)
+
     def filters_delete(self):
         ''' Deletes match filter'''
         path = os.path.join('profiles','filters','')
