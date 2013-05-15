@@ -856,17 +856,17 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         # overall acc
         acc = str(round(self.sim_stats['Overall'],2))
         line_acc = str(overall_hit)+'/'+str(overall)
-        line = 'Overall'+': '+line_acc+','+acc+'%'
+        line = 'Overall'+': '+line_acc+', '+acc+'%'
         QtGui.QTreeWidgetItem(item).setText(0, line)
         # 1,x,2 acc
         acc = str(round(self.sim_stats['1,x,2'],2))
         line_acc = str(single_hit)+'/'+str(single)
-        line = '1,x,2'+': '+line_acc+','+acc+'%'
+        line = '1,x,2'+': '+line_acc+', '+acc+'%'
         QtGui.QTreeWidgetItem(item).setText(0, line)
         # 1x,x2 acc
         acc = str(round(self.sim_stats['1x,x2'],2))
         line_acc = str(double_hit)+'/'+str(double)
-        line = '1x,x2'+': '+line_acc+','+acc+'%'
+        line = '1x,x2'+': '+line_acc+', '+acc+'%'
         QtGui.QTreeWidgetItem(item).setText(0, line)
         ### bets
         val = ['1','1x','x','x2','2']
