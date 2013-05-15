@@ -698,13 +698,14 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         odd_1 = self.odds_rescale(odds[0],100)
         odd_x = self.odds_rescale(odds[1],100)
         odd_2 = self.odds_rescale(odds[2],100)
-        odd_1x = 1/((1/odd_1) + (1/odd_x))
-        odd_x2 = 1/((1/odd_x) + (1/odd_2))
+        odd_1x = round(1/((1/odd_1) + (1/odd_x)),2)
+        odd_x2 = round(1/((1/odd_x) + (1/odd_2)),2)
         if odd_1x < 1:
             odd_1x = 1
         if odd_x2 < 1:
             odd_x2 = 1
-        line ='1: '+str(odd_1)+'  x: '+str(odd_x)+'  2: '+str(odd_2)
+        line ='1: '+str(odd_1)+'  x: '+str(odd_x)+'  2: '+str(odd_2)+self.nl+\
+                ' 1x: '+str(odd_1x)+'  x2: '+str(odd_x2)
         self.gui.label_odds.setText(line)
         print odd_1x,odd_x2
 
