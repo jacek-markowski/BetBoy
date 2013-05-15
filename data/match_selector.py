@@ -53,6 +53,39 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         self.gui.tree_filters_profile.clicked.connect(self.filters_name)
         self.gui.button_select.clicked.connect(self.match_select)
         self.gui.button_filters_delete.clicked.connect(self.filters_delete)
+        self.gui.spin_points.valueChanged.connect(self.filter_combos_spins)
+        self.gui.spin_points_ha.valueChanged.connect(self.filter_combos_spins)
+        self.gui.spin_form.valueChanged.connect(self.filter_combos_spins)
+        self.gui.spin_form_ha.valueChanged.connect(self.filter_combos_spins)
+        self.gui.combo_points.currentIndexChanged.connect(self.filter_combos_spins)
+        self.gui.combo_points_ha.currentIndexChanged.connect(self.filter_combos_spins)
+        self.gui.combo_form.currentIndexChanged.connect(self.filter_combos_spins)
+        self.gui.combo_form_ha.currentIndexChanged.connect(self.filter_combos_spins)
+
+    def filter_combos_spins(self):
+        ''' Changes values of combos and spins for away team'''
+        combos = [
+        (self.gui.combo_points,self.gui.combo_points_2),
+        (self.gui.combo_points_ha,self.gui.combo_points_ha_2),
+        (self.gui.combo_form,self.gui.combo_form_2),
+        (self.gui.combo_form_ha,self.gui.combo_form_ha_2)]
+        spins = [
+        (self.gui.spin_points,self.gui.spin_points_2),
+        (self.gui.spin_points_ha,self.gui.spin_points_ha_2),
+        (self.gui.spin_form,self.gui.spin_form_2),
+        (self.gui.spin_form_ha,self.gui.spin_form_ha_2)]
+
+        for i in combos:
+            if i[0].currentText() == '>=':
+                i[1].setItemText(0,'<=')
+            elif  i[0].currentText() == '<=':
+                i[1].setItemText(0,'>=')
+
+        for i in spins:
+            val1 = i[0].value()
+            val2 = 100 - i[0].value()
+            i[0].setValue(val1)
+            i[1].setValue(val2)
 
     def filters_delete(self):
         ''' Deletes match filter'''
