@@ -283,6 +283,7 @@ class Database(Shared):
         0-normal
         1-export
         2-simulation'''
+        print net
         with open(os.path.join('tmp','')+'comm','w') as comm:
             # communicates with export manager
             comm.write('')
@@ -837,7 +838,7 @@ class Database(Shared):
         ####
         # Odds
         ####
-        self.odds = self.simulation_prediction(home,away,'default',1)
+        self.odds = self.simulation_prediction(home,away,'default',mode=1)
         self.odd_1 = round(self.odds_rescale(self.odds[0],self.odds_level),3)
         self.odd_x = round(self.odds_rescale(self.odds[1],self.odds_level),3)
         self.odd_2 = round(self.odds_rescale(self.odds[2],self.odds_level),3)
@@ -1465,10 +1466,11 @@ class Database(Shared):
         odds = ann.run(input_list[:])
         for i in odds:
             input_list.append(i)
-        ann = libfann.neural_net()
-        ann.create_from_file(path_net+str(net))
-        prediction = ann.run(input_list[:])
-        self.prediction = prediction[0]
+        if mode == 0:
+            ann = libfann.neural_net()
+            ann.create_from_file(path_net+str(net))
+            prediction = ann.run(input_list[:])
+            self.prediction = prediction[0]
         if mode == 0: #prediction
             return self.prediction
         elif mode == 1: #odds
@@ -1543,7 +1545,7 @@ def main():
     ''' Main function'''
     print 'print a'
     x = Database()
-    x.load_csv(os.path.join('leagues', 'current', ''), 'default', expt_name='jhjh',mode = 1)
+    #x.load_csv(os.path.join('leagues', 'current', ''), 'default', expt_name='jhjh',mode = 1)
 
 if __name__ == '__main__':
     main()

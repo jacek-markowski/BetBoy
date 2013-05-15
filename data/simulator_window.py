@@ -760,6 +760,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 self.sim_stats['Path']= str(sim.text(0))
                 self.sim_stats['League']= str(sim.text(1))
                 self.sim_stats['Net']= str(sim.text(2))
+
                 self.sim_stats['Filter']= str(sim.text(3))
                 self.sim_stats['Ranges']= str(sim.text(4))
                 self.sim_stats['Bet_selector']= str(sim.text(5))
@@ -810,6 +811,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             self.filters_load(self.sim_stats['Filter'])
             locale.setlocale(locale.LC_ALL, "C")
             if self.stop_action == 0:
+
                 self.load_csv(os.path.join('leagues',
                             self.sim_stats['Path'],''),
                             self.sim_stats['League'],
@@ -817,6 +819,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                             r_max=rounds_max,
                             mode=2,
                             net=self.sim_stats['Net'])
+                print self.sim_stats['Net'],'aaaaaaa'
             if mode == 0:
                 self.simulation_stats()
         if mode == 0 and self.stop_action == 0:
@@ -841,29 +844,29 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.simulation_overall_accuracy()
         QtGui.QTreeWidgetItem(item).setText(0, '*Accuracy*')
         val = ['Overall','1,x,2','1x,x2']
-        overall = self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']+\
-                    self.sim_stats['1x']+self.sim_stats['x2']
-        overall_hit = self.sim_stats['1 hit']+self.sim_stats['x hit']+self.sim_stats['2 hit']+\
-                    self.sim_stats['1x hit']+self.sim_stats['x2 hit']
-        single = self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']
-        single_hit = self.sim_stats['1 hit']+self.sim_stats['x hit']+self.sim_stats['2 hit']
-        double = self.sim_stats['1x']+self.sim_stats['x2']
-        double_hit = self.sim_stats['1x hit']+self.sim_stats['x2 hit']
+        overall = round(self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2']+\
+                    self.sim_stats['1x']+self.sim_stats['x2'],0)
+        overall_hit = round(self.sim_stats['1 hit']+self.sim_stats['x hit']+self.sim_stats['2 hit']+\
+                    self.sim_stats['1x hit']+self.sim_stats['x2 hit'],0)
+        single = round(self.sim_stats['1']+self.sim_stats['x']+self.sim_stats['2'],0)
+        single_hit = round(self.sim_stats['1 hit']+self.sim_stats['x hit']+self.sim_stats['2 hit'],0)
+        double = round(self.sim_stats['1x']+self.sim_stats['x2'],0)
+        double_hit = round(self.sim_stats['1x hit']+self.sim_stats['x2 hit'],0)
 
         # overall acc
         acc = str(round(self.sim_stats['Overall'],2))
         line_acc = str(overall_hit)+'/'+str(overall)
-        line = 'Overall'+': '+line_acc+','+acc
+        line = 'Overall'+': '+line_acc+','+acc+'%'
         QtGui.QTreeWidgetItem(item).setText(0, line)
         # 1,x,2 acc
         acc = str(round(self.sim_stats['1,x,2'],2))
         line_acc = str(single_hit)+'/'+str(single)
-        line = '1,x,2'+': '+line_acc+','+acc
+        line = '1,x,2'+': '+line_acc+','+acc+'%'
         QtGui.QTreeWidgetItem(item).setText(0, line)
         # 1x,x2 acc
         acc = str(round(self.sim_stats['1x,x2'],2))
         line_acc = str(double_hit)+'/'+str(double)
-        line = '1x,x2'+': '+line_acc+','+acc
+        line = '1x,x2'+': '+line_acc+','+acc+'%'
         QtGui.QTreeWidgetItem(item).setText(0, line)
         ### bets
         val = ['1','1x','x','x2','2']
