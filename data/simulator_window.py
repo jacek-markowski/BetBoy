@@ -533,7 +533,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
 
     def bets_final_save(self):
         ''' Save selected bets'''
-        file_name = QtGui.QFileDialog.getSaveFileName(self)
+        file_name = QtGui.QFileDialog.getSaveFileName(self, 'Save selected bets', 'saves/')
         with open(file_name[0],'w') as file_save:
             count = self.gui.tree_bets_selected.topLevelItemCount()
             for i in range(0,count):

@@ -35,6 +35,7 @@ class LearningApp(QtGui.QWidget, Shared):
         self.bindings()
         self.exports_tree()
         self.nets_tree()
+        self.auto_load()
 
     def bindings(self):
         '''Bindings for app widgets.
@@ -44,7 +45,15 @@ class LearningApp(QtGui.QWidget, Shared):
         self.gui.tree_exports.clicked.connect(self.set_name)
         self.gui.button_delete.clicked.connect(self.nets_delete)
         self.gui.button_exp_delete.clicked.connect(self.exports_delete)
-
+        # auto save bindings
+        self.gui.spin_hidden.valueChanged.connect(self.auto_save)
+        self.gui.spin_epochs.valueChanged.connect(self.auto_save)
+        self.gui.spin_error.valueChanged.connect(self.auto_save)
+        self.gui.spin_rate.valueChanged.connect(self.auto_save)
+        self.gui.spin_reports.valueChanged.connect(self.auto_save)
+        self.gui.combo_algorithm.currentIndexChanged.connect(self.auto_save)
+        self.gui.combo_hidden.currentIndexChanged.connect(self.auto_save)
+        self.gui.combo_output.currentIndexChanged.connect(self.auto_save)
     def learn_process(self):
         ''' Start Learning calls learny.py with args'''
         item = self.gui.tree_exports.currentItem()
@@ -153,6 +162,43 @@ class LearningApp(QtGui.QWidget, Shared):
         file_delete = item.text(0)
         self.delete_file(file_delete, path)
         self.exports_tree()
+
+    def auto_save(self):
+        'Auto saves settings for next session'
+        hidden = self.gui.spin_hidden.text()
+        epochs = self.gui.spin_epochs.text()
+        error = self.gui.spin_error.text()
+        rate = self.gui.spin_rate.text()
+        reports = self.gui.spin_reports.text()
+        algorithm = self.gui.combo_algorithm.currentText()
+        hidden_func = self.gui.combo_hidden.currentText()
+        out_func = self.gui.combo_output.currentText()
+
+        elements = [hidden, error, epochs, rate, reports, algorithm, hidden_func,out_func]
+        with open('profiles/auto_save/learning_manager.txt','w') as save:
+            for i in elements:
+                save.write(i+'\n')
+
+    def auto_load(self):
+        'Restores settings from previous session'
+        with open('profiles/auto_save/learning_manager.txt','r') as load:
+            list = load.readlines()
+            elements = []
+            for i in list:
+                i = i.replace('\n','')
+                i = i.replace(',','.')
+                elements.append(i)
+            self.gui.spin_hidden.setValue(float(elements[0].replace('\n','')))
+            self.gui.spin_error.setValue(float(elements[1].replace('\n','')))
+            self.gui.spin_epochs.setValue(float(elements[2].replace('\n','')))
+            self.gui.spin_rate.setValue(float(elements[3].replace('\n','')))
+            self.gui.spin_reports.setValue(float(elements[4].replace('\n','')))
+            algorithm = self.gui.combo_algorithm.findText(elements[5])
+            self.gui.combo_algorithm.setCurrentIndex(algorithm)
+            hidden_func = self.gui.combo_hidden.findText(elements[6])
+            self.gui.combo_hidden.setCurrentIndex(hidden_func)
+            out_func = self.gui.combo_output.findText(elements[7])
+            self.gui.combo_output.setCurrentIndex(out_func)
 if __name__ == "__main__":
     APP = QtGui.QApplication(sys.argv)
     MYAPP = LearningApp()

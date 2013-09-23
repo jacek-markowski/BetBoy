@@ -683,7 +683,7 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
             bet = '2'
         else:
             bet = 'None'
-        line = home+' - '+away+' : '+bet
+        line = home+' - '+away+' : '+bet+' net: '+str(round(prediction,3))
         self.gui.label_prediction.setText(line)
         self.gui.label_home.setText(home)
         self.gui.label_away.setText(away)
