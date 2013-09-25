@@ -35,7 +35,10 @@ class LearningApp(QtGui.QWidget, Shared):
         self.bindings()
         self.exports_tree()
         self.nets_tree()
-        self.auto_load()
+        try:
+            self.auto_load()
+        except:
+            print 'restore settings problem'
 
     def bindings(self):
         '''Bindings for app widgets.
@@ -177,22 +180,23 @@ class LearningApp(QtGui.QWidget, Shared):
         elements = [hidden, error, epochs, rate, reports, algorithm, hidden_func,out_func]
         with open('profiles/auto_save/learning_manager.txt','w') as save:
             for i in elements:
-                save.write(i+'\n')
+                save.write(i+self.nl)
 
     def auto_load(self):
-        'Restores settings from previous session'
+        """Restores settings from previous session"""
         with open('profiles/auto_save/learning_manager.txt','r') as load:
             list = load.readlines()
             elements = []
             for i in list:
                 i = i.replace('\n','')
+                i = i.replace('\r','')
                 i = i.replace(',','.')
                 elements.append(i)
-            self.gui.spin_hidden.setValue(float(elements[0].replace('\n','')))
-            self.gui.spin_error.setValue(float(elements[1].replace('\n','')))
-            self.gui.spin_epochs.setValue(float(elements[2].replace('\n','')))
-            self.gui.spin_rate.setValue(float(elements[3].replace('\n','')))
-            self.gui.spin_reports.setValue(float(elements[4].replace('\n','')))
+            self.gui.spin_hidden.setValue(float(elements[0]))
+            self.gui.spin_error.setValue(float(elements[1]))
+            self.gui.spin_epochs.setValue(float(elements[2]))
+            self.gui.spin_rate.setValue(float(elements[3]))
+            self.gui.spin_reports.setValue(float(elements[4]))
             algorithm = self.gui.combo_algorithm.findText(elements[5])
             self.gui.combo_algorithm.setCurrentIndex(algorithm)
             hidden_func = self.gui.combo_hidden.findText(elements[6])

@@ -125,7 +125,10 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.table_filtered.setColumnCount(len(labels))
         self.gui.table_filtered.setHorizontalHeaderLabels(labels)
         self.gui.table_filtered.setRowCount(0)
-        self.auto_load()
+        try:
+            self.auto_load()
+        except:
+            print 'restore settings problem'
         self.bindings()
 
     def closeEvent(self, event):
