@@ -72,8 +72,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             self.gui.tree_bets_selected.headerItem().setText(i,
                                                    (labels[i]))
 
-
-        self.bindings()
         # try to show files in folders profile
         trees = (
         self.leagues_tree,
@@ -127,6 +125,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.table_filtered.setColumnCount(len(labels))
         self.gui.table_filtered.setHorizontalHeaderLabels(labels)
         self.gui.table_filtered.setRowCount(0)
+        self.auto_load()
+        self.bindings()
 
     def closeEvent(self, event):
         self.stop_action = 1
@@ -181,7 +181,14 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.spin_rounds_min.valueChanged.connect(self.combos_rounds)
         self.gui.spin_rounds_max.valueChanged.connect(self.combos_rounds)
         self.gui.button_stop.clicked.connect(self.simulation_stop)
-
+        # auto save bindings
+        self.gui.spin_rounds_max.valueChanged.connect(self.auto_save)
+        self.gui.spin_rounds_min.valueChanged.connect(self.auto_save)
+        self.gui.spin_odds_level.valueChanged.connect(self.auto_save)
+        self.gui.tree_nets.itemClicked.connect(self.auto_save)
+        self.gui.tree_filters.itemClicked.connect(self.auto_save)
+        self.gui.tree_ranges.itemClicked.connect(self.auto_save)
+        self.gui.tree_bets.itemClicked.connect(self.auto_save)
     def combos_rounds(self):
         ''' Prevents spins to have conflicting values'''
         val = [
@@ -1507,7 +1514,48 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             item_exp.setText(0, (i))
         self.gui.tree_filters_profile.setCurrentItem(item_exp)
 
+    def auto_save(self):
+        """Auto saves settings for next session"""
+        r_min = self.gui.spin_rounds_min.text()
+        r_max = self.gui.spin_rounds_max.text()
+        odds_level = self.gui.spin_odds_level.text()
+        nets = self.gui.tree_nets.currentItem()
+        nets = self.gui.tree_nets.indexOfTopLevelItem(nets)
+        filters = self.gui.tree_filters.currentItem()
+        filters = self.gui.tree_filters.indexOfTopLevelItem(filters)
+        ranges = self.gui.tree_ranges.currentItem()
+        ranges = self.gui.tree_ranges.indexOfTopLevelItem(ranges)
+        bets = self.gui.tree_bets.currentItem()
+        bets = self.gui.tree_bets.indexOfTopLevelItem(bets)
 
+
+        elements = [r_min, r_max, odds_level, nets, filters, ranges, bets]
+        with open('profiles/auto_save/simulator.txt','w') as save:
+            for i in elements:
+                save.write(str(i)+self.nl)
+        print 'save'
+    def auto_load(self):
+        """Restores settings from previous session"""
+        with open('profiles/auto_save/simulator.txt','r') as load:
+            list = load.readlines()
+            elements = []
+            for i in list:
+                i = i.replace('\n','')
+                i = i.replace('\r','')
+                i = i.replace(',','.')
+                elements.append(i)
+            self.gui.spin_rounds_min.setValue(float(elements[0]))
+            print elements[0]
+            self.gui.spin_rounds_max.setValue(float(elements[1]))
+            self.gui.spin_odds_level.setValue(float(elements[2]))
+            nets = self.gui.tree_nets.topLevelItem(int(elements[3]))
+            filters = self.gui.tree_filters.topLevelItem(int(elements[4]))
+            ranges = self.gui.tree_ranges.topLevelItem(int(elements[5]))
+            bets = self.gui.tree_bets.topLevelItem(int(elements[6]))
+            self.gui.tree_nets.setCurrentItem(nets)
+            self.gui.tree_filters.setCurrentItem(filters)
+            self.gui.tree_ranges.setCurrentItem(ranges)
+            self.gui.tree_bets.setCurrentItem(bets)
 if __name__ == "__main__":
     APP = QtGui.QApplication(sys.argv)
     MYAPP = SimulatorApp()
