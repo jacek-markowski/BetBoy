@@ -57,6 +57,7 @@ class LearningApp(QtGui.QWidget, Shared):
         self.gui.combo_algorithm.currentIndexChanged.connect(self.auto_save)
         self.gui.combo_hidden.currentIndexChanged.connect(self.auto_save)
         self.gui.combo_output.currentIndexChanged.connect(self.auto_save)
+
     def learn_process(self):
         ''' Start Learning calls learny.py with args'''
         item = self.gui.tree_exports.currentItem()

@@ -97,6 +97,7 @@
     <addaction name="actionStats_central"/>
     <addaction name="actionMatch_selector"/>
     <addaction name="actionSimulator"/>
+    <addaction name="actionSimulations_browser"/>
     <addaction name="actionUpdate_manager"/>
     <addaction name="actionLinks_creator"/>
     <addaction name="actionLeagues_creator"/>
@@ -155,6 +156,11 @@
   <action name="actionMatch_selector">
    <property name="text">
     <string>Match selector</string>
+   </property>
+  </action>
+  <action name="actionSimulations_browser">
+   <property name="text">
+    <string>Simulations browser</string>
    </property>
   </action>
  </widget>

@@ -1,3 +1,8 @@
+0.4.3 25.10.2013:
+- displayed net value in stats central
+- new directory 'saves' for saving selected bets
+- auto save setting in simulator, learning manager, export manager
+- new links base (thanks to irek)
 0.4.1 15.05.2013:
 -added 1x,x2 odds in stats central
 0.4.0 12.05.2013:

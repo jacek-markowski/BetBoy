@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 import sys
+import csv
 import os
 from csv import reader
 import locale
@@ -653,6 +654,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         mode 0 - batch simulation
         mode 1 - show selected (after batch simulation)'''
         self.stop_action = 0
+        self.id_simulation = 0 # simulation id used as name for temp save file of simulation
         self.gui.table_filtered.setSortingEnabled(False)
         self.gui.table_preview.setSortingEnabled(False)
         if mode == 0:
@@ -829,14 +831,29 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                             r_max=rounds_max,
                             mode=2,
                             net=self.sim_stats['Net'])
-                print self.sim_stats['Net'],'aaaaaaa'
             if mode == 0:
-                self.simulation_stats()
+                self.id_simulation += 1
+                self.simulation_stats() # stats for simulation
+                self.simulation_save_temp() # save results to text file
         if mode == 0 and self.stop_action == 0:
             self.gui.tabWidget.setCurrentIndex(2)  #change tab
         self.gui.table_filtered.setSortingEnabled(True)
         self.gui.table_preview.setSortingEnabled(True)
 
+    def simulation_save_temp(self):
+        """Saves results of every simulation in batch for loading after clicking"""
+        with open(os.path.join('tmp','simulations','')+str(self.id_simulation), 'w') as stream:
+            writer = csv.writer(stream)
+            for row in range(self.gui.table_filtered.rowCount()):
+                rowdata = []
+                for column in range(self.gui.table_filtered.columnCount()):
+                    item = self.gui.table_filtered.item(row, column)
+                    if item is not None:
+                        rowdata.append(
+                                unicode(item.text()).encode('utf8'))
+                    else:
+                        rowdata.append('')
+                writer.writerow(rowdata)
     def simulation_stats(self):
         ''' Adds simulation stats to tree preview'''
         item = QtGui.QTreeWidgetItem(self.gui.tree_hits)
