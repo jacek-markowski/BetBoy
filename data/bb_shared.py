@@ -62,7 +62,7 @@ class Shared(object):
             else:
                 os.mkdir(os.path.join(os.getcwd(),i,''))
         profiles = ('bets', 'export', 'filters', 'football_data', 'links',
-                    'ranges', 'selector', 'simulation', 'teams')
+                    'ranges', 'selector', 'simulation', 'teams','auto_save')
         for i in profiles:
             if os.path.isdir(os.path.join(os.getcwd(), 'profiles', i, '')):
                 pass

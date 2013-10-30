@@ -1550,13 +1550,13 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
 
 
         elements = [r_min, r_max, odds_level, nets, filters, ranges, bets]
-        with open('profiles/auto_save/simulator.txt','w') as save:
+        with open(os.path.join('profiles','auto_save','simulator.txt'),'w') as save:
             for i in elements:
                 save.write(str(i)+self.nl)
         print 'save'
     def auto_load(self):
         """Restores settings from previous session"""
-        with open('profiles/auto_save/simulator.txt','r') as load:
+        with open(os.path.join('profiles','auto_save','simulator.txt'),'r') as load:
             list = load.readlines()
             elements = []
             for i in list:

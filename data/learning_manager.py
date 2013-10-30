@@ -179,13 +179,13 @@ class LearningApp(QtGui.QWidget, Shared):
         out_func = self.gui.combo_output.currentText()
 
         elements = [hidden, error, epochs, rate, reports, algorithm, hidden_func,out_func]
-        with open('profiles/auto_save/learning_manager.txt','w') as save:
+        with open(os.path.join('profiles','auto_save','learning_manager.txt'),'w') as save:
             for i in elements:
                 save.write(i+self.nl)
 
     def auto_load(self):
         """Restores settings from previous session"""
-        with open('profiles/auto_save/learning_manager.txt','r') as load:
+        with open(os.path.join('profiles','auto_save','learning_manager.txt'),'r') as load:
             list = load.readlines()
             elements = []
             for i in list:
