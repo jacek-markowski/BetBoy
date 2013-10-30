@@ -105,6 +105,27 @@ class Scrape(QtCore.QThread, Shared):
                 tmp_file.write(final_goals[1].strip()+self.nl)
                 html_page = re.sub(pattern_compiled, ' ', html_page, 1)
                 page_final = pattern_compiled.search(html_page)
+        #Fix file when downloading other sport disciplines with overtime tag
+        new_file = []
+        with (open(os.path.join('tmp','')+'tmp','r')) as to_fix:
+            n = reader(to_fix)
+            for i in n:
+                # re pattern
+                re_fix = """(?P<value>.*?)<.*"""
+                re_fix_compl = re.compile(re_fix)
+                fixed_value = re.search(re_fix_compl, i[4])
+                if fixed_value:
+                    new_value = fixed_value.group('value')
+                    i[4] = new_value
+                fixed_value = re.search(re_fix_compl, i[3])
+                if fixed_value:
+                    new_value = fixed_value.group('value')
+                    i[3] = new_value
+                line = i[0]+','+i[1]+','+i[2]+','+i[3]+','+i[4]+'\n'
+                new_file.append(line)
+        with open(os.path.join('tmp','')+'tmp','w') as fixed:
+            for i in new_file:
+                fixed.write(str(i))
         with open(os.path.join('tmp','')+'tmp','r') as f:
             tmp_file = reader(f)
             tmp_file = list(tmp_file)

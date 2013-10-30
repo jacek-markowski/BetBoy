@@ -112,7 +112,7 @@ class Shared(object):
                 for i in leagues:
                     with open(os.path.join('leagues',path,'')+i,'r') as f:
                         for a in reader(f):
-                            if len(a[3])> 5 or len(a[4])> 5:
+                            if len(a[3])> 4 or len(a[4])> 4:
                                 errors += 1
                                 line = path+self.nl+i+'>>>'+str(a)+self.nl
                                 QtGui.QApplication.processEvents()
