@@ -75,7 +75,7 @@ class Shared(object):
                 pass
             else:
                 os.mkdir(os.path.join(os.getcwd(), 'leagues', i, ''))
-        tmp = ('leagues',)
+        tmp = ('leagues', 'simulations')
         for i in tmp:
             if os.path.isdir(os.path.join(os.getcwd(), 'tmp', i, '')):
                 pass
