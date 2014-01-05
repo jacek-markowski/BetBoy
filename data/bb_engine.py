@@ -1284,21 +1284,25 @@ class Database(Shared):
             self.relations_base.execute('''DELETE FROM league_stats
                                             WHERE id''')
         except:
-            pass
+            print 'League table deletion error'
 
         try:
             self.relations_base.execute('''DELETE FROM results WHERE id''')
         except:
-            pass
+            print 'League results deletion error'
 
         try:
-            self.relations_base.execute('''DELETE FROM league WHERE id''')
+            self.relations_base.execute('''DELETE FROM series WHERE id''')
         except:
-            pass
+            print 'Series table deletion error'
         try:
             self.relations_base.execute('''DELETE FROM scaled WHERE id''')
         except:
-            pass
+            print 'Scaled table deletion error'
+        try:
+            self.relations_base.execute('''DELETE FROM odds WHERE id''')
+        except:
+            print 'Odds table deletion error'
     def simulation_prediction(self, home, away, net, mode=0):
         ''' Predict outcome form match using given net
         mode 0 predicting outcomes (1,x,2)
