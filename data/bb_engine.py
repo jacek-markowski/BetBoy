@@ -336,6 +336,8 @@ class Database(Shared):
                             print '==== Scaling====', day
                             export_print_file.write('Process data :'+day+' Round %d'%rounds)
                     self.export('tmp', home, away, rounds, fth, fta)
+                if rounds <= r_max:
+                    self.process_csv(i)
             if self.stop_action == 1:
                 break
             if mode == 2: # simulation
@@ -352,9 +354,12 @@ class Database(Shared):
                     self.fth = fth
                     self.fta = fta
                     self.batch_print() # simulation module
-            self.process_csv(i)
-        # final scale for predicting in stats window
-        self.scale_group(teams_num)
+                if rounds <= r_max:
+                    self.process_csv(i)
+            if mode == 0:
+                self.process_csv(i)
+                # final scale for predicting in stats window
+                self.scale_group(teams_num)
 
     def batch_print(self):
         ''' Used in simulator app'''
@@ -1281,7 +1286,7 @@ class Database(Shared):
         '''Reamoves all data form tables for new file process '''
 
         try:
-            self.relations_base.execute('''DELETE FROM league_stats
+            self.relations_base.execute('''DELETE FROM league
                                             WHERE id''')
         except:
             print 'League table deletion error'
