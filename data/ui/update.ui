@@ -385,7 +385,7 @@
                </property>
                <property name="icon">
                 <iconset resource="../icons/icons.qrc">
-                 <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
+                 <normaloff>:/actions/actions/agt_forward.png</normaloff>:/actions/actions/agt_forward.png</iconset>
                </property>
               </widget>
              </item>

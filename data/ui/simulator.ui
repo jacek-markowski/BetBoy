@@ -16,6 +16,9 @@
   <layout class="QHBoxLayout" name="horizontalLayout_11">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::West</enum>
      </property>
@@ -5739,7 +5742,7 @@
              <item>
               <widget class="QPushButton" name="button_save_reports">
                <property name="text">
-                <string>Save reports</string>
+                <string>Save simulation</string>
                </property>
                <property name="icon">
                 <iconset resource="../icons/icons.qrc">
@@ -5759,17 +5762,6 @@
                    <property name="icon">
                     <iconset resource="../icons/icons.qrc">
                      <normaloff>:/actions/actions/reload.png</normaloff>:/actions/actions/reload.png</iconset>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="button_preview_remove">
-                   <property name="text">
-                    <string>Remove</string>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../icons/icons.qrc">
-                     <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
                    </property>
                   </widget>
                  </item>
