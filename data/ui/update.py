@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'update.ui'
 #
-# Created: Wed May 15 18:12:10 2013
+# Created: Tue Jan 21 13:56:10 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -158,7 +158,7 @@ class Ui_Update(object):
         self.horizontalLayout.addWidget(self.button_add)
         self.button_all = QtGui.QPushButton(self.tab)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/actions/actions/edit_remove.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/actions/actions/agt_forward.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_all.setIcon(icon4)
         self.button_all.setObjectName("button_all")
         self.horizontalLayout.addWidget(self.button_all)
@@ -208,16 +208,18 @@ class Ui_Update(object):
         self.button_clear.setObjectName("button_clear")
         self.horizontalLayout_3.addWidget(self.button_clear)
         self.button_remove = QtGui.QPushButton(self.tab)
-        self.button_remove.setIcon(icon4)
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap(":/actions/actions/edit_remove.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_remove.setIcon(icon7)
         self.button_remove.setObjectName("button_remove")
         self.horizontalLayout_3.addWidget(self.button_remove)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_5 = QtGui.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.button_update = QtGui.QPushButton(self.tab)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap(":/actions/actions/agt_update_drivers.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.button_update.setIcon(icon7)
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap(":/actions/actions/agt_update_drivers.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.button_update.setIcon(icon8)
         self.button_update.setObjectName("button_update")
         self.horizontalLayout_5.addWidget(self.button_update)
         self.combo_path = QtGui.QComboBox(self.tab)

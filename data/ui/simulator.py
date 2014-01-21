@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'simulator.ui'
 #
-# Created: Wed May 15 18:12:12 2013
+# Created: Tue Jan 21 13:52:47 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,6 +16,7 @@ class Ui_Simulator(object):
         self.horizontalLayout_11 = QtGui.QHBoxLayout(Simulator)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
         self.tabWidget = QtGui.QTabWidget(Simulator)
+        self.tabWidget.setEnabled(True)
         self.tabWidget.setTabPosition(QtGui.QTabWidget.West)
         self.tabWidget.setObjectName("tabWidget")
         self.tab_settings = QtGui.QWidget()
@@ -1678,10 +1679,6 @@ class Ui_Simulator(object):
         self.button_preview_show.setIcon(icon8)
         self.button_preview_show.setObjectName("button_preview_show")
         self.verticalLayout_42.addWidget(self.button_preview_show)
-        self.button_preview_remove = QtGui.QPushButton(self.tab_preview)
-        self.button_preview_remove.setIcon(icon)
-        self.button_preview_remove.setObjectName("button_preview_remove")
-        self.verticalLayout_42.addWidget(self.button_preview_remove)
         self.verticalLayout_43.addLayout(self.verticalLayout_42)
         self.horizontalLayout_22 = QtGui.QHBoxLayout()
         self.horizontalLayout_22.setObjectName("horizontalLayout_22")
@@ -2072,9 +2069,8 @@ class Ui_Simulator(object):
         self.table_preview.setSortingEnabled(True)
         self.button_stop.setText(QtGui.QApplication.translate("Simulator", "Stop", None, QtGui.QApplication.UnicodeUTF8))
         self.label_18.setText(QtGui.QApplication.translate("Simulator", "Filtered: accuracy stats", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_save_reports.setText(QtGui.QApplication.translate("Simulator", "Save reports", None, QtGui.QApplication.UnicodeUTF8))
+        self.button_save_reports.setText(QtGui.QApplication.translate("Simulator", "Save simulation", None, QtGui.QApplication.UnicodeUTF8))
         self.button_preview_show.setText(QtGui.QApplication.translate("Simulator", "Show", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_preview_remove.setText(QtGui.QApplication.translate("Simulator", "Remove", None, QtGui.QApplication.UnicodeUTF8))
         self.button_preview_save.setText(QtGui.QApplication.translate("Simulator", "Save profile", None, QtGui.QApplication.UnicodeUTF8))
         self.label_17.setText(QtGui.QApplication.translate("Simulator", "Filtered", None, QtGui.QApplication.UnicodeUTF8))
         self.table_filtered.setSortingEnabled(True)
