@@ -359,7 +359,7 @@ class Database(Shared):
             if mode == 0:
                 self.process_csv(i)
                 # final scale for predicting in stats window
-                self.scale_group(teams_num)
+        self.scale_group(teams_num)
 
     def batch_print(self):
         ''' Used in simulator app'''
