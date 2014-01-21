@@ -17,6 +17,7 @@ limitations under the License.
 import sys
 import csv
 import os
+import shutil
 from csv import reader
 import locale
 
@@ -171,7 +172,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.button_batch_run.clicked.connect(self.simulation_batch)
         self.gui.button_preview_show.clicked.connect(self.simulation_show)
         self.gui.button_save_reports.clicked.connect(self.simulation_reports_save)
-        self.gui.button_preview_remove.clicked.connect(self.batch_preview_remove)
         self.gui.button_preview_save.clicked.connect(self.batch_preview_save)
         self.gui.button_bets_final_save.clicked.connect(self.bets_final_save)
         self.gui.combo_points.currentIndexChanged.connect(self.filter_combos_spins)
@@ -601,12 +601,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 save.write(str(i)+self.nl)
         self.bets_tree()
 
-    def batch_preview_remove(self):
-        ''' Remove item from filtered accuracy stats'''
-        item = self.gui.tree_hits.currentItem()
-        index = self.gui.tree_hits.indexOfTopLevelItem(item)
-        self.gui.tree_hits.takeTopLevelItem(index)
-
     def batch_preview_save(self):
         ''' Saves batch profile'''
         file_name = self.gui.line_preview_save.text()
@@ -645,16 +639,62 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.simulation_run(mode=0)
 
     def simulation_show(self):
-        self.simulation_run(mode=1)
+        #self.simulation_run(mode=1)
+        self.gui.table_filtered.setSortingEnabled(False)
+        self.gui.table_preview.setSortingEnabled(False)
+        self.gui.table_preview.setRowCount(0)
+        self.gui.table_filtered.setRowCount(0)
+
+        selected = self.gui.tree_hits.currentIndex().row()
+        green = QtGui.QColor('#11BD00')
+        red = QtGui.QColor('#C40202')
+        with open(os.path.join('tmp','simulations','')+str(selected)+'full', 'r') as stream:
+            table = csv.reader(stream)
+            table = list(table)
+        for i in range(0, len(table)):
+            rows_all = self.gui.table_preview.rowCount()
+            index = 0
+            if table[i][8] == 'Miss':
+                color = red
+            else:
+                color = green
+            for j in table[i]:
+                item = QtGui.QTableWidgetItem(j)
+                self.gui.table_preview.setRowCount(rows_all+1)
+                self.gui.table_preview.setItem(rows_all, index, item)
+                self.gui.table_preview.item(rows_all, index).\
+                    setBackground(QtGui.QColor(color))
+                index +=1
+        with open(os.path.join('tmp','simulations','')+str(selected)+'filter', 'r') as stream:
+            table = csv.reader(stream)
+            table = list(table)
+        for i in range(0, len(table)):
+            rows_all = self.gui.table_filtered.rowCount()
+            index = 0
+            if table[i][8] == 'Miss':
+                color = red
+            else:
+                color = green
+
+            for j in table[i]:
+                item = QtGui.QTableWidgetItem(j)
+                self.gui.table_filtered.setRowCount(rows_all+1)
+                self.gui.table_filtered.setItem(rows_all, index, item)
+                self.gui.table_filtered.item(rows_all, index).\
+                    setBackground(QtGui.QColor(color))
+                index +=1
+
+        self.gui.table_filtered.setSortingEnabled(True)
+        self.gui.table_preview.setSortingEnabled(True)
     def simulation_stop(self):
         ''' Stops simulation'''
         self.stop_action = 1
     def simulation_run(self,mode=0):
         ''' Runs all selected simulations
         mode 0 - batch simulation
-        mode 1 - show selected (after batch simulation)'''
+        mode 1 - restart selected simulation (after batch simulation)'''
         self.stop_action = 0
-        self.id_simulation = 0 # simulation id used as name for temp save file of simulation
+        self.id_simulation = -1 # simulation id used as name for temp save file of simulation
         self.gui.table_filtered.setSortingEnabled(False)
         self.gui.table_preview.setSortingEnabled(False)
         if mode == 0:
@@ -836,13 +876,26 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 self.simulation_stats() # stats for simulation
                 self.simulation_save_temp() # save results to text file
         if mode == 0 and self.stop_action == 0:
-            self.gui.tabWidget.setCurrentIndex(2)  #change tab
+            pass
+            #self.gui.tabWidget.setCurrentIndex(2)  #change tab
         self.gui.table_filtered.setSortingEnabled(True)
         self.gui.table_preview.setSortingEnabled(True)
 
     def simulation_save_temp(self):
         """Saves results of every simulation in batch for loading after clicking"""
-        with open(os.path.join('tmp','simulations','')+str(self.id_simulation), 'w') as stream:
+        with open(os.path.join('tmp','simulations','')+str(self.id_simulation)+'full', 'w') as stream:
+            writer = csv.writer(stream)
+            for row in range(self.gui.table_preview.rowCount()):
+                rowdata = []
+                for column in range(self.gui.table_preview.columnCount()):
+                    item = self.gui.table_preview.item(row, column)
+                    if item is not None:
+                        rowdata.append(
+                                unicode(item.text()).encode('utf8'))
+                    else:
+                        rowdata.append('')
+                writer.writerow(rowdata)
+        with open(os.path.join('tmp','simulations','')+str(self.id_simulation)+'filter', 'w') as stream:
             writer = csv.writer(stream)
             for row in range(self.gui.table_filtered.rowCount()):
                 rowdata = []
@@ -854,6 +907,20 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                     else:
                         rowdata.append('')
                 writer.writerow(rowdata)
+        with open(os.path.join('tmp','simulations','')+str(self.id_simulation)+'stats', 'w') as file_save:
+            item = self.gui.tree_hits.topLevelItem(self.id_simulation)
+            simulation = item.text(1) + ',' + item.text(2) + ',' +\
+                item.text(3) + ',' +item.text(4) + ',' +\
+                item.text(5) + ',' +item.text(6) + ',' +item.text(7) + ',' +\
+                item.text(8) + ',' +item.text(9)
+            line = simulation+self.nl
+            file_save.write(line)
+            child_num = item.childCount()
+            for i in range(0,child_num):
+                name = item.child(i)
+                name = name.text(0)
+                line = name+self.nl
+                file_save.write('.........'+line)
     def simulation_stats(self):
         ''' Adds simulation stats to tree preview'''
         item = QtGui.QTreeWidgetItem(self.gui.tree_hits)
@@ -1010,26 +1077,17 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             if self.stop_action == 0:
                 self.batch_bets()
         except:
-            'no bets'
+            print 'no bets'
     def simulation_reports_save(self):
-        ''' Save selected bets'''
+        ''' Save simulation to a file'''
         file_name = QtGui.QFileDialog.getSaveFileName(self)
-        with open(file_name[0],'w') as file_save:
-            count = self.gui.tree_hits.topLevelItemCount()
-            for i in range(0,count):
-                item = self.gui.tree_hits.topLevelItem(i)
-                simulation = item.text(1) + ',' + item.text(2) + ',' +\
-                    item.text(3) + ',' +item.text(4) + ',' +\
-                    item.text(5) + ',' +item.text(6) + ',' +item.text(7) + ',' +\
-                    item.text(8) + ',' +item.text(9)
-                line = simulation+self.nl
-                file_save.write(line)
-                child_num = item.childCount()
-                for i in range(0,child_num):
-                    name = item.child(i)
-                    name = name.text(0)
-                    line = name+self.nl
-                    file_save.write('.........'+line)
+        selected = self.gui.tree_hits.currentIndex().row()
+        ext = ('full','filter','stats')
+        for i in ext:
+            src = os.path.join('tmp','simulations','')+str(selected)+i
+            dst = file_name[0]+i
+            shutil.copy(src,dst)
+
     def batch_bets(self):
         ''' Gives bets'''
          # bets filter
