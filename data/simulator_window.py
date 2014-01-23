@@ -185,6 +185,10 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.spin_rounds_min.valueChanged.connect(self.combos_rounds)
         self.gui.spin_rounds_max.valueChanged.connect(self.combos_rounds)
         self.gui.button_stop.clicked.connect(self.simulation_stop)
+        # double click
+        self.gui.tree_leagues.doubleClicked.connect(self.batch_add)
+        # mark
+        self.gui.button_mark.clicked.connect(self.mark_color)
         # auto save bindings
         self.gui.spin_rounds_max.valueChanged.connect(self.auto_save)
         self.gui.spin_rounds_min.valueChanged.connect(self.auto_save)
@@ -604,6 +608,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
     def batch_preview_save(self):
         ''' Saves batch profile'''
         file_name = self.gui.line_preview_save.text()
+        green = QtGui.QColor('#11BD00')
         with open(os.path.join('profiles','simulation','')+\
         str(file_name), 'w') as file_save:
             count = self.gui.tree_hits.topLevelItemCount()
@@ -629,10 +634,11 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                         r_max,
                         odds]
                 line = ''
-                for i in val:
-                    line+=i+','
-                line = line +self.nl
-                file_save.write(line)
+                if item.background(0) == green:
+                    for i in val:
+                        line+=i+','
+                    line = line +self.nl
+                    file_save.write(line)
         self.batch_profiles_tree()
 
     def simulation_batch(self):
@@ -923,8 +929,10 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 file_save.write('.........'+line)
     def simulation_stats(self):
         ''' Adds simulation stats to tree preview'''
+
         item = QtGui.QTreeWidgetItem(self.gui.tree_hits)
-        item.setText(0,'.....')
+        self.simulation_yield()
+        item.setText(0,str(round(self.sim_stats['Overall yield'],1))+'%')
         item.setText(1,(self.sim_stats['Path']))
         item.setText(2,(self.sim_stats['League']))
         item.setText(3,(self.sim_stats['Net']))
@@ -934,6 +942,15 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         item.setText(7,(self.sim_stats['R_min']))
         item.setText(8,(self.sim_stats['R_max']))
         item.setText(9,str(self.odds_level))
+
+        ### profit/loss - yield
+        QtGui.QTreeWidgetItem(item).setText(0, '*Yield*')
+        #self.simulation_yield()
+        val = ['Overall yield','1,x,2 yield','1x,x2 yield','1 yield','x yield','2 yield','1x yield','x2 yield']
+        for i in range(0,len(val)):
+            profit = str(round(self.sim_stats[val[i]],2))
+            line = val[i]+': '+profit+' %'
+            QtGui.QTreeWidgetItem(item).setText(0, line)
 
         self.simulation_overall_accuracy()
         QtGui.QTreeWidgetItem(item).setText(0, '*Accuracy*')
@@ -973,15 +990,6 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             except:
                 percent = 0
             line = val[i]+' hits: '+count+', '+str(round(percent,2))+'%'
-            QtGui.QTreeWidgetItem(item).setText(0, line)
-
-        ### profit/loss - yield
-        QtGui.QTreeWidgetItem(item).setText(0, '*Yield*')
-        self.simulation_yield()
-        val = ['Overall yield','1,x,2 yield','1x,x2 yield','1 yield','x yield','2 yield','1x yield','x2 yield']
-        for i in range(0,len(val)):
-            profit = str(round(self.sim_stats[val[i]],2))
-            line = val[i]+': '+profit+' %'
             QtGui.QTreeWidgetItem(item).setText(0, line)
 
         ### avg_odds
@@ -1558,6 +1566,17 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         elif self.prediction_color == grey:
             self.color ='None'
 
+    def mark_color(self):
+        """
+        Simulation preview: results:
+         Marks selected item to save as profile
+        """
+        green = QtGui.QColor('#11BD00')
+        selected = self.gui.tree_hits.currentItem()
+        if selected.background(0) ==  green:
+            selected.setBackground(0,selected.background(1))
+        else:
+            selected.setBackground(0,green)
     def filters_name(self):
         item = self.gui.tree_filters_profile.currentItem()
         file_name = str(item.text(0))
