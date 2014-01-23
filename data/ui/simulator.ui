@@ -5765,6 +5765,17 @@
                    </property>
                   </widget>
                  </item>
+                 <item>
+                  <widget class="QPushButton" name="button_mark">
+                   <property name="text">
+                    <string>Mark/Unmark</string>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../icons/icons.qrc">
+                     <normaloff>:/small/agt_action_success.png</normaloff>:/small/agt_action_success.png</iconset>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item>
@@ -5772,7 +5783,7 @@
                  <item>
                   <widget class="QPushButton" name="button_preview_save">
                    <property name="text">
-                    <string>Save profile</string>
+                    <string>Save marked as profile</string>
                    </property>
                    <property name="icon">
                     <iconset resource="../icons/icons.qrc">

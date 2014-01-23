@@ -24,7 +24,7 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
-       <string>Scrape website</string>
+       <string>Betradar/Betexploerer</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
