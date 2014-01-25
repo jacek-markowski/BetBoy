@@ -1081,11 +1081,11 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 QtGui.QTreeWidgetItem(item).setText(0, line)
 
 
-        try:
-            if self.stop_action == 0:
-                self.batch_bets()
-        except:
-            print 'no bets'
+        
+        if self.stop_action == 0:
+            self.batch_bets()
+            
+        else:print 'no bets'
     def simulation_reports_save(self):
         ''' Save simulation to a file'''
         file_name = QtGui.QFileDialog.getSaveFileName(self)
@@ -1137,7 +1137,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             matches = matches.fetchall()
         else:
             matches = []
-
+        print matches[:]
         if len(matches)>0:
             self.item_sim = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
             line = str(
@@ -1153,7 +1153,19 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             self.item_sim.setText(0,(line))
             for i in matches:
                 date,home,away = i
-                self.simulation_prediction(home,away,self.sim_stats['Net'])
+                self.date = date
+                ## predict result using odds from file  or predicted odds
+                odds = self.relations_base.execute('''SELECT odd_1,odd_x,odd_2,date_txt
+                FROM results WHERE (home="%s" AND away="%s" AND gHomeEnd = "NULL")'''%(home,away))
+                try: #match in database
+                    odds = odds.fetchone()
+                    odd_1,odd_x,odd_2,dt = odds
+                except: # didn't match
+                    odd_1 = 0
+                if odd_1>0:
+                    self.simulation_prediction(home,away,self.sim_stats['Net'],date = date, mode=2)
+                else:
+                    self.simulation_prediction(home,away,self.sim_stats['Net'])
                 self.filter_status = ''
                 self.simulation_filters(home,away)
                 self.simulation_match_filters()
