@@ -163,10 +163,11 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         self.filters_load(file_name)
         ####
         self.load_csv(path,league)
-        min_date = self.relations_base.execute('''SELECT min(date_num)
+        min_date = self.relations_base.execute('''SELECT min(date_num), min(date_txt)
                                     From Results WHERE
                                     gHomeEnd == "NULL"''')
         min_date = min_date.fetchone()
+        self.date = min_date[1]
         min_date = min_date[0]
         if min_date:
             matches = self.relations_base.execute('''SELECT date_txt,home,away
