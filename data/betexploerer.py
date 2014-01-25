@@ -63,7 +63,7 @@ class BetExploerer():
         with open(self.html, 'r') as f:
             html_page = f.read()
         re_pattern_main = '"first-cell date tl">.*?</td></tr>'
-        re_pattern_a = 'date tl">(?P<date>.*?) .*?<a href.*?>(?P<home>.*?) - (?P<away>.*?)</a>.*?<a.*?>(?P<odd_1>.*?)</a>.*?<a.*?>(?P<odd_x>.*?)</a>.*?<a.*?>(?P<odd_2>.*?)</a>.*?'
+        re_pattern_a = 'date tl">(?P<date>.*?) .*?<a href.*?>(?P<home>.*?) - (?P<away>.*?)</a>.*?<a.*?"mySelectionsTip">(?P<odd_1>.*?)</a>.*?<a.*?"mySelectionsTip">(?P<odd_x>.*?)</a>.*?<a.*?"mySelectionsTip">(?P<odd_2>.*?)</a>.*?'
         re_pattern_b = '"first-cell date tl">(?P<date>.*?) .*?<a href.*?>(?P<home>.*?) - (?P<away>.*?)</a>(?P<odd_1>.)(?P<odd_x>.)(?P<odd_2>.)'
         re_compiled = re.compile(re_pattern_main, re.DOTALL)
         re_compiled_a = re.compile(re_pattern_a, re.DOTALL)
@@ -72,10 +72,8 @@ class BetExploerer():
         with open(os.path.join('tmp','')+'fixtures.txt','w') as f:
             search = re_compiled.search(html_page)
             html_text = search.group(0)
-            print 'jjjjjjjjjjjjjjjjjjjjj'
             while search:
                 search_a = re_compiled_a.search(html_text)
-                print search_a
                 if search_a:
                     group = search_a.group('date','home','away','odd_1','odd_x','odd_2')
                     group = list(group)
@@ -107,10 +105,10 @@ class BetExploerer():
                         group[0] = previous_date
                     else:
                         previous_date = group[0]
-                    if len(group[3])<2:
-                        group[3]='NULL'
-                        group[4]='NULL'
-                        group[5]='NULL'
+                    if len(group[3])<2: #odds
+                        group[3]='0'
+                        group[4]='0'
+                        group[5]='0'
                     #date 01.34.6789
                     print group[:]
                     day = group[0][0:2]
