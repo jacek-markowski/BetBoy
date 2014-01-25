@@ -59,16 +59,16 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         except:
             pass
         self.bindings()
-
+        self.prediction()
     def bindings(self):
         '''Bindings for app widgets.
          QtCore.QObject.connect(widget,QtCore.SIGNAL("clicked()"),command)
          or
          widget.event.connect(function)'''
         self.gui.main_combo_home.currentIndexChanged.connect\
-                                                    (self.tables_fill)
+                                                    (self.combo_team_change)
         self.gui.main_combo_away.currentIndexChanged.connect\
-                                                    (self.tables_fill)
+                                                    (self.combo_team_change)
         self.gui.combo_standings_mode.activated.connect(self.standings)
         self.gui.combo_form_mode.activated.connect(self.form)
         self.gui.combo_scheudle_dates.activated.connect(self.scheudle)
@@ -79,7 +79,10 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         self.gui.main_combo_nets.activated.connect(self.prediction)
         self.gui.spin_series.valueChanged.connect(self.tree_series)
         self.gui.main_table_scheudle.clicked.connect(self.scheudle_teams)
-
+    
+    def combo_team_change(self):
+        self.tables_fill()
+        self.prediction()
     def scheudle_teams(self):
         ''' Changes teams when clicked match'''
         row = self.gui.main_table_scheudle.currentRow()
@@ -89,7 +92,6 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         index_away = self.gui.main_combo_away.findText(away)
         self.gui.main_combo_home.setCurrentIndex(index_home)
         self.gui.main_combo_away.setCurrentIndex(index_away)
-
     def leagues_tree(self):
         ''' Creates leageues tree'''
         self.gui.treeLeagues.headerItem().setText(0, ('Leagues'))
@@ -641,18 +643,31 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         # Final configuring table
         table.resizeRowsToContents()
         table.resizeColumnsToContents()
-        try:
-            self.prediction()
-        except:
-            pass
+        
     def prediction(self):
         ''' Gives prediction for match'''
         locale.setlocale(locale.LC_ALL, "C")
         home = self.v['home_team']()
         away = self.v['away_team']()
-        prediction = self.database.simulation_prediction(home,
+        
+
+        odds = self.database.relations_base.execute('''SELECT odd_1,odd_x,odd_2,date_txt
+        FROM results WHERE (home="%s" AND away="%s" AND gHomeEnd = "NULL")'''%(home,away))
+        try: #match in database
+            odds = odds.fetchone()
+            odd_1,odd_x,odd_2,dt = odds
+        except: # didn't match
+            odd_1 = 0
+        if odd_1>0: # odds in file
+            print 'prediction using odds from file'
+            prediction = self.database.simulation_prediction(home,
                                                          away,
-                                                         self.v['net']())
+                                                             self.v['net'](),date=dt,mode=2)
+        else: # use predicted odds
+            print 'prediction using predicted odds'
+            prediction = self.database.simulation_prediction(home,
+                                                         away,
+                                                             self.v['net']())
         # ranges
         with open(os.path.join('profiles', 'ranges', '')+self.v['ranges'](),'r') as ranges:
             load = list(ranges)
@@ -691,23 +706,39 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         ####
         # Odds
         ####
-        odds = self.database.simulation_prediction(home,
-                                                         away,
+        odds = self.database.relations_base.execute('''SELECT odd_1,odd_x,odd_2,gHomeEnd
+        FROM results WHERE (home="%s" AND away="%s" AND gHomeEnd = "NULL")'''%(home,away))
+        try: #match in database
+            odds = odds.fetchone()
+            odd_1,odd_x,odd_2,gh = odds
+        except: # didn't match
+            odd_1 = 0
+        if odd_1>0:
+            # odds in file
+            print 'use odds'
+            odd_1x = round(1/((1/odd_1) + (1/odd_x)),2)
+            odd_x2 = round(1/((1/odd_x) + (1/odd_2)),2)
+            line ='1: '+str(odd_1)+'  x: '+str(odd_x)+'  2: '+str(odd_2)+self.nl+\
+                ' 1x: '+str(odd_1x)+'  x2: '+str(odd_x2)
+            
+        else: #predict odds
+            print 'predict odds'
+            odds = self.database.simulation_prediction(home, away,
                                                          'default',mode=1)
-        print 'odds',prediction
-        odd_1 = self.odds_rescale(odds[0],100)
-        odd_x = self.odds_rescale(odds[1],100)
-        odd_2 = self.odds_rescale(odds[2],100)
-        odd_1x = round(1/((1/odd_1) + (1/odd_x)),2)
-        odd_x2 = round(1/((1/odd_x) + (1/odd_2)),2)
-        if odd_1x < 1:
-            odd_1x = 1
-        if odd_x2 < 1:
-            odd_x2 = 1
-        line ='1: '+str(odd_1)+'  x: '+str(odd_x)+'  2: '+str(odd_2)+self.nl+\
+            print 'odds',prediction
+            odd_1 = self.odds_rescale(odds[0],100)
+            odd_x = self.odds_rescale(odds[1],100)
+            odd_2 = self.odds_rescale(odds[2],100)
+            odd_1x = round(1/((1/odd_1) + (1/odd_x)),2)
+            odd_x2 = round(1/((1/odd_x) + (1/odd_2)),2)
+            if odd_1x < 1:
+                odd_1x = 1
+            if odd_x2 < 1:
+                odd_x2 = 1
+            line ='1: '+str(odd_1)+'  x: '+str(odd_x)+'  2: '+str(odd_2)+self.nl+\
                 ' 1x: '+str(odd_1x)+'  x2: '+str(odd_x2)
         self.gui.label_odds.setText(line)
-        print odd_1x,odd_x2
+        print odd_1,odd_x,odd_2,odd_1x,odd_x2
 
     def main_home(self):
         ''' Table home in main tab'''
