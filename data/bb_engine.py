@@ -49,7 +49,10 @@ class Database(Shared):
         home TEXT,
         away TEXT,
         gHomeEnd INTEGER,
-        gAwayEnd INTEGER
+        gAwayEnd INTEGER,
+        odd_1 FLOAT DEFAULT 000.0,
+        odd_x FLOAT DEFAULT 000.0,
+        odd_2 FLOAT DEFAULT 000.0,
         fake TEXT NOT NULL DEFAULT "-")''')
         self.relations_base.execute('''CREATE TABLE league
         (id INTEGER PRIMARY KEY,
@@ -270,10 +273,13 @@ class Database(Shared):
         series_under25 INTEGER DEFAULT 000.0,
         series_under25Home INTEGER DEFAULT 000.0,
         series_under25Away INTEGER DEFAULT 000.0,
+        odd_1 FLOAT DEFAULT 0.0,
+        odd_x FLOAT DEFAULT 0.0,
+        odd_2 FLOAT DEFAULT 0.0,
         fake TEXT NOT NULL DEFAULT "-")''')
         self.relations_base.execute('''CREATE TABLE odds
         (id INTEGER PRIMARY KEY,
-        name TETX,
+        name TEXT,
         odd_home FLOAT DEFAULT 000.0,
         odd_draw FLOAT DEFAULT 000.0,
         odd_away FLOAT DEFAULT 000.0)''')
@@ -288,6 +294,9 @@ class Database(Shared):
             # communicates with export manager
             comm.write('')
         self.clear_tables()
+        ##
+        ##return_teams insert fil to sql table + return list of teams
+        ##
         teams = self.return_teams(folder, name)
         for team in teams:
             item = team[0]
@@ -305,7 +314,10 @@ class Database(Shared):
                                 home,
                                 away,
                                 gHomeEnd,
-                                gAwayEnd
+                                gAwayEnd,
+                                odd_1,
+                                odd_x,
+                                odd_2
                                 FROM results WHERE NOT gHomeEnd='NULL'
                                 ORDER BY date_num ASC
                                 ''')
@@ -316,7 +328,7 @@ class Database(Shared):
         self.match_group_date = 0
         index = 0
         for i in results:
-            day, home, away, fth, fta = i[:]
+            day, home, away, fth, fta, odd_1, odd_x, odd_2  = i[:]
             rounds_m = self.relations_base.execute('''SELECT
             max(matches) FROM league''')
             rounds = rounds_m.fetchone()
@@ -327,15 +339,20 @@ class Database(Shared):
                     comm_var = comm.readline()
                 if comm_var != '':
                     break
+                ####################################
                 if r_min <= rounds <= r_max:
                     index += 1
                     self.scale_group_check(day)
                     if self.match_group == 1:
                         self.scale_group(teams_num)
+                        self.scale_odds(home,away,day)
                         with open(os.path.join('tmp','')+'print','w') as export_print_file:
                             print '==== Scaling====', day
                             export_print_file.write('Process data :'+day+' Round %d'%rounds)
-                    self.export('tmp', home, away, rounds, fth, fta)
+                    if odd_1 > 0:
+                        self.export('tmp', home, away, rounds, fth, fta, mode=1)
+                    else:
+                        self.export('tmp', home, away, rounds, fth, fta, mode=0)
                 if rounds <= r_max:
                     self.process_csv(i)
             if self.stop_action == 1:
@@ -345,14 +362,19 @@ class Database(Shared):
                     self.scale_group_check(day)
                     if self.match_group == 1:
                         self.scale_group(teams_num)
-                    self.simulation_prediction(home, away, net,mode=0)
-                    self.simulation_filters(home, away)
                     ### used in simulation module
                     self.date = day
                     self.home = home
                     self.away = away
                     self.fth = fth
                     self.fta = fta
+                    if odd_1>0: # odds in file
+                        x=2
+                    else:
+                        x=0 # predict odds
+                    self.simulation_prediction(home, away, net, date=day, mode=x)
+                    self.simulation_filters(home, away)
+                    
                     self.batch_print() # simulation module
                 if rounds <= r_max:
                     self.process_csv(i)
@@ -365,8 +387,12 @@ class Database(Shared):
     def batch_print(self):
         ''' Used in simulator app'''
         pass
-    def export(self, expt_name, home, away, rounds, fth, fta):
-        ''' Exports data for learning'''
+    def export(self, expt_name, home, away, rounds, fth, fta, mode=0):
+        """
+        Exports data for learning
+        mode = 0 predict odds
+        mode = 1 take odds from database
+        """
         with open(os.path.join('tmp', '')+'export', 'a') as save:
             scaled_h = self.relations_base.execute('''SELECT
             matches,
@@ -520,10 +546,21 @@ class Database(Shared):
             WHERE team="%s"'''%away)
             scaled_a = scaled_a.fetchone()
             scaled_a = str(scaled_a[:])
-
-            prediction = self.simulation_prediction(home,away,'default',mode=1)
-            prd_line = ','+str(prediction[0])+','+str(prediction[1])+','+str(prediction[2])
-            line = scaled_h[1:-1]+','+scaled_a[1:-1]+prd_line+self.nl
+            # prediction mode=1 return predicted oddse
+            if mode == 0: # predict odds
+                prediction = self.simulation_prediction(home,away,'default',mode=1)
+                ## odds
+                prd_line = ','+str(prediction[0])+','+str(prediction[1])+','+str(prediction[2])
+                # line to write
+                line = scaled_h[1:-1]+','+scaled_a[1:-1]+prd_line+self.nl
+            if mode == 1: # take odds from database
+                odds = self.relations_base.execute('''SELECT odd_home, odd_draw, odd_away FROM odds''')
+                odds = odds.fetchone()
+                odd_1 = odds[0]
+                odd_x = odds[1]
+                odd_2 = odds[2]
+                odds_line =','+str(odd_1)+','+str(odd_x)+','+str(odd_2)
+                line = scaled_h[1:-1]+','+scaled_a[1:-1]+odds_line+self.nl
             if fth > fta:  #win home
                 #save.write(home+'-'+away+self.nl)
                 save.write(line)
@@ -721,7 +758,24 @@ class Database(Shared):
                    min_value=0, max_value=10, series=1)
 
 
-
+    def scale_odds(self, home,away,date,min_value=1,max_value=20):
+        """
+        scales odds to range(-1,1)
+        """
+        odds = self.relations_base.execute('''SELECT odd_1,odd_x,odd_2
+        FROM results WHERE home="%s" AND away="%s" AND date_txt="%s"'''%(home,away,date))
+        odd_home,odd_draw,odd_away = odds.fetchone()
+        scaled_1 = 2.0*(float(odd_home)-min_value)/(max_value-min_value)-1
+        scaled_x = 2.0*(float(odd_draw)-min_value)/(max_value-min_value)-1
+        scaled_2 = 2.0*(float(odd_away)-min_value)/(max_value-min_value)-1
+        val = [scaled_1,scaled_x,scaled_2]
+        for i in range(0,len(val)):
+            if val[i] > 1:
+                val[i]=1
+            elif val[i] < 1:
+                val[i]=-1
+        self.relations_base.execute('''UPDATE odds SET odd_home=?,odd_draw=?,odd_away=?''',(scaled_1,scaled_x,scaled_2))
+        return (scaled_1,scaled_x,scaled_2)
     def scale(self, record_in, record_out, min_value=None, max_value=None,
               series=0):
         ''' Scales data to range(-1,1), Need some tweaks to speed up'''
@@ -844,10 +898,18 @@ class Database(Shared):
         ####
         # Odds
         ####
-        self.odds = self.simulation_prediction(home,away,'default',mode=1)
-        self.odd_1 = round(self.odds_rescale(self.odds[0],self.odds_level),3)
-        self.odd_x = round(self.odds_rescale(self.odds[1],self.odds_level),3)
-        self.odd_2 = round(self.odds_rescale(self.odds[2],self.odds_level),3)
+        odds = self.relations_base.execute('''SELECT odd_1,odd_x,odd_2
+        FROM results WHERE (home="%s" AND away="%s" AND date_txt = "%s")'''%(home,away,self.date))
+        odds = odds.fetchone()
+        if odds[0]>0: # odds in file
+            self.odds = odds
+            self.odd_1,self.odd_x,self.odd_2 = odds
+
+        else: # no odds, predict odds
+            self.odds = self.simulation_prediction(home,away,'default',mode=1)
+            self.odd_1 = round(self.odds_rescale(self.odds[0],self.odds_level),3)
+            self.odd_x = round(self.odds_rescale(self.odds[1],self.odds_level),3)
+            self.odd_2 = round(self.odds_rescale(self.odds[2],self.odds_level),3)
         self.odd_1x = round(1/((1/self.odd_1) + (1/self.odd_x)),3)
         self.odd_x2 = round(1/((1/self.odd_x) + (1/self.odd_2)),3)
         if self.odd_1 < 1:
@@ -862,7 +924,7 @@ class Database(Shared):
             self.odd_1x = 1.0
     def process_csv(self, results):
         '''Calculates points,form,series etc.'''
-        date, team_home, team_away, goals_home, goals_away = results
+        date, team_home, team_away, goals_home, goals_away,odd_1, odd_x,odd_2  = results
         if goals_home > goals_away:
             winner = 1  #home team won
         if goals_home < goals_away:
@@ -1309,10 +1371,12 @@ class Database(Shared):
             self.relations_base.execute('''DELETE FROM odds WHERE id''')
         except:
             print 'Odds table deletion error'
-    def simulation_prediction(self, home, away, net, mode=0):
+    def simulation_prediction(self, home, away, net, date=0, mode=0):
         ''' Predict outcome form match using given net
-        mode 0 predicting outcomes (1,x,2)
-        mode 1 predictiong odds'''
+        mode 0 predicting outcomes (1,x,2) using predicted odds
+        mode 1 predictiong odds
+        mode 2 predict outcomes (1,x,2) using odds from file
+        '''
         path_net = os.path.join('net','')
         path_odds = os.path.join('odds','')
         input_list = []
@@ -1471,20 +1535,33 @@ class Database(Shared):
         for i in t2[0]:
             input_list.append(i)
         locale.setlocale(locale.LC_ALL, "C")
-        ann = libfann.neural_net()
-        ann.create_from_file(path_odds+'odds.net')
-        odds = ann.run(input_list[:])
-        for i in odds:
-            input_list.append(i)
-        if mode == 0:
+        if mode == 0: # prediction using predicted odds
+            ann = libfann.neural_net()
+            ann.create_from_file(path_odds+'odds.net')
+            odds = ann.run(input_list[:])
+            for i in odds:
+                input_list.append(i)
             ann = libfann.neural_net()
             ann.create_from_file(path_net+str(net))
             prediction = ann.run(input_list[:])
             self.prediction = prediction[0]
-        if mode == 0: #prediction
             return self.prediction
-        elif mode == 1: #odds
+        elif mode == 1: # predict odds
+            ann = libfann.neural_net()
+            ann.create_from_file(path_odds+'odds.net')
+            odds = ann.run(input_list[:])
             return odds
+        elif mode == 2: #prediction using odds from file
+            print 'simulation using odds'
+            odds = self.scale_odds(home,away,date)
+            print odds
+            for i in odds:
+                input_list.append(i)
+            ann = libfann.neural_net()
+            ann.create_from_file(path_net+str(net))
+            prediction = ann.run(input_list[:])
+            self.prediction = prediction[0]
+            return self.prediction
     def return_teams(self, folder, name):
         ''' Adds all matches to sql and return list of teams'''
         self.clear_tables()
@@ -1495,6 +1572,29 @@ class Database(Shared):
             date_num = float(date)
             fth = line[3]
             fta = line[4]
+            
+            if len(line)>5: # files with odds included
+                if line[5] == "NULL":
+                    odd_1 = 0
+                else:
+                    odd_1 = line[5]
+            else:
+                odd_1 = 0
+            if len(line)>5:
+                if line[6] == "NULL":
+                    odd_x = 0
+                else:
+                    odd_x = line[6]
+            else:
+                odd_x = 0
+            if len(line)>5:
+                if line[7] == "NULL":
+                    odd_2 = 0
+                else:
+                    odd_2 = line[7]
+            else:
+                odd_2 = 0
+            
             if fth == '' or fta =='':
                 fth = 'NULL'
                 fta = 'NULL'
@@ -1504,14 +1604,20 @@ class Database(Shared):
             home,
             away,
             gHomeEnd,
-            gAwayEnd) VALUES(?,?,?,?,?,?)''',
+            gAwayEnd,
+            odd_1,
+            odd_x,
+            odd_2) VALUES(?,?,?,?,?,?,?,?,?)''',
             (
             line[0],
             date_num,
             line[1],
             line[2],
             fth,
-            fta))
+            fta,
+            odd_1,
+            odd_x,
+            odd_2))
         #always sort results according to date
         self.relations_base.execute('''CREATE TEMPORARY TABLE results_copy
         AS SELECT * FROM results ORDER BY date_num ASC''')
@@ -1522,14 +1628,20 @@ class Database(Shared):
                                     home,
                                     away,
                                     gHomeEnd,
-                                    gAwayEnd)
+                                    gAwayEnd,
+                                    odd_1,
+                                    odd_x,
+                                    odd_2)
                                     SELECT
                                     date_txt,
                                     date_num,
                                     home,
                                     away,
                                     gHomeEnd,
-                                    gAwayEnd
+                                    gAwayEnd,
+                                    odd_1,
+                                    odd_x,
+                                    odd_2
                                     FROM results_copy''')
         self.relations_base.execute('''DROP TABLE results_copy''')
         # remove duplicates:
