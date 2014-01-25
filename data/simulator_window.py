@@ -1304,36 +1304,27 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         '''Counts balance win - lost money( for yield calculations)
         mode = 0 lost coupon
         mode = 1 won coupon'''
-        odds = self.simulation_prediction(self.home,self.away,'default',mode=1)
-        odd_1 = self.odds_rescale(odds[0],self.odds_level)
-        odd_x = self.odds_rescale(odds[1],self.odds_level)
-        odd_2 = self.odds_rescale(odds[2],self.odds_level)
-        odd_1x = 1/((1/odd_1) + (1/odd_x))
-        odd_x2 = 1/((1/odd_x) + (1/odd_2))
-        if odd_1x<1:
-            odd_1x=1
-        if odd_x2<1:
-            odd_x2=1
+
         if bet == '1':
-            profit = 100*odd_1*mode
+            profit = 100*self.odd_1*mode
             self.sim_stats['1 balance'] = self.sim_stats['1 balance'] + profit
-            self.sim_stats['1 odd_balance'] = self.sim_stats['1 odd_balance'] + odd_1
+            self.sim_stats['1 odd_balance'] = self.sim_stats['1 odd_balance'] + self.odd_1
         if bet == 'x':
-            profit = 100*odd_x*mode
+            profit = 100*self.odd_x*mode
             self.sim_stats['x balance'] = self.sim_stats['x balance'] + profit
-            self.sim_stats['x odd_balance'] = self.sim_stats['x odd_balance'] + odd_x
+            self.sim_stats['x odd_balance'] = self.sim_stats['x odd_balance'] + self.odd_x
         if bet == '2':
-            profit = 100*odd_2*mode
+            profit = 100*self.odd_2*mode
             self.sim_stats['2 balance'] = self.sim_stats['2 balance'] + profit
-            self.sim_stats['2 odd_balance'] = self.sim_stats['2 odd_balance'] + odd_2
+            self.sim_stats['2 odd_balance'] = self.sim_stats['2 odd_balance'] + self.odd_2
         if bet == '1x':
-            profit = 100*odd_1x*mode
+            profit = 100*self.odd_1x*mode
             self.sim_stats['1x balance'] = self.sim_stats['1x balance'] + profit
-            self.sim_stats['1x odd_balance'] = self.sim_stats['1x odd_balance'] + odd_1x
+            self.sim_stats['1x odd_balance'] = self.sim_stats['1x odd_balance'] + self.odd_1x
         if bet == 'x2':
-            profit = 100*odd_x2*mode
+            profit = 100*self.odd_x2*mode
             self.sim_stats['x2 balance'] = self.sim_stats['x2 balance'] + profit
-            self.sim_stats['x2 odd_balance'] = self.sim_stats['x2 odd_balance'] + odd_x2
+            self.sim_stats['x2 odd_balance'] = self.sim_stats['x2 odd_balance'] + self.odd_x2
 
     def simulation_yield(self):
         ''' Calculates yield'''

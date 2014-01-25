@@ -904,7 +904,10 @@ class Database(Shared):
         if odds[0]>0: # odds in file
             self.odds = odds
             self.odd_1,self.odd_x,self.odd_2 = odds
-
+            self.odd_1 = self.odd_1*self.odds_level/100
+            self.odd_x = self.odd_x*self.odds_level/100
+            self.odd_2 = self.odd_2*self.odds_level/100
+            
         else: # no odds, predict odds
             self.odds = self.simulation_prediction(home,away,'default',mode=1)
             self.odd_1 = round(self.odds_rescale(self.odds[0],self.odds_level),3)
