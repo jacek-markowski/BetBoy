@@ -30,12 +30,26 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
+          <widget class="QPushButton" name="button_betradar">
+           <property name="text">
+            <string>Betradar</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="button_betexplorer">
+           <property name="text">
+            <string>Betexplorer</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="button_previous">
            <property name="text">
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../icons/icons.qrc">
+            <iconset>
              <normaloff>:/actions/actions/agt_back.png</normaloff>:/actions/actions/agt_back.png</iconset>
            </property>
           </widget>
@@ -46,7 +60,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../icons/icons.qrc">
+            <iconset>
              <normaloff>:/actions/actions/agt_forward.png</normaloff>:/actions/actions/agt_forward.png</iconset>
            </property>
            <property name="flat">
@@ -60,7 +74,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../icons/icons.qrc">
+            <iconset>
              <normaloff>:/actions/actions/edit_add.png</normaloff>:/actions/actions/edit_add.png</iconset>
            </property>
           </widget>
@@ -161,7 +175,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Always select 'full listing' and 'week by week'.</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Betradar&lt;/span&gt; : choose league, go to fixtures, select 'full listing' and 'week by week'.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Betexploer: &lt;/span&gt;example link : http://www.betexplorer.com/soccer/netherlands/eredivisie/&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -269,7 +283,7 @@
                 <string>Save</string>
                </property>
                <property name="icon">
-                <iconset resource="../icons/icons.qrc">
+                <iconset>
                  <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
                </property>
               </widget>
@@ -331,7 +345,7 @@
                 <string>Delete</string>
                </property>
                <property name="icon">
-                <iconset resource="../icons/icons.qrc">
+                <iconset>
                  <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
                </property>
               </widget>
@@ -342,7 +356,7 @@
                 <string>Load</string>
                </property>
                <property name="icon">
-                <iconset resource="../icons/icons.qrc">
+                <iconset>
                  <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
                </property>
               </widget>
@@ -413,7 +427,7 @@
                 <string>Check</string>
                </property>
                <property name="icon">
-                <iconset resource="../icons/icons.qrc">
+                <iconset>
                  <normaloff>:/actions/actions/reload.png</normaloff>:/actions/actions/reload.png</iconset>
                </property>
               </widget>
@@ -426,7 +440,7 @@
                   <string>Remove</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
+                  <iconset>
                    <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
                  </property>
                 </widget>
@@ -437,312 +451,7 @@
                   <string>Clear</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
-                   <normaloff>:/actions/actions/editclear.png</normaloff>:/actions/actions/editclear.png</iconset>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
-      <attribute name="title">
-       <string>football-data.co.uk</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
-           <item>
-            <widget class="QPushButton" name="button_prev_fd">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../icons/icons.qrc">
-               <normaloff>:/actions/actions/agt_back.png</normaloff>:/actions/actions/agt_back.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="button_next_fd">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../icons/icons.qrc">
-               <normaloff>:/actions/actions/agt_forward.png</normaloff>:/actions/actions/agt_forward.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLineEdit" name="line_address_fd"/>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QWebView" name="webView_fd">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="url">
-            <url>
-             <string>about:blank</string>
-            </url>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_11">
-         <item>
-          <widget class="QPushButton" name="button_add_fd">
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../icons/icons.qrc">
-             <normaloff>:/actions/actions/edit_add.png</normaloff>:/actions/actions/edit_add.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="line_url_fd">
-           <property name="text">
-            <string>paste_link_location</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <item>
-            <widget class="QTreeWidget" name="tree_link_bases_fd">
-             <property name="palette">
-              <palette>
-               <active>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>243</red>
-                   <green>237</green>
-                   <blue>255</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </active>
-               <inactive>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>243</red>
-                   <green>237</green>
-                   <blue>255</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </inactive>
-               <disabled>
-                <colorrole role="Base">
-                 <brush brushstyle="SolidPattern">
-                  <color alpha="255">
-                   <red>247</red>
-                   <green>247</green>
-                   <blue>247</blue>
-                  </color>
-                 </brush>
-                </colorrole>
-               </disabled>
-              </palette>
-             </property>
-             <column>
-              <property name="text">
-               <string notr="true">1</string>
-              </property>
-             </column>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <item>
-              <widget class="QPushButton" name="button_save_fd">
-               <property name="text">
-                <string>Save</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../icons/icons.qrc">
-                 <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="line_save_fd">
-               <property name="palette">
-                <palette>
-                 <active>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>243</red>
-                     <green>237</green>
-                     <blue>255</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </active>
-                 <inactive>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>243</red>
-                     <green>237</green>
-                     <blue>255</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </inactive>
-                 <disabled>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>247</red>
-                     <green>247</green>
-                     <blue>247</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </disabled>
-                </palette>
-               </property>
-               <property name="inputMask">
-                <string/>
-               </property>
-               <property name="text">
-                <string>name</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_9">
-             <item>
-              <widget class="QPushButton" name="button_delete_fd">
-               <property name="text">
-                <string>Delete</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../icons/icons.qrc">
-                 <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="button_load_fd">
-               <property name="text">
-                <string>Load</string>
-               </property>
-               <property name="icon">
-                <iconset resource="../icons/icons.qrc">
-                 <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_8">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_9">
-             <item>
-              <widget class="QTreeWidget" name="tree_url_fd">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>200</height>
-                </size>
-               </property>
-               <property name="palette">
-                <palette>
-                 <active>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>243</red>
-                     <green>237</green>
-                     <blue>255</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </active>
-                 <inactive>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>243</red>
-                     <green>237</green>
-                     <blue>255</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </inactive>
-                 <disabled>
-                  <colorrole role="Base">
-                   <brush brushstyle="SolidPattern">
-                    <color alpha="255">
-                     <red>247</red>
-                     <green>247</green>
-                     <blue>247</blue>
-                    </color>
-                   </brush>
-                  </colorrole>
-                 </disabled>
-                </palette>
-               </property>
-               <column>
-                <property name="text">
-                 <string notr="true">1</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_10">
-               <item>
-                <widget class="QPushButton" name="button_remove_fd">
-                 <property name="text">
-                  <string>Remove</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
-                   <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="button_clear_fd">
-                 <property name="text">
-                  <string>Clear</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
+                  <iconset>
                    <normaloff>:/actions/actions/editclear.png</normaloff>:/actions/actions/editclear.png</iconset>
                  </property>
                 </widget>

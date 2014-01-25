@@ -34,46 +34,40 @@ class LinksApp(QtGui.QWidget, Shared):
         self.gui.tree_url.setSortingEnabled(1)
         self.gui.tree_url.headerItem().setText(0, ('League'))
         self.gui.tree_url.headerItem().setText(1, ('url'))
-        self.gui.tree_url_fd.headerItem().setText(0, ('url'))
         self.gui.tree_url.setColumnWidth(0,200)
         self.gui.tree_url.setColumnWidth(1,800)
-        self.gui.tree_url_fd.setColumnWidth(0,200)
-        self.gui.tree_url_fd.setColumnWidth(1,800)
         self.default_url = 'http://stats.betradar.com/s4/?clientid=271&language=en#2_1,22_1'
-        self.default_url_fd = 'http://www.football-data.co.uk/englandm.php'
         self.gui.line_url.setText(self.default_url)
-        self.gui.line_address_fd.setText(self.default_url_fd)
         self.gui.webView.load(QtCore.QUrl(self.default_url))
-        self.gui.webView_fd.load(QtCore.QUrl(self.default_url_fd))
         self.bindings()
         self.tree_link_saved()
-        self.tree_link_saved_fd()
+
 
     def bindings(self):
         ''' Widgets connections'''
         self.gui.button_add.clicked.connect(self.add_url)
-        self.gui.button_add_fd.clicked.connect(self.add_url_fd)
         self.gui.webView.urlChanged.connect(self.url_change)
-        self.gui.webView_fd.urlChanged.connect(self.url_change_fd)
         self.gui.button_save.clicked.connect(self.save_urls)
-        self.gui.button_save_fd.clicked.connect(self.save_urls_fd)
         self.gui.button_next.clicked.connect(self.gui.webView.forward)
         self.gui.button_previous.clicked.connect(self.gui.webView.back)
-        self.gui.button_next_fd.clicked.connect(self.gui.webView_fd.forward)
-        self.gui.button_prev_fd.clicked.connect(self.gui.webView_fd.back)
         self.gui.button_delete.clicked.connect(self.delete)
-        self.gui.button_delete_fd.clicked.connect(self.delete_fd)
         self.gui.button_clear.clicked.connect(self.gui.tree_url.clear)
-        self.gui.button_clear_fd.clicked.connect(self.gui.tree_url_fd.clear)
         self.gui.button_remove.clicked.connect(self.remove)
-        self.gui.button_remove_fd.clicked.connect(self.remove_fd)
         self.gui.button_load.clicked.connect(self.load_base)
+        ## betradar betexplorer buttons
+        self.gui.button_betradar.clicked.connect(self.change_to_betradar)
+        self.gui.button_betexplorer.clicked.connect(self.change_to_betexplorer)
 
-        self.gui.button_load_fd.clicked.connect(self.load_base_fd)
+
         self.gui.tree_link_bases.doubleClicked.connect(self.load_base)
         self.gui.button_check.clicked.connect(self.check_link)
         self.gui.line_name.textChanged.connect(self.line_sync)
         self.gui.tree_link_bases.clicked.connect(self.load_name)
+    def change_to_betradar(self):
+        self.gui.webView.load(QtCore.QUrl(self.default_url))
+    def change_to_betexplorer(self):
+        url= 'http://www.betexplorer.com/soccer/'
+        self.gui.webView.load(QtCore.QUrl(url))
     def load_name(self):
         ''' Sets loaded file name in text line'''
         child = self.gui.tree_link_bases.currentItem()
@@ -96,22 +90,12 @@ class LinksApp(QtGui.QWidget, Shared):
         url = url.toString()
         self.gui.line_url.setText(url)
 
-    def url_change_fd(self):
-        ''' Changes url in addres bar - football data'''
-        url = self.gui.webView_fd.url()
-        url = url.toString()
-        self.gui.line_address_fd.setText(url)
-
     def add_url(self):
         ''' Adds url to list- scrape website'''
         item_url = QtGui.QTreeWidgetItem(self.gui.tree_url)
         item_url.setText(0, self.gui.line_name.text())
         item_url.setText(1, self.gui.line_url.text())
 
-    def add_url_fd(self):
-        ''' Adds url to list - football-data.co.uk'''
-        item_url = QtGui.QTreeWidgetItem(self.gui.tree_url_fd)
-        item_url.setText(0, self.gui.line_url_fd.text())
 
     def save_urls(self):
         ''' Saves url profile - website scraping'''
@@ -130,21 +114,6 @@ class LinksApp(QtGui.QWidget, Shared):
                 file_save.write(line)
         self.tree_link_saved()
 
-    def save_urls_fd(self):
-        ''' Saves url profile - football data'''
-        file_name = self.gui.line_save_fd.text()
-        with open(os.path.join('profiles', 'football_data', '')\
-                +str(file_name), 'w') as file_save:
-            count = self.gui.tree_url_fd.topLevelItemCount()
-            for i in range(0, count):
-                item = self.gui.tree_url_fd.topLevelItem(i)
-                url = item.text(0)
-                if i == count-1:
-                    line = str(url)
-                else:
-                    line = str(url+self.nl)
-                file_save.write(line)
-        self.tree_link_saved_fd()
 
     def tree_link_saved(self):
         ''' Shows list of saved profiles in tree'''
@@ -157,17 +126,6 @@ class LinksApp(QtGui.QWidget, Shared):
             item = QtGui.QTreeWidgetItem(self.gui.tree_link_bases)
             item.setText(0, i)
 
-    def tree_link_saved_fd(self):
-        ''' Shows list of saved profiles in tree'''
-        self.gui.tree_link_bases_fd.clear()
-        self.gui.tree_link_bases_fd.sortItems(0, QtCore.Qt.SortOrder(0))
-        self.gui.tree_link_bases_fd.setSortingEnabled(1)
-        self.gui.tree_link_bases_fd.headerItem().setText(0, ('Saved'))
-        dir_bases = os.listdir(os.path.join('profiles','football_data'))
-        for i in dir_bases:
-            item = QtGui.QTreeWidgetItem(self.gui.tree_link_bases_fd)
-            item.setText(0, i)
-
     def delete(self):
         ''' Deletes file - websote scraping'''
         path = os.path.join('profiles', 'links', '')
@@ -176,25 +134,11 @@ class LinksApp(QtGui.QWidget, Shared):
         self.delete_file(file_delete, path)
         self.tree_link_saved()
 
-    def delete_fd(self):
-        ''' Deletes file - football date'''
-        path = os.path.join('profiles', 'football_data', '')
-        item = self.gui.tree_link_bases_fd.currentItem()
-        file_delete = item.text(0)
-        self.delete_file(file_delete, path)
-        self.tree_link_saved_fd()
-
     def remove(self):
         ''' Removes link from tree - scrape website'''
         item = self.gui.tree_url.currentItem()
         index = self.gui.tree_url.indexOfTopLevelItem(item)
         self.gui.tree_url.takeTopLevelItem(index)
-
-    def remove_fd(self):
-        ''' Removes link from tree - football-data.co.uk'''
-        item = self.gui.tree_url_fd.currentItem()
-        index = self.gui.tree_url_fd.indexOfTopLevelItem(item)
-        self.gui.tree_url_fd.takeTopLevelItem(index)
 
     def load_base(self):
         ''' Load url profile to tree - website scraping'''
@@ -210,17 +154,6 @@ class LinksApp(QtGui.QWidget, Shared):
                 item_url.setText(1, url)
 
 
-    def load_base_fd(self):
-        ''' Load url profile to tree - football data'''
-        child = self.gui.tree_link_bases_fd.currentItem()
-        file_name = str(child.text(0))
-        with open(os.path.join('profiles', 'football_data', '')+file_name, 'r') as file_load:
-            self.gui.tree_url_fd.clear()
-            for i in file_load:
-                url = i
-                url = self.rm_lines(url)
-                item_url = QtGui.QTreeWidgetItem(self.gui.tree_url_fd)
-                item_url.setText(0, url)
 
 if __name__ == "__main__":
     APP = QtGui.QApplication(sys.argv)
