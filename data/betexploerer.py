@@ -33,7 +33,11 @@ class BetExploerer():
         re_pattern_a = '.*?return false;">(?P<home>.*?) - (?P<away>.*?)</a>.*?return false;">(?P<goals_home>.*?):(?P<goals_away>.*?)</a>.*?<td class=("odds best-betrate"|"odds")>(?P<odd_1>.*?)</td>.*?<td class=("odds best-betrate"|"odds")>(?P<odd_x>.*?)</td>.*?<td class=("odds best-betrate"|"odds")>(?P<odd_2>.*?)</td>.*?<td class="last-cell nobr date">(?P<date>.*?)</td>'
         re_compiled_a = re.compile(re_pattern_a, re.DOTALL)
         search = re_compiled.search(html_page)
-        html_text = search.group(0)
+        try:
+            html_text = search.group(0)
+        except:
+            print 'No results'
+            html_text = ""
         with open(os.path.join('tmp','')+'results.txt','w') as f:
             while search:
                 search_a = re_compiled_a.search(html_text)

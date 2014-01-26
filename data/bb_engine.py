@@ -17,6 +17,8 @@ limitations under the License.
 """
 
 import sqlite3
+import codecs
+import unicodedata
 from csv import reader
 import os
 import locale
@@ -1597,7 +1599,10 @@ class Database(Shared):
                     odd_2 = line[7]
             else:
                 odd_2 = 0
-            
+            home_txt = line[1].decode('utf8', 'replace')
+            away_txt = line[2].decode('utf8', 'replace')
+            home = unicodedata.normalize('NFD', home_txt).encode('ascii', 'ignore')
+            away = unicodedata.normalize('NFD', away_txt).encode('ascii', 'ignore')
             if fth == '' or fta =='':
                 fth = 'NULL'
                 fta = 'NULL'
@@ -1614,8 +1619,8 @@ class Database(Shared):
             (
             line[0],
             date_num,
-            line[1],
-            line[2],
+            home,
+            away,
             fth,
             fta,
             odd_1,

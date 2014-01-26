@@ -59,7 +59,7 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         except:
             pass
         self.bindings()
-        self.prediction()
+        #self.prediction()
     def bindings(self):
         '''Bindings for app widgets.
          QtCore.QObject.connect(widget,QtCore.SIGNAL("clicked()"),command)
