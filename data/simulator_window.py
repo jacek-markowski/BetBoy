@@ -392,38 +392,38 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
 
     def batch_add(self):
         ''' Add item to batch tree'''
-        try:
-            item = self.gui.tree_nets.currentItem()
-            net = item.text(0)
-            item = self.gui.tree_leagues.currentItem()
-            league = item.text(0)
-            path =item.parent()
-            path = path.text(0)
-            item = self.gui.tree_filters.currentItem()
-            filters = item.text(0)
-            item = self.gui.tree_ranges.currentItem()
-            ranges = item.text(0)
-            item = self.gui.tree_bets.currentItem()
-            bets = item.text(0)
-            r_min = self.gui.spin_rounds_min.value()
-            r_max = self.gui.spin_rounds_max.value()
-            odds = self.gui.spin_odds_level.value()
-            if path != None:
-                val = [path,
-                        league,
-                        net,
-                        filters,
-                        ranges,
-                        bets,
-                        r_min,
-                        r_max,
-                        odds]
-
-                item = QtGui.QTreeWidgetItem(self.gui.tree_batch)
-                for i in range(0,len(val)):
-                    item.setText(i,(str(val[i])))
-        except:
-            pass
+        #Wtry:
+        item = self.gui.tree_nets.currentItem()
+        net = item.text(0)
+        item = self.gui.tree_leagues.currentItem()
+        league = item.text(0)
+        path =item.parent()
+        path = path.text(0)
+        item = self.gui.tree_filters.currentItem()
+        filters = item.text(0)
+        item = self.gui.tree_ranges.currentItem()
+        ranges = item.text(0)
+        item = self.gui.tree_bets.currentItem()
+        bets = item.text(0)
+        r_min = self.gui.spin_rounds_min.value()
+        r_max = self.gui.spin_rounds_max.value()
+        odds = self.gui.spin_odds_level.value()
+        if path != None:
+            val = [path,
+                   league,
+                   net,
+                   filters,
+                   ranges,
+                   bets,
+                   r_min,
+                   r_max,
+                   odds]
+            
+            item = QtGui.QTreeWidgetItem(self.gui.tree_batch)
+            for i in range(0,len(val)):
+                item.setText(i,(str(val[i])))
+        #except:
+        #    print 'Cant adds some error in batch_add'
 
     def batch_save(self):
         ''' Save items in bath tree'''

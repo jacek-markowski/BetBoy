@@ -116,7 +116,7 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         self.gui.treeLeagues.setSortingEnabled(1)
 
     def tree_return(self):
-        ''' Calls ng_engine module and loads csv file dependly of path
+        ''' Calls bb_engine module and loads csv file dependly of path
         and league name'''
         child = self.gui.treeLeagues.currentItem()
         try:
@@ -454,7 +454,7 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
             self.s_f(data, labels, self.gui.main_table_form)
 
     def scheudle(self):
-        ''' Table scheudle in main tab'''
+        ''' Table schedle in main tab'''
         date = str(self.v['mode_date']())
         date = date.replace('>','')
         date = date.replace('<','')
@@ -463,7 +463,12 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         'Date',
         'Home',
         'Away',
-        'Result']
+        'Result',
+        'odd 1',
+        'odd x',
+        'odd 2',
+        'odd 1x',
+        'odd x2']
         self.gui.main_table_scheudle.setColumnCount(len(labels))
         self.gui.main_table_scheudle.setHorizontalHeaderLabels(labels)
         data = self.database.relations_base.execute('''Select
@@ -471,7 +476,10 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         home,
         away,
         gHomeEnd,
-        gAwayEnd
+        gAwayEnd,
+        odd_1,
+        odd_x,
+        odd_2
         From results WHERE date_txt=?''', [(date)])
         data = data.fetchall()
         data = self.matches_list_fix(data)
@@ -505,7 +513,12 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
             'Date',
             'Home',
             'Away',
-            'Result']
+            'Result',
+            'odd_1',
+            'odd_x',
+            'odd_2',
+            'odd_1x',
+            'odd_x2']
         table.setColumnCount(len(labels))
         table.setHorizontalHeaderLabels(labels)
         if mode == 0:  #Overall
@@ -514,7 +527,10 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
             home,
             away,
             gHomeEnd,
-            gAwayEnd
+            gAwayEnd,
+            odd_1,
+            odd_x,
+            odd_2
             From results WHERE home=? or away=?''',(
                                                 str(team),
                                                 str(team)
@@ -532,7 +548,7 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
                     col += 1
                     line = QtGui.QTableWidgetItem(str(lin))
                     table.setItem(row, col, line)
-                    goals_h, goals_a = i[-1].split(':')
+                    goals_h, goals_a = i[-6].split(':')
                     if i[1] == str(team):
                         if goals_h == '-' or goals_a == '-':
                             table.item(row, col).\
@@ -569,7 +585,10 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
             home,
             away,
             gHomeEnd,
-            gAwayEnd
+            gAwayEnd,
+            odd_1,
+            odd_x,
+            odd_2
             From results WHERE home=?''', [(str(team)
                                                                     )])
             data = data.fetchall()
@@ -585,7 +604,7 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
                     col += 1
                     line = QtGui.QTableWidgetItem(str(lin))
                     table.setItem(row, col, line)
-                    goals_h, goals_a = i[-1].split(':')
+                    goals_h, goals_a = i[-6].split(':')
                     if goals_h == '-' or goals_a == '-':
                         table.item(row, col).\
                                 setBackground(self.v['c_1'])
@@ -608,7 +627,10 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
             home,
             away,
             gHomeEnd,
-            gAwayEnd
+            gAwayEnd,
+            odd_1,
+            odd_x,
+            odd_2
             From results WHERE away=?''', [(str(team)
                                                                     )])
             data = data.fetchall()
@@ -624,7 +646,7 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
                     col += 1
                     line = QtGui.QTableWidgetItem(str(lin))
                     table.setItem(row, col, line)
-                    goals_h, goals_a = i[-1].split(':')
+                    goals_h, goals_a = i[-6].split(':')
                     if goals_h == '-' or goals_a == '-':
                         table.item(row, col).\
                                 setBackground(self.v['c_1'])
@@ -756,12 +778,28 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
         '''Joins two items in every row:"gHomeEnd:gAwayEnd"'''
         match_list = []
         for i in data:
-            line = list(i[0:3])
+            print i
             if i[3] == 'NULL':
                 goals_str = '-:-'
             else:
                 goals_str = str(i[3])+':'+str(i[4])
-            line.append(goals_str)
+            if i[5] == 0:
+                odd_1 = 0
+                odd_x = 0
+                odd_2 = 0
+                odd_1x = 0
+                odd_x2 = 0
+            else:
+                odd_1 = i[5]
+                odd_x = i[6]
+                odd_2 = i[7]
+                odd_1x = round(1/((1/odd_1) + (1/odd_x)),2)
+                if odd_1x<1:
+                    odd_1x = 1
+                odd_x2 = round(1/((1/odd_2) + (1/odd_x)),2)
+                if odd_x2<0:
+                    odd_x2 = 0
+            line = [i[0],i[1],i[2],goals_str,odd_1,odd_x,odd_2,odd_1x,odd_x2]
             match_list.append(line)
         return match_list
 
