@@ -30,7 +30,7 @@ class BetExploerer():
             html_page = f.read()
         re_pattern = '<td class="first-cell tl">.*?</td></tr>'
         re_compiled = re.compile(re_pattern,re.DOTALL)
-        re_pattern_a = '.*?return false;">(?P<home>.*?) - (?P<away>.*?)</a>.*?return false;">(?P<goals_home>.*?):(?P<goals_away>.*?)</a>.*?<td class=("odds best-betrate"|"odds")>(?P<odd_1>.*?)</td>.*?<td class=("odds best-betrate"|"odds")>(?P<odd_x>.*?)</td>.*?<td class=("odds best-betrate"|"odds")>(?P<odd_2>.*?)</td>.*?<td class="last-cell nobr date">(?P<date>.*?)</td>'
+        re_pattern_a = '.*?return false;">(?P<home>.*?) - (?P<away>.*?)</a>.*?return false;">(?P<goals_home>.*?):(?P<goals_away>.*?)<.*?<td class=("odds best-betrate"|"odds")>(?P<odd_1>.*?)</td>.*?<td class=("odds best-betrate"|"odds")>(?P<odd_x>.*?)</td>.*?<td class=("odds best-betrate"|"odds")>(?P<odd_2>.*?)</td>.*?<td class="last-cell nobr date">(?P<date>.*?)</td>'
         re_compiled_a = re.compile(re_pattern_a, re.DOTALL)
         search = re_compiled.search(html_page)
         try:
@@ -49,15 +49,22 @@ class BetExploerer():
                     month = group[0][3:5]
                     year =group[0][6:]
                     date = year +'.'+month +'.'+ day
+                    odd_1 = group[5]
+                    odd_x = group[6]
+                    odd_2 = group[7]
+                    if odd_1=='&nbsp;' or odd_x=='&nbsp;' or odd_2=='&nbsp;':
+                        odd_1 = '0'
+                        odd_x = '0'
+                        odd_2 = '0'
                     print group[:]
                     f.write(date+',')
                     f.write(group[1]+',')
                     f.write(group[2]+',')
                     f.write(group[3]+',')
                     f.write(group[4]+',')
-                    f.write(group[5]+',')
-                    f.write(group[6]+',')
-                    f.write(group[7]+'\n')
+                    f.write(odd_1+',')
+                    f.write(odd_x+',')
+                    f.write(odd_2+'\n')
                 html_page = re.sub(re_compiled, ' ', html_page, 1)
                 search = re_compiled.search(html_page)
                 if search:
@@ -92,14 +99,21 @@ class BetExploerer():
                     month = group[0][3:5]
                     year =group[0][6:]
                     date = year +'.'+month +'.'+ day
+                    odd_1 = group[3]
+                    odd_x = group[4]
+                    odd_2 = group[5]
+                    if odd_1=='&nbsp;' or odd_x=='&nbsp;' or odd_2=='&nbsp;':
+                        odd_1 = '0'
+                        odd_x = '0'
+                        odd_2 = '0'
                     f.write(date+',')
                     f.write(group[1]+',')
                     f.write(group[2]+',')
                     f.write('NULL,') # home goals
                     f.write('NULL,') # away goals
-                    f.write(group[3]+',')
-                    f.write(group[4]+',')
-                    f.write(group[5]+'\n')
+                    f.write(odd_1+',')
+                    f.write(odd_x+',')
+                    f.write(odd_2+'\n')
                 else:
                     search_b = re_compiled_b.search(html_text)
                     group = search_b.group('date','home','away','odd_1','odd_x','odd_2')
@@ -119,14 +133,21 @@ class BetExploerer():
                     month = group[0][3:5]
                     year =group[0][6:]
                     date = year +'.'+month +'.'+ day
+                    odd_1 = group[3]
+                    odd_x = group[4]
+                    odd_2 = group[5]
+                    if odd_1=='&nbsp;' or odd_x=='&nbsp;' or odd_2=='&nbsp;':
+                        odd_1 = '0'
+                        odd_x = '0'
+                        odd_2 = '0'
                     f.write(date+',')
                     f.write(group[1]+',')
                     f.write(group[2]+',')
                     f.write('NULL,') # home goals
                     f.write('NULL,') # away goals
-                    f.write(group[3]+',')
-                    f.write(group[4]+',')
-                    f.write(group[5]+'\n')
+                    f.write(odd_1+',')
+                    f.write(odd_x+',')
+                    f.write(odd_2+'\n')
                 html_page = re.sub(re_compiled, ' ', html_page, 1)
                 search = re_compiled.search(html_page)
                 if search:
