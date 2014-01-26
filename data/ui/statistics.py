@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'statistics.ui'
 #
-# Created: Wed May 15 18:12:11 2013
+# Created: Sun Jan 26 21:42:28 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -436,7 +436,7 @@ class Ui_MainWindow(object):
         self.actionAbout.setObjectName("actionAbout")
 
         self.retranslateUi(MainWindow)
-        self.tabWidget_2.setCurrentIndex(0)
+        self.tabWidget_2.setCurrentIndex(2)
         self.combo_home_mode.setCurrentIndex(1)
         self.combo_away_mode.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -465,7 +465,7 @@ class Ui_MainWindow(object):
         self.main_table_form.setSortingEnabled(False)
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_form), QtGui.QApplication.translate("MainWindow", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.main_table_scheudle.setSortingEnabled(False)
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_scheudle), QtGui.QApplication.translate("MainWindow", "Scheudle", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_scheudle), QtGui.QApplication.translate("MainWindow", "Schedle", None, QtGui.QApplication.UnicodeUTF8))
         self.label_home.setText(QtGui.QApplication.translate("MainWindow", "Home team", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_home_mode.setItemText(0, QtGui.QApplication.translate("MainWindow", "Overall", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_home_mode.setItemText(1, QtGui.QApplication.translate("MainWindow", "Home", None, QtGui.QApplication.UnicodeUTF8))

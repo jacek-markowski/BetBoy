@@ -273,7 +273,7 @@ font: 13pt}</string>
             </size>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="tab_main_standings">
             <attribute name="title">
@@ -504,7 +504,7 @@ font: 13pt}</string>
            </widget>
            <widget class="QWidget" name="tab_main_scheudle">
             <attribute name="title">
-             <string>Scheudle</string>
+             <string>Schedle</string>
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">
