@@ -33,6 +33,8 @@ Download latest BetBoy release:
 
 Before you can run BetBoy you have to install Python,Pyside and Pyfann(only on linux, included in windows version) on your system.
 
+BetBoy repository is available on [github](https://github.com/jacekm-git/BetBoy).
+
 ###Windows
 Download and install [Python 2.6 32 bit](http://www.python.org/ftp/python/2.6/python-2.6.msi)
 
