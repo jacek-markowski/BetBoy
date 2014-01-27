@@ -82,7 +82,11 @@ class BetExploerer():
         previous_date = ''
         with open(os.path.join('tmp','')+'fixtures.txt','w') as f:
             search = re_compiled.search(html_page)
-            html_text = search.group(0)
+            try:
+                html_text = search.group(0)
+            except:
+                print 'No results'
+                html_text = ""
             while search:
                 search_a = re_compiled_a.search(html_text)
                 if search_a:
