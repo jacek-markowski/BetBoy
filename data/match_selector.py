@@ -169,11 +169,13 @@ class SelectorApp(QtGui.QWidget, Database, Shared):
         min_date = min_date.fetchone()
         self.date = min_date[1]
         min_date = min_date[0]
+        print 'min date:', min_date
         if min_date:
             matches = self.relations_base.execute('''SELECT date_txt,home,away
                             From Results WHERE
                             gHomeEnd == "NULL" and date_num=%f'''%min_date)
             matches = matches.fetchall()
+            print matches[:]
         else:
             matches = []
 

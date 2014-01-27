@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'update.ui'
 #
-# Created: Tue Jan 21 13:56:10 2014
+# Created: Mon Jan 27 15:12:32 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -230,29 +230,6 @@ class Ui_Update(object):
         self.horizontalLayout_7.addLayout(self.verticalLayout_4)
         self.verticalLayout_6.addLayout(self.horizontalLayout_7)
         self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QtGui.QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.horizontalLayout_9 = QtGui.QHBoxLayout(self.tab_2)
-        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.verticalLayout_7 = QtGui.QVBoxLayout()
-        self.verticalLayout_7.setObjectName("verticalLayout_7")
-        self.tree_profiles_fd = QtGui.QTreeWidget(self.tab_2)
-        self.tree_profiles_fd.setObjectName("tree_profiles_fd")
-        self.tree_profiles_fd.headerItem().setText(0, "1")
-        self.verticalLayout_7.addWidget(self.tree_profiles_fd)
-        self.button_update_fd = QtGui.QPushButton(self.tab_2)
-        self.button_update_fd.setIcon(icon1)
-        self.button_update_fd.setObjectName("button_update_fd")
-        self.verticalLayout_7.addWidget(self.button_update_fd)
-        self.button_fd_delete = QtGui.QPushButton(self.tab_2)
-        self.button_fd_delete.setIcon(icon2)
-        self.button_fd_delete.setObjectName("button_fd_delete")
-        self.verticalLayout_7.addWidget(self.button_fd_delete)
-        self.horizontalLayout_9.addLayout(self.verticalLayout_7)
-        self.textBrowser_fd = QtGui.QTextBrowser(self.tab_2)
-        self.textBrowser_fd.setObjectName("textBrowser_fd")
-        self.horizontalLayout_9.addWidget(self.textBrowser_fd)
-        self.tabWidget.addTab(self.tab_2, "")
         self.verticalLayout_5.addWidget(self.tabWidget)
 
         self.retranslateUi(Update)
@@ -270,10 +247,7 @@ class Ui_Update(object):
         self.button_clear.setText(QtGui.QApplication.translate("Update", "Clear", None, QtGui.QApplication.UnicodeUTF8))
         self.button_remove.setText(QtGui.QApplication.translate("Update", "Remove", None, QtGui.QApplication.UnicodeUTF8))
         self.button_update.setText(QtGui.QApplication.translate("Update", "Update", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("Update", "Scrape website", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_update_fd.setText(QtGui.QApplication.translate("Update", "Update", None, QtGui.QApplication.UnicodeUTF8))
-        self.button_fd_delete.setText(QtGui.QApplication.translate("Update", "Delete", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), QtGui.QApplication.translate("Update", "football-data.co.uk", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("Update", "Betradar/Betexploerer", None, QtGui.QApplication.UnicodeUTF8))
 
 from PySide import QtWebKit
 import icons_rc

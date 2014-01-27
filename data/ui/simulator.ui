@@ -48,7 +48,7 @@
           <attribute name="title">
            <string>Simulation</string>
           </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_41">
+          <layout class="QVBoxLayout" name="verticalLayout_47">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_12">
              <item>
@@ -72,7 +72,7 @@
                       <string>Remove</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
+                      <iconset>
                        <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
                      </property>
                     </widget>
@@ -83,7 +83,7 @@
                       <string>Clear</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
+                      <iconset>
                        <normaloff>:/actions/actions/editclear.png</normaloff>:/actions/actions/editclear.png</iconset>
                      </property>
                     </widget>
@@ -98,7 +98,7 @@
                       <string>Run</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
+                      <iconset>
                        <normaloff>:/actions/actions/agt_runit.png</normaloff>:/actions/actions/agt_runit.png</iconset>
                      </property>
                     </widget>
@@ -201,7 +201,7 @@
                         <string>Add</string>
                        </property>
                        <property name="icon">
-                        <iconset resource="../icons/icons.qrc">
+                        <iconset>
                          <normaloff>:/actions/actions/edit_add.png</normaloff>:/actions/actions/edit_add.png</iconset>
                        </property>
                       </widget>
@@ -233,7 +233,7 @@
                     <string>Load</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons/icons.qrc">
+                    <iconset>
                      <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
                    </property>
                   </widget>
@@ -244,7 +244,7 @@
                     <string>Delete</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons/icons.qrc">
+                    <iconset>
                      <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
                    </property>
                   </widget>
@@ -261,7 +261,7 @@
                       <string>Save</string>
                      </property>
                      <property name="icon">
-                      <iconset resource="../icons/icons.qrc">
+                      <iconset>
                        <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
                      </property>
                     </widget>
@@ -278,12 +278,12 @@
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_24">
+            <layout class="QHBoxLayout" name="horizontalLayout_20">
              <item>
               <widget class="QTreeWidget" name="tree_leagues">
                <property name="maximumSize">
                 <size>
-                 <width>250</width>
+                 <width>350</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -295,40 +295,48 @@
               </widget>
              </item>
              <item>
-              <widget class="QTreeWidget" name="tree_nets">
-               <column>
-                <property name="text">
-                 <string notr="true">1</string>
-                </property>
-               </column>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_41">
+               <item>
+                <widget class="QTreeWidget" name="tree_filters">
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTreeWidget" name="tree_nets">
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
              </item>
              <item>
-              <widget class="QTreeWidget" name="tree_filters">
-               <column>
-                <property name="text">
-                 <string notr="true">1</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-             <item>
-              <widget class="QTreeWidget" name="tree_ranges">
-               <column>
-                <property name="text">
-                 <string notr="true">1</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-             <item>
-              <widget class="QTreeWidget" name="tree_bets">
-               <column>
-                <property name="text">
-                 <string notr="true">1</string>
-                </property>
-               </column>
-              </widget>
+              <layout class="QVBoxLayout" name="verticalLayout_46">
+               <item>
+                <widget class="QTreeWidget" name="tree_ranges">
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTreeWidget" name="tree_bets">
+                 <column>
+                  <property name="text">
+                   <string notr="true">1</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
@@ -370,7 +378,7 @@
                   <string>Load</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
+                  <iconset>
                    <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
                  </property>
                 </widget>
@@ -387,7 +395,7 @@
                   <string>Delete</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
+                  <iconset>
                    <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
                  </property>
                 </widget>
@@ -424,7 +432,7 @@
                   <string>Save</string>
                  </property>
                  <property name="icon">
-                  <iconset resource="../icons/icons.qrc">
+                  <iconset>
                    <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
                  </property>
                 </widget>
@@ -4979,7 +4987,7 @@
                      <string>Load</string>
                     </property>
                     <property name="icon">
-                     <iconset resource="../icons/icons.qrc">
+                     <iconset>
                       <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
                     </property>
                    </widget>
@@ -5002,7 +5010,7 @@
                      <string>Delete</string>
                     </property>
                     <property name="icon">
-                     <iconset resource="../icons/icons.qrc">
+                     <iconset>
                       <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
                     </property>
                    </widget>
@@ -5022,7 +5030,7 @@
                        <string>Save</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="../icons/icons.qrc">
+                       <iconset>
                         <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
                       </property>
                      </widget>
@@ -5566,7 +5574,7 @@
                          <string>Load</string>
                         </property>
                         <property name="icon">
-                         <iconset resource="../icons/icons.qrc">
+                         <iconset>
                           <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
                         </property>
                        </widget>
@@ -5595,7 +5603,7 @@
                          <string>Delete</string>
                         </property>
                         <property name="icon">
-                         <iconset resource="../icons/icons.qrc">
+                         <iconset>
                           <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
                         </property>
                        </widget>
@@ -5624,7 +5632,7 @@
                        <string>Save</string>
                       </property>
                       <property name="icon">
-                       <iconset resource="../icons/icons.qrc">
+                       <iconset>
                         <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
                       </property>
                      </widget>
@@ -5714,7 +5722,7 @@
                 <string>Stop</string>
                </property>
                <property name="icon">
-                <iconset resource="../icons/icons.qrc">
+                <iconset>
                  <normaloff>:/actions/cancel.png</normaloff>:/actions/cancel.png</iconset>
                </property>
               </widget>
@@ -5745,7 +5753,7 @@
                 <string>Save simulation</string>
                </property>
                <property name="icon">
-                <iconset resource="../icons/icons.qrc">
+                <iconset>
                  <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
                </property>
               </widget>
@@ -5760,7 +5768,7 @@
                     <string>Show</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons/icons.qrc">
+                    <iconset>
                      <normaloff>:/actions/actions/reload.png</normaloff>:/actions/actions/reload.png</iconset>
                    </property>
                   </widget>
@@ -5771,7 +5779,7 @@
                     <string>Mark/Unmark</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons/icons.qrc">
+                    <iconset>
                      <normaloff>:/small/agt_action_success.png</normaloff>:/small/agt_action_success.png</iconset>
                    </property>
                   </widget>
@@ -5786,7 +5794,7 @@
                     <string>Save marked as profile</string>
                    </property>
                    <property name="icon">
-                    <iconset resource="../icons/icons.qrc">
+                    <iconset>
                      <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
                    </property>
                   </widget>
@@ -5853,7 +5861,7 @@
             <string>Save</string>
            </property>
            <property name="icon">
-            <iconset resource="../icons/icons.qrc">
+            <iconset>
              <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
            </property>
           </widget>
