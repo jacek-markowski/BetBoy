@@ -7,17 +7,15 @@
 </head>
 <body>
 <h1>BetBoy</h1>
-<p>Betboy uses artificial neural networks (FANN library) to predict outcomes of football matches. It's written in Python, for graphical interface uses Qt (PySide).</p>
+<p>Artificial neural networks for predicting results of football(soccer) matches.</p>
 <p>Features:</p>
 <ul>
-<li>predicting outcomes of football matches</li>
-<li>predictiong odds</li>
-<li>simulations with filters</li>
-<li>automatic bets selector with filters</li>
-<li>complex statistics (standings, form, series, scheudle)</li>
-<li>automatic or manual updates</li>
-<li>preparing data for neural networks</li>
-<li>creating and saving neural networks</li>
+<li>predicting results of football matches</li>
+<li>predicting odds if not available in update</li>
+<li>automatic updates</li>
+<li>simulations</li>
+<li>statistics (tables, form, series, schedle with odds)</li>
+<li>rating system</li>
 </ul>
 <p>program license: Apache License v2</p>
 <p>e-mail: jacek87markowski@gmail.com</p>
@@ -46,7 +44,7 @@
 <p>Before you can run BetBoy you have to install Python,Pyside and Pyfann(only on linux, included in windows version) on your system.</p>
 <h3>Windows</h3>
 <p>Download and install <a href="http://www.python.org/ftp/python/2.6/python-2.6.msi">Python 2.6 32 bit</a></p>
-<p>Download and install <a href="http://releases.qt-project.org/pyside/PySide-1.1.2.win32-py2.6.exe">Pyside for Python 2.6 32 bit</a></p>
+<p>Download and install <a href="http://download.qt-project.org/official_releases/pyside/PySide-1.2.1.win32-py2.6.exe">Pyside for Python 2.6 32 bit</a></p>
 <p>To run BetBoy just double click on bet_boy.py</p>
 <h3>Linux - Ubuntu 12.04</h3>
 <p>Go to Ubuntu software center install :</p>
@@ -91,7 +89,7 @@
 </ul>
 </li>
 <li>form</li>
-<li>scheudle</li>
+<li>schedle</li>
 <li>matches of selected teams</li>
 <li>series of selected teams</li>
 <li>predictions and odds:<ul>
@@ -160,21 +158,12 @@ for example:<ul>
 <p>If any errors,there will be created directory data/tmp/leagues (there are stored copies of broken files) and log.txt - shows wchich lines are bad and need manual fixing (for manual fixing i recommend to use notepad++).
 After fixing you can copy files from data/tmp/leagues to data/leagues.</p>
 </li>
-<li>
-<p>football-data.co.uk</p>
-<p>Select list of urls do download and click button 'update'</p>
-</li>
 </ul>
 <h3><a href="https://www.youtube.com/watch?v=Cs3DwGa6ETw">Link creator</a></h3>
 <ul>
 <li>
 <p>Scrape website</p>
 <p>Here you can create file with list of urls used for updates. On the left of displayed website choose football and select league, go to fixtures <strong>select all matches and week by week</strong>. On the left next to address bar there is text line where you can enter your name for this league, after you give name to league click button '+' to add to list. When you complete picking urls you can save entire list to file. This saved file can be opened in update manager.</p>
-</li>
-<li>
-<p>football-data.co.uk</p>
-<p>Select league on the right pane of site: there will be list of files-&gt; move mouse cursor to link to file-&gt; right button of mouse, from list select copy link-&gt; paste link to textbox under browser-&gt; push button '+' to add file to list.</p>
-<p>When collecting actuall season files after selecting leagues, go to section latest matches(list of upcoming matches - this list will be merged to downloaded leagues.), and copy link to upcoming matches-&gt; push button '+' to add to list.<strong>This link to file must be added at last place.</strong></p>
 </li>
 </ul>
 <h3><a href="https://www.youtube.com/watch?v=j_Ag30E6FVY">Leagues creator</a></h3>

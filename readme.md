@@ -1,16 +1,14 @@
 #BetBoy
-Betboy uses artificial neural networks (FANN library) to predict outcomes of football matches. It's written in Python, for graphical interface uses Qt (PySide).
+Artificial neural networks for predicting results of football(soccer) matches.
 
 Features:
 
-* predicting outcomes of football matches
-* predictiong odds
-* simulations with filters
-* automatic bets selector with filters
-* complex statistics (standings, form, series, scheudle)
-* automatic or manual updates
-* preparing data for neural networks
-* creating and saving neural networks
+* predicting results of football matches
+* predicting odds if not available in update
+* automatic updates
+* simulations
+* statistics (tables, form, series, schedle with odds)
+* rating system
 
 program license: Apache License v2
 
@@ -38,7 +36,7 @@ Before you can run BetBoy you have to install Python,Pyside and Pyfann(only on l
 ###Windows
 Download and install [Python 2.6 32 bit](http://www.python.org/ftp/python/2.6/python-2.6.msi)
 
-Download and install [Pyside for Python 2.6 32 bit](http://releases.qt-project.org/pyside/PySide-1.1.2.win32-py2.6.exe)
+Download and install [Pyside for Python 2.6 32 bit](http://download.qt-project.org/official_releases/pyside/PySide-1.2.1.win32-py2.6.exe)
 
 To run BetBoy just double click on bet_boy.py
 ###Linux - Ubuntu 12.04
@@ -75,7 +73,7 @@ In this module you can check statistics for selected league:
 		* win: 3 points + (opponent points(scaled to [0,1]) + opponent form(scaled to [0,1]))/2
 		* draw: 1 point + (opponent points(scaled to [0,1]) + opponent form(scaled to [0,1]))/2
 * form
-* scheudle
+* schedle
 * matches of selected teams
 * series of selected teams
 * predictions and odds:
@@ -138,22 +136,10 @@ for example:
 	If any errors,there will be created directory data/tmp/leagues (there are stored copies of broken files) and log.txt - shows wchich lines are bad and need manual fixing (for manual fixing i recommend to use notepad++).
 After fixing you can copy files from data/tmp/leagues to data/leagues.
 
-* football-data.co.uk
-	
-	Select list of urls do download and click button 'update'
-
-
 ###[Link creator](https://www.youtube.com/watch?v=Cs3DwGa6ETw)
 * Scrape website
 
 	Here you can create file with list of urls used for updates. On the left of displayed website choose football and select league, go to fixtures **select all matches and week by week**. On the left next to address bar there is text line where you can enter your name for this league, after you give name to league click button '+' to add to list. When you complete picking urls you can save entire list to file. This saved file can be opened in update manager.
-
-* football-data.co.uk
-
-	Select league on the right pane of site: there will be list of files-> move mouse cursor to link to file-> right button of mouse, from list select copy link-> paste link to textbox under browser-> push button '+' to add file to list.
-
-	When collecting actuall season files after selecting leagues, go to section latest matches(list of upcoming matches - this list will be merged to downloaded leagues.), and copy link to upcoming matches-> push button '+' to add to list.**This link to file must be added at last place.**
-
 
 
 ###[Leagues creator](https://www.youtube.com/watch?v=j_Ag30E6FVY)
