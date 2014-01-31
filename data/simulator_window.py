@@ -1652,8 +1652,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             filters = self.gui.tree_filters.topLevelItem(int(elements[4]))
             ranges = self.gui.tree_ranges.topLevelItem(int(elements[5]))
             bets = self.gui.tree_bets.topLevelItem(int(elements[6]))
-            nets_count = self.gui.tree_nets.count()-1
-            
+                    
             self.gui.tree_nets.setCurrentItem(nets)
             self.gui.tree_filters.setCurrentItem(filters)
             self.gui.tree_ranges.setCurrentItem(ranges)
