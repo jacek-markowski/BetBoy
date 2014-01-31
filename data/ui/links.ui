@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>571</width>
+    <width>594</width>
     <height>577</height>
    </rect>
   </property>
@@ -175,7 +175,7 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Betradar&lt;/span&gt; : choose league, go to fixtures, select 'full listing' and 'week by week'.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Betexploer: &lt;/span&gt;example link : http://www.betexplorer.com/soccer/netherlands/eredivisie/&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Betradar&lt;/span&gt; : choose league, go to fixtures, select 'full listing' and 'week by week'.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Betexplorer: &lt;/span&gt;example link : http://www.betexplorer.com/soccer/netherlands/eredivisie/&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>

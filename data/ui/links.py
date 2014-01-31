@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'links.ui'
 #
-# Created: Sat Jan 25 15:03:21 2014
+# Created: Sat Feb  1 00:10:33 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Links(object):
     def setupUi(self, Links):
         Links.setObjectName("Links")
-        Links.resize(571, 577)
+        Links.resize(594, 577)
         self.verticalLayout_4 = QtGui.QVBoxLayout(Links)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.tabWidget = QtGui.QTabWidget(Links)
@@ -215,7 +215,7 @@ class Ui_Links(object):
         self.button_betradar.setText(QtGui.QApplication.translate("Links", "Betradar", None, QtGui.QApplication.UnicodeUTF8))
         self.button_betexplorer.setText(QtGui.QApplication.translate("Links", "Betexplorer", None, QtGui.QApplication.UnicodeUTF8))
         self.line_name.setText(QtGui.QApplication.translate("Links", "league_name", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Links", "<html><head/><body><p><span style=\" font-weight:600;\">Betradar</span> : choose league, go to fixtures, select \'full listing\' and \'week by week\'.</p><p><span style=\" font-weight:600;\">Betexploer: </span>example link : http://www.betexplorer.com/soccer/netherlands/eredivisie/</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("Links", "<html><head/><body><p><span style=\" font-weight:600;\">Betradar</span> : choose league, go to fixtures, select \'full listing\' and \'week by week\'.</p><p><span style=\" font-weight:600;\">Betexplorer: </span>example link : http://www.betexplorer.com/soccer/netherlands/eredivisie/</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.button_save.setText(QtGui.QApplication.translate("Links", "Save", None, QtGui.QApplication.UnicodeUTF8))
         self.line_save.setText(QtGui.QApplication.translate("Links", "name", None, QtGui.QApplication.UnicodeUTF8))
         self.button_delete.setText(QtGui.QApplication.translate("Links", "Delete", None, QtGui.QApplication.UnicodeUTF8))

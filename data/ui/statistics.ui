@@ -504,7 +504,7 @@ font: 13pt}</string>
            </widget>
            <widget class="QWidget" name="tab_main_scheudle">
             <attribute name="title">
-             <string>Schedle</string>
+             <string>Schedule</string>
             </attribute>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <property name="spacing">

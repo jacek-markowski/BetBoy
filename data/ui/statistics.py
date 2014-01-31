@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'statistics.ui'
 #
-# Created: Sun Jan 26 21:42:28 2014
+# Created: Sat Feb  1 00:10:18 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -465,7 +465,7 @@ class Ui_MainWindow(object):
         self.main_table_form.setSortingEnabled(False)
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_form), QtGui.QApplication.translate("MainWindow", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.main_table_scheudle.setSortingEnabled(False)
-        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_scheudle), QtGui.QApplication.translate("MainWindow", "Schedle", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_main_scheudle), QtGui.QApplication.translate("MainWindow", "Schedule", None, QtGui.QApplication.UnicodeUTF8))
         self.label_home.setText(QtGui.QApplication.translate("MainWindow", "Home team", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_home_mode.setItemText(0, QtGui.QApplication.translate("MainWindow", "Overall", None, QtGui.QApplication.UnicodeUTF8))
         self.combo_home_mode.setItemText(1, QtGui.QApplication.translate("MainWindow", "Home", None, QtGui.QApplication.UnicodeUTF8))
