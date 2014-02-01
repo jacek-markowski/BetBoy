@@ -1,3 +1,7 @@
+0.6.1 01.01.2014
+-added updating from betexplorer(with odds)
+-faster updating
+-button for saving simulation results(csv format)
 0.4.4 30.10.2013:
 - fixed auto_save not working on windows
 0.4.3 25.10.2013:
