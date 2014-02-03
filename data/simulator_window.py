@@ -1141,6 +1141,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         if len(matches)>0:
             self.item_sim = QtGui.QTreeWidgetItem(self.gui.tree_bets_selected)
             line = str(
+            str(round(self.sim_stats['Overall yield'],1))+'% ,'+\
             self.sim_stats['Path']+','+\
             self.sim_stats['League']+','+\
             self.sim_stats['Net']+','+\
