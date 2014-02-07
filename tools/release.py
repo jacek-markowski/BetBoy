@@ -2,12 +2,27 @@
 import os
 import shutil
 
-shutil.rmtree('data/tmp')
-shutil.rmtree('data/export')
-shutil.rmtree('data/tmp')
-shutil.rmtree('data/leagues')
-os.remove('data/icons.zip')
-os.remove('data/*.pyc')
+dirs_ = ['.git',
+         'data/tmp',
+         'data/export',
+         'data/tmp',
+         'data/leagues',
+         'tools']
+files_ =['data/icons.zip',
+         'data/*.pyc',
+         '.gitignore',
+         'readme.md']
+for i in dirs_:
+    try:
+        shutil.rmtree(i)
+    except:
+        print 'erorr:' + i +'\n'
+for i in files_:
+    try:
+        os.remove(i)
+    except:
+        print 'erorr:' + i +'\n'
+
 
 
 
