@@ -903,20 +903,21 @@ class Database(Shared):
         odds = self.relations_base.execute('''SELECT odd_1,odd_x,odd_2
         FROM results WHERE (home="%s" AND away="%s" AND date_txt = "%s")'''%(home,away,self.date))
         odds = odds.fetchone()
-        if odds[0]>0: # odds in file
+        if odds[0]>0 and odds[1]>0 and odds[2]>0: # odds in file
             self.odds = odds
             self.odd_1,self.odd_x,self.odd_2 = odds
             self.odd_1 = self.odd_1*self.odds_level/100
             self.odd_x = self.odd_x*self.odds_level/100
             self.odd_2 = self.odd_2*self.odds_level/100
-            
+            self.odd_1x = round(1/((1/self.odd_1) + (1/self.odd_x)),3)
+            self.odd_x2 = round(1/((1/self.odd_x) + (1/self.odd_2)),3)
         else: # no odds, predict odds
             self.odds = self.simulation_prediction(home,away,'default',mode=1)
             self.odd_1 = round(self.odds_rescale(self.odds[0],self.odds_level),3)
             self.odd_x = round(self.odds_rescale(self.odds[1],self.odds_level),3)
             self.odd_2 = round(self.odds_rescale(self.odds[2],self.odds_level),3)
-        self.odd_1x = round(1/((1/self.odd_1) + (1/self.odd_x)),3)
-        self.odd_x2 = round(1/((1/self.odd_x) + (1/self.odd_2)),3)
+            self.odd_1x = round(1/((1/self.odd_1) + (1/self.odd_x)),3)
+            self.odd_x2 = round(1/((1/self.odd_x) + (1/self.odd_2)),3)
         if self.odd_1 < 1:
             self.odd_1 = 1.0
         if self.odd_2 < 1:
