@@ -1,0 +1,3 @@
+uruchom export_manager.py, po zakonczniu exportu plik będzie w folderze export
+plik kopiujesz do betboy do folderu export, tworzysz sieć, plik sieci z folderu net
+przenisisz do folderu odds (plik musi miec nazwe odds.net)
