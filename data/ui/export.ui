@@ -136,7 +136,7 @@
         <string>Save</string>
        </property>
        <property name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/actions/actions/filesaveas.png</normaloff>:/actions/actions/filesaveas.png</iconset>
        </property>
       </widget>
@@ -153,7 +153,7 @@
         <string>Load</string>
        </property>
        <property name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/actions/actions/fileopen.png</normaloff>:/actions/actions/fileopen.png</iconset>
        </property>
       </widget>
@@ -170,7 +170,7 @@
         <string>Delete</string>
        </property>
        <property name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/actions/actions/editdelete.png</normaloff>:/actions/actions/editdelete.png</iconset>
        </property>
       </widget>
@@ -182,14 +182,14 @@
      <item>
       <widget class="QTreeWidget" name="tree_leagues">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>400</width>
          <height>16777215</height>
         </size>
        </property>
@@ -377,9 +377,15 @@
      </item>
      <item>
       <widget class="QPushButton" name="button_add">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>400</width>
          <height>16777215</height>
         </size>
        </property>
@@ -387,7 +393,7 @@
         <string>Add league</string>
        </property>
        <property name="icon">
-        <iconset resource="../icons/icons.qrc">
+        <iconset>
          <normaloff>:/actions/actions/edit_add.png</normaloff>:/actions/actions/edit_add.png</iconset>
        </property>
       </widget>
@@ -445,7 +451,7 @@
           <string>Remove</string>
          </property>
          <property name="icon">
-          <iconset resource="../icons/icons.qrc">
+          <iconset>
            <normaloff>:/actions/actions/edit_remove.png</normaloff>:/actions/actions/edit_remove.png</iconset>
          </property>
         </widget>
@@ -456,7 +462,7 @@
           <string>Clear</string>
          </property>
          <property name="icon">
-          <iconset resource="../icons/icons.qrc">
+          <iconset>
            <normaloff>:/actions/actions/editclear.png</normaloff>:/actions/actions/editclear.png</iconset>
          </property>
         </widget>
@@ -478,7 +484,7 @@
           <string>Export</string>
          </property>
          <property name="icon">
-          <iconset resource="../icons/icons.qrc">
+          <iconset>
            <normaloff>:/actions/actions/player_play.png</normaloff>:/actions/actions/player_play.png</iconset>
          </property>
         </widget>

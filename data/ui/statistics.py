@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'statistics.ui'
 #
-# Created: Sat Feb  1 00:10:18 2014
+# Created: Fri Feb  7 20:24:44 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -65,7 +65,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.treeLeagues.sizePolicy().hasHeightForWidth())
         self.treeLeagues.setSizePolicy(sizePolicy)
-        self.treeLeagues.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.treeLeagues.setMaximumSize(QtCore.QSize(400, 16777215))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(243, 237, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
