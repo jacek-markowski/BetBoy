@@ -83,6 +83,8 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
     def combo_team_change(self):
         self.tables_fill()
         self.prediction()
+        self.gui.label_home.setText(self.gui.main_combo_home.text())
+        self.gui.label_away.setText(self.gui.main_combo_away.text())
     def scheudle_teams(self):
         ''' Changes teams when clicked match'''
         row = self.gui.main_table_scheudle.currentRow()
