@@ -608,21 +608,27 @@ class Shared(object):
          self.spin_form,'T-form'),
         (self.check_form_ha,self.t1_form_h,self.t2_form_a,self.combo_form_ha,
          self.spin_form_ha,'T-formH/A')]
-
+        #print "checkpoint : " + self.check_points + 'aa'
+        #print "spin points: " + self.spin_points
         for i in points:
-            if i[0] == 'True':
+            checkbutton_state = self.rm_lines(i[0])
+            if checkbutton_state == 'True':
                 sum_points= i[1]+i[2]
                 if sum_points == 0:
                     diff = 0
                 else:
-                    diff = i[1]/(float(sum_points))*100
-                line = str(diff)+i[3]+i[4]
+                    diff = i[1]/(float(sum_points))*100 #50/ sum points
+                compare_vals = self.rm_lines(i[3])
+                value = self.rm_lines(i[4])
+                line = str(diff)+compare_vals+value # example 10<= 50
+                #print "line" + line
                 if eval(line):
                     pass
                 else:
                     self.filter_status = 'no'
                     # filter reports count
                     self.sim_stats[i[5]] = self.sim_stats[i[5]] + 1
+        print "filter status points/form : " + self.filter_status
 
         ############
         ## Series
@@ -701,16 +707,16 @@ class Shared(object):
         # HomeAway-series
 
         for i in T12:
-            line=i[0]
-            'When getting file from linux on windows'
-            line = self.rm_lines(line)
-
-            if eval(line):
-                pass
-            else:
-                self.filter_status = 'no'
-                # for fiters report
-                self.sim_stats[i[1]] = self.sim_stats[i[1]] + 1
+            if self.filter_status == 'yes':
+                line=i[0]
+                'When getting file from linux on windows'
+                line = self.rm_lines(line)
+                if eval(line):
+                    pass
+                else:
+                    self.filter_status = 'no'
+                    # for fiters report
+                    self.sim_stats[i[1]] = self.sim_stats[i[1]] + 1
 
         if self.app == 'selector':
             ######
@@ -730,6 +736,7 @@ class Shared(object):
                         self.filter_status = 'no'
                         #print float(i[0]),float(i[1]),float(i[2])
                         print 'sada'
+        print "filter status series: " + self.filter_status
 
 
 
