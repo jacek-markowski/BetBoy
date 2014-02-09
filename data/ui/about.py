@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'about.ui'
 #
-# Created: Fri Feb  7 20:15:34 2014
+# Created: Sun Feb  9 14:12:59 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -42,7 +42,7 @@ class Ui_About(object):
 
     def retranslateUi(self, About):
         About.setWindowTitle(QtGui.QApplication.translate("About", "About", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("About", "<html><head/><body><p><span style=\" font-weight:600;\">BetBoy, </span>version 0.6.2</p><p>Release date: 07.02.2014</p><p>Copyright © 2013, 2014 Jacek Markowski</p><p>e-mail: jacek87markowski@gmail.com</p><p>Licensed under the terms of Apache License, Version 2.0</p><p><br/><span style=\" font-weight:600;\">Check for new versions:</span></p><p><a href=\"http://sourceforge.net/projects/betboy/\"><span style=\" text-decoration: underline; color:#0000ff;\">http://sourceforge.net/projects/betboy/</span></a></p><p><span style=\" font-weight:600;\">Neural network library :</span></p><p>Fast Artificial Neural Network Library © 2003-2013 Steffen Nissen</p><p><a href=\"http://leenissen.dk/fann/wp/\"><span style=\" text-decoration: underline; color:#0000ff;\">http://leenissen.dk/fann/wp/</span></a></p><p><span style=\" font-weight:600;\">Icons: </span></p><p>Crystal Project Icons © 2006-2007 Everaldo Coelho </p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("About", "<html><head/><body><p><span style=\" font-weight:600;\">BetBoy, </span>version 0.6.3</p><p>Release date: 09.02.2014</p><p>Copyright © 2013, 2014 Jacek Markowski</p><p>e-mail: jacek87markowski@gmail.com</p><p>Licensed under the terms of Apache License, Version 2.0</p><p><br/><span style=\" font-weight:600;\">Check for new versions:</span></p><p><a href=\"http://sourceforge.net/projects/betboy/\"><span style=\" text-decoration: underline; color:#0000ff;\">http://sourceforge.net/projects/betboy/</span></a></p><p><span style=\" font-weight:600;\">Neural network library :</span></p><p>Fast Artificial Neural Network Library © 2003-2013 Steffen Nissen</p><p><a href=\"http://leenissen.dk/fann/wp/\"><span style=\" text-decoration: underline; color:#0000ff;\">http://leenissen.dk/fann/wp/</span></a></p><p><span style=\" font-weight:600;\">Icons: </span></p><p>Crystal Project Icons © 2006-2007 Everaldo Coelho </p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("About", "About", None, QtGui.QApplication.UnicodeUTF8))
         self.plainTextEdit.setPlainText(QtGui.QApplication.translate("About", "                                 Apache License\n"
 "                           Version 2.0, January 2004\n"
