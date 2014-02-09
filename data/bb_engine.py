@@ -351,7 +351,7 @@ class Database(Shared):
                         with open(os.path.join('tmp','')+'print','w') as export_print_file:
                             print '==== Scaling====', day
                             export_print_file.write('Process data :'+day+' Round %d'%rounds)
-                    if odd_1 > 0:
+                    if odd_1 > 0 and odd_x > 0 and odd_2 > 0:
                         self.export('tmp', home, away, rounds, fth, fta, mode=1)
                     else:
                         self.export('tmp', home, away, rounds, fth, fta, mode=0)
@@ -370,7 +370,7 @@ class Database(Shared):
                     self.away = away
                     self.fth = fth
                     self.fta = fta
-                    if odd_1>0: # odds in file
+                    if odd_1>0 and odd_x > 0 and odd_2 > 0: # odds in file
                         x=2
                     else:
                         x=0 # predict odds
