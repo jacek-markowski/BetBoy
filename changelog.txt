@@ -1,3 +1,9 @@
+0.6.3 09.02.2014
+-fixed filter problem (points/form) in simulator
+-realtime learning output redirected to BetBoy window (RTconsole.exe)
+-fix with odds checking (simulation and export related)
+0.6.2 07.02.2014
+-added links database to all countries (betexplorer)
 0.6.1 01.01.2014
 -added updating from betexplorer(with odds)
 -faster updating
