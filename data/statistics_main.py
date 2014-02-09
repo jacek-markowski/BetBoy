@@ -693,7 +693,7 @@ class StatisticsApp(QtGui.QMainWindow, Shared):
                                                          away,
                                                              self.v['net']())
         # ranges
-        with open(os.path.join('profiles', 'ranges', '')+self.v['ranges'](),'r') as ranges:
+        with open(os.path.join('profiles', 'ranges', self.v['ranges']()),'r') as ranges:
             load = list(ranges)
         val = []
         for i in range(0, len(load)):

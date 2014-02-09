@@ -116,8 +116,7 @@ class LeaguesApp(QtGui.QWidget,Shared):
     def profile_save(self):
         ''' Saves teams to file'''
         file_name = self.gui.line_teams_save.text()
-        with open(os.path.join('profiles', 'teams', '')+\
-                                str(file_name), 'w') as file_save:
+        with open(os.path.join('profiles', 'teams', str(file_name)), 'w') as file_save:
             count = self.gui.tree_teams.topLevelItemCount()
             for i in range(0, count):
                 item = self.gui.tree_teams.topLevelItem(i)
@@ -134,8 +133,7 @@ class LeaguesApp(QtGui.QWidget,Shared):
         self.gui.tree_teams.clear()
         child = self.gui.tree_team_profiles.currentItem()
         file_name = str(child.text(0))
-        with open(os.path.join('profiles', 'teams', '')+\
-                            file_name, 'r') as file_load:
+        with open(os.path.join('profiles', 'teams', file_name), 'r') as file_load:
             for i in file_load:
                 team = self.rm_lines(i)
                 item = QtGui.QTreeWidgetItem(self.gui.tree_teams)
@@ -320,7 +318,7 @@ class LeaguesApp(QtGui.QWidget,Shared):
     def league_save(self):
         ''' Saves edited league'''
         name = self.gui.line_league_save.text()
-        with open(os.path.join('leagues', 'current', '')+name, 'w') as save:
+        with open(os.path.join('leagues', 'current', name), 'w') as save:
             count = self.gui.tree_matches.topLevelItemCount()
             for i in range(0, count):
                 item = self.gui.tree_matches.topLevelItem(i)

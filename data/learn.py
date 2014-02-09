@@ -42,14 +42,14 @@ def start(file_in=sys.argv[1],
           training_algorithm = 'libfann.'+sys.argv[9],
           file_out= sys.argv[10]):
     ''' Learning network'''
-    title = open(os.path.join('export', '')+file_in, 'r').readline()
+    title = open(os.path.join('export', file_in), 'r').readline()
     sets, num_input, num_output = title.split(' ')
     num_input = int(num_input)
     num_output = int(num_output)
     print num_input, num_output
     # create training data, and ann object
     train_data = libfann.training_data()
-    train_data.read_train_from_file(os.path.join('export', '')+file_in)
+    train_data.read_train_from_file(os.path.join('export', file_in))
     ann = libfann.neural_net()
     ann.create_sparse_array(connection_rate, (num_input,
                                               num_neurons_hidden,
@@ -69,7 +69,7 @@ def start(file_in=sys.argv[1],
     ann.train_on_data(train_data, max_iterations,
                       iterations_between_reports, desired_error)
     # save network to disk
-    ann.save(os.path.join('net','')+file_out)
+    ann.save(os.path.join('net',file_out))
 
 if __name__ == "__main__":
     start()

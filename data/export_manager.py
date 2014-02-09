@@ -51,7 +51,7 @@ class ExportApp(QtGui.QWidget, Shared):
         self.profiles_tree()
         self.bindings()
     def closeEvent(self, event):
-        with open(os.path.join('tmp','')+'comm','w') as comm:
+        with open(os.path.join('tmp','comm'),'w') as comm:
             # communicates with export manager
             comm.write('stop')
         event.accept()
@@ -166,7 +166,7 @@ class ExportApp(QtGui.QWidget, Shared):
     def leagues_export(self):
         ''' 'Starts Export of selected leagues'''
         try:
-            os.remove(os.path.join('tmp','')+'export')
+            os.remove(os.path.join('tmp','export'))
         except:
             pass
         expt_name = self.gui.line_export_name.text()
@@ -174,7 +174,7 @@ class ExportApp(QtGui.QWidget, Shared):
         self.gui.progress_2.setValue(0)
         self.threads = []
         for i in range(0, rows):
-            with open(os.path.join('tmp','')+'print','w') as export_print_file:
+            with open(os.path.join('tmp','print'),'w') as export_print_file:
                 export_print_file.write('')
                 export_print_file.close()
             name = self.gui.table_leagues.item(i, 0).text()
@@ -194,7 +194,7 @@ class ExportApp(QtGui.QWidget, Shared):
             mode
             )
             self.gui.progress_2.setFormat('%p% '+self.gui.progress_2_txt)
-            with open(os.path.join('tmp','')+'comm','r') as comm:
+            with open(os.path.join('tmp','comm'),'r') as comm:
             # communicates with export manager
                 comm_var = comm.readline()
             if comm_var != '':
@@ -211,7 +211,7 @@ class ExportApp(QtGui.QWidget, Shared):
             while self.export.isRunning():
                 QtGui.QApplication.processEvents()
                 try:
-                    with open(os.path.join('tmp','')+'print','r') as export_print_file:
+                    with open(os.path.join('tmp','print'),'r') as export_print_file:
                         line = export_print_file.readline()
                         if line != line_prev and line != '':
                             self.gui.text_export.append(line)
@@ -227,7 +227,7 @@ class ExportApp(QtGui.QWidget, Shared):
     def profile_save(self):
         ''' Saves profile of leagues to export'''
         f_name = self.gui.line_export.text()
-        with open(os.path.join('profiles', 'export', '')+f_name, 'w') as f_save:
+        with open(os.path.join('profiles', 'export', f_name), 'w') as f_save:
             rows = self.gui.table_leagues.rowCount()
             for i in range(0, rows):
                 name = self.gui.table_leagues.item(i, 0).text()
@@ -250,7 +250,7 @@ class ExportApp(QtGui.QWidget, Shared):
         self.gui.table_leagues.setRowCount(0)
         child = self.gui.tree_profiles.currentItem()
         profile = child.text(0)
-        with open(os.path.join('profiles', 'export', '')+profile, 'r') as f_load:
+        with open(os.path.join('profiles', 'export', profile), 'r') as f_load:
             for i in f_load:
                 i = self.rm_lines(i)
                 league, folder, r_min, r_max = i.split(',')

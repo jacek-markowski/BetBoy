@@ -15,7 +15,7 @@ class BetExploerer():
     def __init__(self,dst, mode):
         
 
-        self.html = os.path.join('tmp','')+'page'
+        self.html = os.path.join('tmp','page')
         self.dst = dst
         self.be_mode = mode
         self.run()
@@ -38,7 +38,7 @@ class BetExploerer():
         except:
             print 'No results'
             html_text = ""
-        with open(os.path.join('tmp','')+'results.txt','w') as f:
+        with open(os.path.join('tmp','results.txt'),'w') as f:
             while search:
                 search_a = re_compiled_a.search(html_text)
                 if search_a:
@@ -80,7 +80,7 @@ class BetExploerer():
         re_compiled_a = re.compile(re_pattern_a, re.DOTALL)
         re_compiled_b = re.compile(re_pattern_b, re.DOTALL)
         previous_date = ''
-        with open(os.path.join('tmp','')+'fixtures.txt','w') as f:
+        with open(os.path.join('tmp','fixtures.txt'),'w') as f:
             search = re_compiled.search(html_page)
             try:
                 html_text = search.group(0)

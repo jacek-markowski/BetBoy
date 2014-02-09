@@ -35,7 +35,7 @@ class UpdateApp(QtGui.QWidget, Shared):
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
         Shared.__init__(self)
-        with open(os.path.join('tmp','')+'comm','w') as comm:
+        with open(os.path.join('tmp','comm'),'w') as comm:
             # communicates with export manager
             comm.write('')
         self.gui = Ui_Update()
@@ -60,7 +60,7 @@ class UpdateApp(QtGui.QWidget, Shared):
         self.combo_path()
 
     def closeEvent(self, event):
-        with open(os.path.join('tmp','')+'comm','w') as comm:
+        with open(os.path.join('tmp','comm'),'w') as comm:
             # communicates with export manager
             comm.write('stop')
         self.find_broken_leagues()
@@ -109,7 +109,7 @@ class UpdateApp(QtGui.QWidget, Shared):
         path = self.gui.combo_path.currentText()
         self.path = os.path.join('leagues', path, '')
         for i in xrange(0, count):
-            with open(os.path.join('tmp','')+'comm','r') as comm:
+            with open(os.path.join('tmp','comm'),'r') as comm:
             # communicates with update manager
                 comm_var = comm.readline()
             if comm_var != '':
@@ -163,7 +163,7 @@ class UpdateApp(QtGui.QWidget, Shared):
             print 'New Scrape'
             html = self.page.toHtml()
             html = html.encode('utf-8') #needed on windows
-            with open(os.path.join('tmp','')+'page','w') as save_file:
+            with open(os.path.join('tmp','page'),'w') as save_file:
                 save_file.write(html)
             if self.update_mode == 'betradar':
                 self.scrape = betradar.Scrape(self.path, self.league)
@@ -206,7 +206,7 @@ class UpdateApp(QtGui.QWidget, Shared):
         ''' Load urls from file'''
         child = self.gui.tree_profiles.currentItem()
         file_name = str(child.text(0))
-        with open(os.path.join('profiles', 'links', '')+file_name, 'r') as links:
+        with open(os.path.join('profiles', 'links', file_name), 'r') as links:
             self.links_dict = {}
             for i in links:
                 key, val = i.split(' ')
@@ -281,8 +281,8 @@ class UpdateApp(QtGui.QWidget, Shared):
     def save_urls(self):
         ''' Saves url profile'''
         file_name = self.gui.line_save.text()
-        with open(os.path.join('profiles', 'links', '')\
-        +str(file_name), 'w') as file_save:
+        with open(os.path.join('profiles', 'links', str(file_name))\
+        , 'w') as file_save:
             count = self.gui.tree_selected.topLevelItemCount()
             for i in range(0, count):
                 item = self.gui.tree_selected.topLevelItem(i)

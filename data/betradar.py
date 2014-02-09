@@ -38,7 +38,7 @@ class Scrape(Shared):
         print 'scrape', str(self.league)
         matches = []
         self.update_state = 1
-        with open(os.path.join('tmp','')+'page','r') as f:
+        with open(os.path.join('tmp','page'),'r') as f:
             html_page = f.read()
         re_patternA = '<td class="datetime">\s*(?P<date>.{8}).*?</td>.*? \
         <span class="home.*?">\s*(?P<team_home>.*?)\s*</span>.*? \
@@ -51,7 +51,7 @@ class Scrape(Shared):
         <td class="nt ftx ">\s*(?P<result_final>.*?)\s*</td>'
         check = re.compile('<td class="p1 ">', re.DOTALL)
         page_check = check.search(html_page)
-        with open(os.path.join('tmp','')+'tmp','w') as tmp_file:
+        with open(os.path.join('tmp','tmp'),'w') as tmp_file:
             if page_check:
                 # 'Halftime and finaltime scores'
                 pattern_compiled = re.compile(re_patternA, re.DOTALL)
@@ -95,7 +95,7 @@ class Scrape(Shared):
                 page_final = pattern_compiled.search(html_page)
         #Fix file when downloading other sport disciplines with overtime tag
         new_file = []
-        with (open(os.path.join('tmp','')+'tmp','r')) as to_fix:
+        with (open(os.path.join('tmp','tmp'),'r')) as to_fix:
             n = reader(to_fix)
             for i in n:
                 # re pattern
@@ -111,10 +111,10 @@ class Scrape(Shared):
                     i[3] = new_value
                 line = i[0]+','+i[1]+','+i[2]+','+i[3]+','+i[4]+'\n'
                 new_file.append(line)
-        with open(os.path.join('tmp','')+'tmp','w') as fixed:
+        with open(os.path.join('tmp','tmp'),'w') as fixed:
             for i in new_file:
                 fixed.write(str(i))
-        with open(os.path.join('tmp','')+'tmp','r') as f:
+        with open(os.path.join('tmp','tmp'),'r') as f:
             tmp_file = reader(f)
             tmp_file = list(tmp_file)
             tmp_file.reverse()

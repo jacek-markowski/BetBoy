@@ -100,8 +100,7 @@ class LinksApp(QtGui.QWidget, Shared):
     def save_urls(self):
         ''' Saves url profile - website scraping'''
         file_name = self.gui.line_save.text()
-        with open(os.path.join('profiles', 'links', '')\
-                    +str(file_name), 'w') as file_save:
+        with open(os.path.join('profiles', 'links', str(file_name)), 'w') as file_save:
             count = self.gui.tree_url.topLevelItemCount()
             for i in range(0, count):
                 item = self.gui.tree_url.topLevelItem(i)
@@ -144,7 +143,7 @@ class LinksApp(QtGui.QWidget, Shared):
         ''' Load url profile to tree - website scraping'''
         child = self.gui.tree_link_bases.currentItem()
         file_name = str(child.text(0))
-        with open(os.path.join('profiles', 'links', '')+file_name, 'r') as file_load:
+        with open(os.path.join('profiles', 'links', file_name), 'r') as file_load:
             self.gui.tree_url.clear()
             for i in file_load:
                 name, url = i.split(' ')

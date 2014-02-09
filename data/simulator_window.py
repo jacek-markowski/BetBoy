@@ -341,7 +341,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.max_2
         ]
         file_name = self.gui.line_ranges.text()
-        with open(os.path.join('profiles','ranges','')+file_name,'w') as save:
+        with open(os.path.join('profiles','ranges',file_name),'w') as save:
             for i in val:
                 save.write(str(i)+self.nl)
         self.ranges_tree()
@@ -374,7 +374,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         ]
         item = self.gui.tree_ranges_profile.currentItem()
         file_name = item.text(0)
-        with open(os.path.join('profiles','ranges','')+file_name,'r') as f:
+        with open(os.path.join('profiles','ranges',file_name),'r') as f:
             load = list(f)
         for i in range(0,len(val)):
             item =self.rm_lines(load[i])
@@ -428,8 +428,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
     def batch_save(self):
         ''' Save items in bath tree'''
         file_name = self.gui.line_batch.text()
-        with open(os.path.join('profiles','simulation','')+\
-            str(file_name), 'w') as file_save:
+        with open(os.path.join('profiles','simulation',str(file_name))\
+            , 'w') as file_save:
             count = self.gui.tree_batch.topLevelItemCount()
             for i in range(0,count):
                 item = self.gui.tree_batch.topLevelItem(i)
@@ -476,7 +476,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         self.gui.tree_batch.clear()
         item = self.gui.tree_profiles.currentItem()
         file_name = item.text(0)
-        with open(os.path.join('profiles','simulation','')+file_name,'r') as f:
+        with open(os.path.join('profiles','simulation',file_name),'r') as f:
             load = reader(f)
             for i in load:
                 item = QtGui.QTreeWidgetItem(self.gui.tree_batch)
@@ -530,7 +530,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         ]
         item = self.gui.tree_bets_profile.currentItem()
         file_name = item.text(0)
-        with open(os.path.join('profiles','bets','')+file_name,'r') as f:
+        with open(os.path.join('profiles','bets',file_name),'r') as f:
             load = list(f)
         for i in range(0,len(val)):
             item =self.rm_lines(load[i])
@@ -600,7 +600,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         odd_x2_max
         ]
         file_name = self.gui.line_bets_save.text()
-        with open(os.path.join('profiles','bets','')+file_name,'w') as save:
+        with open(os.path.join('profiles','bets',file_name),'w') as save:
             for i in val:
                 save.write(str(i)+self.nl)
         self.bets_tree()
@@ -609,8 +609,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         ''' Saves batch profile'''
         file_name = self.gui.line_preview_save.text()
         green = QtGui.QColor('#11BD00')
-        with open(os.path.join('profiles','simulation','')+\
-        str(file_name), 'w') as file_save:
+        with open(os.path.join('profiles','simulation',str(file_name))\
+        , 'w') as file_save:
             count = self.gui.tree_hits.topLevelItemCount()
             for i in range(0,count):
                 item = self.gui.tree_hits.topLevelItem(i)
@@ -654,7 +654,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         selected = self.gui.tree_hits.currentIndex().row()
         green = QtGui.QColor('#11BD00')
         red = QtGui.QColor('#C40202')
-        with open(os.path.join('tmp','simulations','')+str(selected)+'full', 'r') as stream:
+        with open(os.path.join('tmp','simulations',(str(selected)+'full')), 'r') as stream:
             table = csv.reader(stream)
             table = list(table)
         for i in range(0, len(table)):
@@ -671,7 +671,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 self.gui.table_preview.item(rows_all, index).\
                     setBackground(QtGui.QColor(color))
                 index +=1
-        with open(os.path.join('tmp','simulations','')+str(selected)+'filter', 'r') as stream:
+        with open(os.path.join('tmp','simulations',(str(selected)+'filter')), 'r') as stream:
             table = csv.reader(stream)
             table = list(table)
         for i in range(0, len(table)):
@@ -847,8 +847,8 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             self.gui.table_filtered.setHorizontalHeaderLabels(labels)
             self.gui.table_filtered.setRowCount(0)
             # ranges
-            with open(os.path.join('profiles','ranges','')+\
-            self.sim_stats['Ranges'],'r') as ranges:
+            with open(os.path.join('profiles','ranges',self.sim_stats['Ranges'])\
+            ,'r') as ranges:
                 load = list(ranges)
             val = []
             for i in range(0,len(load)):
@@ -889,7 +889,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
 
     def simulation_save_temp(self):
         """Saves results of every simulation in batch for loading after clicking"""
-        with open(os.path.join('tmp','simulations','')+str(self.id_simulation)+'full', 'w') as stream:
+        with open(os.path.join('tmp','simulations',(str(self.id_simulation)+'full')), 'w') as stream:
             writer = csv.writer(stream)
             for row in range(self.gui.table_preview.rowCount()):
                 rowdata = []
@@ -901,7 +901,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                     else:
                         rowdata.append('')
                 writer.writerow(rowdata)
-        with open(os.path.join('tmp','simulations','')+str(self.id_simulation)+'filter', 'w') as stream:
+        with open(os.path.join('tmp','simulations',(str(self.id_simulation)+'filter')), 'w') as stream:
             writer = csv.writer(stream)
             for row in range(self.gui.table_filtered.rowCount()):
                 rowdata = []
@@ -913,7 +913,7 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                     else:
                         rowdata.append('')
                 writer.writerow(rowdata)
-        with open(os.path.join('tmp','simulations','')+str(self.id_simulation)+'stats', 'w') as file_save:
+        with open(os.path.join('tmp','simulations',(str(self.id_simulation)+'stats')), 'w') as file_save:
             item = self.gui.tree_hits.topLevelItem(self.id_simulation)
             simulation = item.text(1) + ',' + item.text(2) + ',' +\
                 item.text(3) + ',' +item.text(4) + ',' +\
@@ -1092,15 +1092,15 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
         selected = self.gui.tree_hits.currentIndex().row()
         ext = ('full','filter','stats')
         for i in ext:
-            src = os.path.join('tmp','simulations','')+str(selected)+i
+            src = os.path.join('tmp','simulations',(str(selected)+i))
             dst = file_name[0]+i
             shutil.copy(src,dst)
 
     def batch_bets(self):
         ''' Gives bets'''
          # bets filter
-        with open(os.path.join('profiles','bets','')+\
-        self.sim_stats['Bet_selector'],'r') as bets:
+        with open(os.path.join('profiles','bets',self.sim_stats['Bet_selector'])\
+        ,'r') as bets:
             load = list(bets)
         val = []
         for i in range(0,len(load)):

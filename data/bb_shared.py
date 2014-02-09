@@ -104,25 +104,25 @@ class Shared(object):
                 pass
             else:
                 os.mkdir(os.path.join('tmp','leagues','')+i)
-        with open(os.path.join('tmp','leagues','')+'log.txt','w') as log:
+        with open(os.path.join('tmp','leagues','log.txt'),'w') as log:
             errors = 0
             for path in paths:
                 files =[]
-                leagues = os.listdir(os.path.join('leagues','')+path)
+                leagues = os.listdir(os.path.join('leagues',path))
                 for i in leagues:
-                    with open(os.path.join('leagues',path,'')+i,'r') as f:
+                    with open(os.path.join('leagues',path,i),'r') as f:
                         for a in reader(f):
                             if len(a[3])> 4 or len(a[4])> 4:
                                 errors += 1
                                 line = path+self.nl+i+'>>>'+str(a)+self.nl
                                 QtGui.QApplication.processEvents()
                                 log.write(line)
-                                file_path = os.path.join(path,'')+i
+                                file_path = os.path.join(path,i)
                                 if not file_path in files[:]:
                                     files.append(file_path)
                 for i in files:
-                    src = os.path.join('leagues','')+i
-                    dst = os.path.join('tmp','leagues','')+i
+                    src = os.path.join('leagues',i)
+                    dst = os.path.join('tmp','leagues',i)
                     shutil.copy(src, dst)
                     self.fix_broken_leagues(src)
 
