@@ -36,11 +36,11 @@ class DoThread(QtCore.QThread):
                    self.cmd[4], self.cmd[5])
 
 
-class ExportApp(QtGui.QWidget, Shared):
+class ExportApp(QtGui.QWidget, Database):
     '''Creates gui and events  '''
     def __init__(self, parent=None):
         QtGui.QWidget.__init__(self, parent)
-        Shared.__init__(self)
+        Database.__init__(self)
         self.gui = Ui_Export()
         self.gui.setupUi(self)
         with open(os.path.join('tmp','comm'),'w') as comm:
@@ -164,7 +164,7 @@ class ExportApp(QtGui.QWidget, Shared):
         self.gui.table_leagues.setColumnCount(0)
 
     def leagues_export(self):
-        ''' 'Starts Export of selected leagues'''
+        ''' Starts Export of selected leagues'''
         try:
             os.remove(os.path.join('tmp','export'))
         except:
@@ -201,23 +201,26 @@ class ExportApp(QtGui.QWidget, Shared):
                 self.export.terminate()
                 break
             else:
-                self.export = DoThread(cmd, self)
-                self.export.start()
+                self.load_csv(cmd[0], cmd[1], cmd[2], cmd[3],
+                   cmd[4], cmd[5])
+                #self.export = DoThread(cmd, self)
+                #self.export.start()
             self.gui.button_export.setEnabled(0)
             self.gui.text_export.append(' ')
             self.gui.text_export.append('%s'%(path+name))
             self.gui.text_export.append('-----------------')
             line_prev = ''
-            while self.export.isRunning():
-                QtGui.QApplication.processEvents()
-                try:
-                    with open(os.path.join('tmp','print'),'r') as export_print_file:
-                        line = export_print_file.readline()
-                        if line != line_prev and line != '':
-                            self.gui.text_export.append(line)
-                            line_prev = line
-                except:
-                    pass
+            #while Tru:
+             #   QtGui.QApplication.processEvents()
+              #  self.gui.text_export.append(sys.stdout.readline)
+                #try:
+                #    with open(os.path.join('tmp','print'),'r') as export_print_file:
+                #        line = export_print_file.readline()
+                #        if line != line_prev and line != '':
+                #            self.gui.text_export.append(line)
+                #            line_prev = line
+                #except:
+                #    pass
             self.gui.progress_2.setValue(self.gui.progress_2_val)
         export_fix = Database()
         export_fix.export_fix(expt_name)
