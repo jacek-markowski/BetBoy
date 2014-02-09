@@ -23,18 +23,6 @@ from ui.export import Ui_Export
 from bb_engine import Database
 from bb_shared import Shared
 
-class DoThread(QtCore.QThread):
-    ''' New thread, export process'''
-    def __init__(self, cmd, parent=None):
-        QtCore.QThread.__init__(self)
-        self.cmd = cmd
-
-    def run(self):
-        global stdout
-        self.x = Database()
-        self.x.load_csv(self.cmd[0], self.cmd[1], self.cmd[2], self.cmd[3],
-                   self.cmd[4], self.cmd[5])
-
 
 class ExportApp(QtGui.QWidget, Database):
     '''Creates gui and events  '''
@@ -209,18 +197,6 @@ class ExportApp(QtGui.QWidget, Database):
             self.gui.text_export.append(' ')
             self.gui.text_export.append('%s'%(path+name))
             self.gui.text_export.append('-----------------')
-            line_prev = ''
-            #while Tru:
-             #   QtGui.QApplication.processEvents()
-              #  self.gui.text_export.append(sys.stdout.readline)
-                #try:
-                #    with open(os.path.join('tmp','print'),'r') as export_print_file:
-                #        line = export_print_file.readline()
-                #        if line != line_prev and line != '':
-                #            self.gui.text_export.append(line)
-                #            line_prev = line
-                #except:
-                #    pass
             self.gui.progress_2.setValue(self.gui.progress_2_val)
         export_fix = Database()
         export_fix.export_fix(expt_name)
