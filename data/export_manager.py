@@ -43,7 +43,7 @@ class ExportApp(QtGui.QWidget, Shared):
         Shared.__init__(self)
         self.gui = Ui_Export()
         self.gui.setupUi(self)
-        with open(os.path.join('tmp','')+'comm','w') as comm:
+        with open(os.path.join('tmp','comm'),'w') as comm:
             # communicates with export manager
             comm.write('')
         # Calls ---------------------

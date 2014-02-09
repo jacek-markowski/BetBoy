@@ -292,7 +292,7 @@ class Database(Shared):
         1-export
         2-simulation'''
         print net
-        with open(os.path.join('tmp','')+'comm','w') as comm:
+        with open(os.path.join('tmp','comm'),'w') as comm:
             # communicates with export manager
             comm.write('')
         self.clear_tables()
@@ -336,7 +336,7 @@ class Database(Shared):
             rounds = rounds_m.fetchone()
             rounds = rounds[0]
             if mode == 1: #export
-                with open(os.path.join('tmp','')+'comm','r') as comm:
+                with open(os.path.join('tmp','comm'),'r') as comm:
                 # communicates with export manager
                     comm_var = comm.readline()
                 if comm_var != '':
@@ -348,7 +348,7 @@ class Database(Shared):
                     if self.match_group == 1:
                         self.scale_group(teams_num)
                         self.scale_odds(home,away,day)
-                        with open(os.path.join('tmp','')+'print','w') as export_print_file:
+                        with open(os.path.join('tmp','print'),'w') as export_print_file:
                             print '==== Scaling====', day
                             export_print_file.write('Process data :'+day+' Round %d'%rounds)
                     if odd_1 > 0 and odd_x > 0 and odd_2 > 0:
@@ -395,7 +395,7 @@ class Database(Shared):
         mode = 0 predict odds
         mode = 1 take odds from database
         """
-        with open(os.path.join('tmp', '')+'export', 'a') as save:
+        with open(os.path.join('tmp', 'export'), 'a') as save:
             scaled_h = self.relations_base.execute('''SELECT
             matches,
             points,
@@ -579,7 +579,7 @@ class Database(Shared):
         ''' Count lines,inputs and outputs and write in title'''
         print '=============fix'
         path = os.path.join('export','')
-        with open(os.path.join('tmp','')+'export','r') as f:
+        with open(os.path.join('tmp','export'),'r') as f:
             tmp = reader(f)
             tmp = list(tmp)
         with open(path+expt_name,'w') as fix_file:
