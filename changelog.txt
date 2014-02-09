@@ -1,3 +1,5 @@
+0.6.4 10.02.2014
+-fixed export problem on windows 7 64 bit
 0.6.3 09.02.2014
 -fixed filter problem (points/form) in simulator
 -realtime learning output redirected to BetBoy window (RTconsole.exe)
