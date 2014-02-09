@@ -95,8 +95,8 @@ class LearningApp(QtGui.QWidget, Shared):
             self.proc.finished.connect(self.finished)
 
         elif system == 'Windows':
-            args =  [sys.executable,
-                     '-u',
+            args =  ['RTconsole.exe',
+                    sys.executable,
                     'learn.py',
                      str(file_in),
                      str(rate),
@@ -108,8 +108,18 @@ class LearningApp(QtGui.QWidget, Shared):
                      str(hidden_func),
                      str(algorithm),
                      str(file_out)]
-            proc = subprocess.Popen(args,stderr=subprocess.STDOUT)
-            self.gui.text_learning.append('Change window to python.exe for realtime output')
+            proc = subprocess.Popen(args,shell = True,stdout = subprocess.PIPE)
+            i=0
+            while True:
+                line = proc.stdout.readline()
+                if not line:
+                    break
+                #print '=='+line
+                line = line.strip('\n')
+                line = line.strip('\r')
+                self.gui.text_learning.append(line)
+                QtGui.QApplication.processEvents()
+            self.gui.text_learning.append('###Done.##########')
 
     def on_out(self):
         ''' Print stdout to textbox'''
