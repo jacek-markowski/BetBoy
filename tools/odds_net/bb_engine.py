@@ -20,6 +20,8 @@ import sqlite3
 from csv import reader
 import os
 import locale
+import codecs
+import unicodedata
 locale.setlocale(locale.LC_ALL, "C")
 import platform
 system = platform.system()
@@ -30,6 +32,7 @@ elif system == 'Linux':
 else:
     from pyfann import libfann
 from bb_shared import Shared
+from PySide import QtGui
 
 
 
@@ -339,9 +342,12 @@ class Database(Shared):
                     self.scale_group_check(day)
                     if self.match_group == 1:
                         self.scale_group(teams_num)
-                        with open(os.path.join('tmp','')+'print','w') as export_print_file:
-                            print '==== Scaling====', day
-                            export_print_file.write('Process data :'+day+' Round %d'%rounds)
+                       # with open(os.path.join('tmp','')+'print','w') as export_print_file:
+                       #     print '==== Scaling====', day
+                       #     export_print_file.write('Process data :'+day+' Round %d'%rounds)
+                        line =  '==== Scaling====' + day + ' Round:' + str(rounds)
+                        QtGui.QApplication.processEvents()
+                        self.gui.text_export.append(line)
                     self.export('tmp', home, away, rounds, fth, fta)
                 if rounds <= r_max:
                     self.process_csv(i)
@@ -1515,6 +1521,11 @@ class Database(Shared):
             if fth == '' or fta =='':
                 fth = 'NULL'
                 fta = 'NULL'
+                
+            home_txt = line[1].decode('utf8', 'replace')
+            away_txt = line[2].decode('utf8', 'replace')
+            home = unicodedata.normalize('NFD', home_txt).encode('ascii', 'ignore')
+            away = unicodedata.normalize('NFD', away_txt).encode('ascii', 'ignore')
             self.relations_base.execute('''INSERT INTO results(
             date_txt,
             date_num,
@@ -1528,8 +1539,8 @@ class Database(Shared):
             (
             line[0],
             date_num,
-            line[1],
-            line[2],
+            home,
+            away,
             fth,
             fta,
             line[5],

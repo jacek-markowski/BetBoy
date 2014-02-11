@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'export.ui'
 #
-# Created: Sun May 12 00:27:18 2013
+# Created: Fri Feb  7 20:26:23 2014
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -82,12 +82,12 @@ class Ui_Export(object):
         self.verticalLayout_4 = QtGui.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.tree_leagues = QtGui.QTreeWidget(Export)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Expanding)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tree_leagues.sizePolicy().hasHeightForWidth())
         self.tree_leagues.setSizePolicy(sizePolicy)
-        self.tree_leagues.setMaximumSize(QtCore.QSize(250, 16777215))
+        self.tree_leagues.setMaximumSize(QtCore.QSize(400, 16777215))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(243, 237, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -128,7 +128,8 @@ class Ui_Export(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
         self.spin_min.setPalette(palette)
         self.spin_min.setMinimum(1)
-        self.spin_min.setProperty("value", 1)
+        self.spin_min.setMaximum(40)
+        self.spin_min.setProperty("value", 5)
         self.spin_min.setObjectName("spin_min")
         self.horizontalLayout_3.addWidget(self.spin_min)
         self.spin_max = QtGui.QSpinBox(Export)
@@ -143,6 +144,7 @@ class Ui_Export(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
         self.spin_max.setPalette(palette)
+        self.spin_max.setMinimum(1)
         self.spin_max.setMaximum(50)
         self.spin_max.setProperty("value", 50)
         self.spin_max.setObjectName("spin_max")
@@ -150,7 +152,12 @@ class Ui_Export(object):
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.verticalLayout_4.addLayout(self.verticalLayout)
         self.button_add = QtGui.QPushButton(Export)
-        self.button_add.setMaximumSize(QtCore.QSize(250, 16777215))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.button_add.sizePolicy().hasHeightForWidth())
+        self.button_add.setSizePolicy(sizePolicy)
+        self.button_add.setMaximumSize(QtCore.QSize(400, 16777215))
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(":/actions/actions/edit_add.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.button_add.setIcon(icon3)
@@ -205,6 +212,9 @@ class Ui_Export(object):
         self.progress_2.setProperty("value", 0)
         self.progress_2.setObjectName("progress_2")
         self.verticalLayout_2.addWidget(self.progress_2)
+        self.text_export = QtGui.QTextBrowser(Export)
+        self.text_export.setObjectName("text_export")
+        self.verticalLayout_2.addWidget(self.text_export)
         self.verticalLayout_3.addLayout(self.verticalLayout_2)
         self.horizontalLayout_4.addLayout(self.verticalLayout_3)
 

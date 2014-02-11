@@ -182,14 +182,14 @@
      <item>
       <widget class="QTreeWidget" name="tree_leagues">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>400</width>
          <height>16777215</height>
         </size>
        </property>
@@ -310,8 +310,11 @@
            <property name="minimum">
             <number>1</number>
            </property>
+           <property name="maximum">
+            <number>40</number>
+           </property>
            <property name="value">
-            <number>1</number>
+            <number>5</number>
            </property>
           </widget>
          </item>
@@ -357,6 +360,9 @@
            <property name="toolTip">
             <string>Max rounds played</string>
            </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
            <property name="maximum">
             <number>50</number>
            </property>
@@ -371,9 +377,15 @@
      </item>
      <item>
       <widget class="QPushButton" name="button_add">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>400</width>
          <height>16777215</height>
         </size>
        </property>
@@ -486,6 +498,9 @@
           <string>%p%</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <widget class="QTextBrowser" name="text_export"/>
        </item>
       </layout>
      </item>
