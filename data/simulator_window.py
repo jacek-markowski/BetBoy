@@ -665,11 +665,12 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
             else:
                 color = green
             for j in table[i]:
-                item = QtGui.QTableWidgetItem(j)
+                item = QtGui.QTableWidgetItem()
+                item.setData(QtCore.Qt.EditRole,j)
                 self.gui.table_preview.setRowCount(rows_all+1)
                 self.gui.table_preview.setItem(rows_all, index, item)
                 self.gui.table_preview.item(rows_all, index).\
-                    setBackground(QtGui.QColor(color))
+                        setBackground(QtGui.QColor(color))
                 index +=1
         with open(os.path.join('tmp','simulations',(str(selected)+'filter')), 'r') as stream:
             table = csv.reader(stream)
