@@ -666,7 +666,10 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 color = green
             for j in table[i]:
                 item = QtGui.QTableWidgetItem()
-                item.setData(QtCore.Qt.EditRole,j)
+                if table[i].index(j) == 7 or table[i].index(j) == 6:
+                    item.setData(QtCore.Qt.EditRole,float(j))
+                else:
+                    item.setData(QtCore.Qt.EditRole,j)
                 self.gui.table_preview.setRowCount(rows_all+1)
                 self.gui.table_preview.setItem(rows_all, index, item)
                 self.gui.table_preview.item(rows_all, index).\
@@ -684,7 +687,11 @@ class SimulatorApp(QtGui.QWidget, Database, Shared):
                 color = green
 
             for j in table[i]:
-                item = QtGui.QTableWidgetItem(j)
+                item = QtGui.QTableWidgetItem()
+                if table[i].index(j) == 7 or table[i].index(j) == 6:
+                    item.setData(QtCore.Qt.EditRole,float(j))
+                else:
+                    item.setData(QtCore.Qt.EditRole,j)
                 self.gui.table_filtered.setRowCount(rows_all+1)
                 self.gui.table_filtered.setItem(rows_all, index, item)
                 self.gui.table_filtered.item(rows_all, index).\
