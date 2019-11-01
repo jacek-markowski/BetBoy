@@ -1,4 +1,4 @@
-# BetBoy
+# BetBoy - DEPRECATED/NOT WORKING 
 Artificial neural networks for predicting results of football(soccer) matches.
 
 Features:
